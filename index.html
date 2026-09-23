@@ -1,5 +1,5 @@
+```html
 <!DOCTYPE html>
-
 <html lang="zh-CN">
 <head>
 <meta charset="UTF-8">
@@ -21,7 +21,9 @@
   --radius:17px;
 }
 
-*{box-sizing:border-box}
+*{
+  box-sizing:border-box;
+}
 
 body{
   margin:0;
@@ -34,7 +36,9 @@ body{
   font-family:Inter,-apple-system,BlinkMacSystemFont,"Segoe UI","Microsoft YaHei",Arial,sans-serif;
 }
 
-button,input,textarea{
+button,
+input,
+textarea{
   font:inherit;
 }
 
@@ -48,7 +52,7 @@ button,input,textarea{
 ========================= */
 
 .header{
-  margin-bottom:18px;
+  margin-bottom:22px;
 }
 
 .eyebrow{
@@ -85,60 +89,8 @@ h1{
 }
 
 /* =========================
-   TOP NAV
-========================= */
-
-.main-tabs{
-  display:flex;
-  align-items:center;
-  gap:5px;
-  width:max-content;
-  max-width:100%;
-  margin:0 0 18px;
-  padding:5px;
-  background:rgba(255,255,255,.78);
-  border:1px solid var(--border);
-  border-radius:13px;
-  box-shadow:0 8px 25px rgba(80,60,130,.07);
-  backdrop-filter:blur(14px);
-}
-
-.tab{
-  border:0;
-  background:transparent;
-  color:var(--muted);
-  padding:8px 15px;
-  border-radius:9px;
-  cursor:pointer;
-  font-size:12px;
-  font-weight:750;
-  text-align:center;
-  transition:.2s;
-  white-space:nowrap;
-}
-
-.tab:hover{
-  color:var(--primary-dark);
-  background:var(--primary-soft-2);
-}
-
-.tab.active{
-  background:var(--primary);
-  color:#fff;
-  box-shadow:0 5px 14px rgba(124,92,230,.2);
-}
-
-/* =========================
    PANELS
 ========================= */
-
-.panel{
-  display:none;
-}
-
-.panel.active{
-  display:block;
-}
 
 .section-grid{
   display:grid;
@@ -189,7 +141,7 @@ h1{
 }
 
 /* =========================
-   INPUT / OUTPUT
+   INPUT
 ========================= */
 
 textarea,
@@ -258,39 +210,6 @@ input:focus{
 
 .btn.ghost:hover{
   background:var(--primary-soft);
-}
-
-.output{
-  min-height:230px;
-  background:#211d2f;
-  color:#eee9ff;
-  border-radius:11px;
-  padding:14px;
-  white-space:pre-wrap;
-  word-break:break-word;
-  font:11px/1.65 ui-monospace,SFMono-Regular,Consolas,monospace;
-  cursor:pointer;
-  position:relative;
-}
-
-.output.empty{
-  color:#938ca7;
-}
-
-.copy-hint{
-  font-size:11px;
-  color:var(--muted);
-  margin-top:7px;
-}
-
-.copyable{
-  cursor:pointer;
-  user-select:none;
-  transition:.2s;
-}
-
-.copyable:hover{
-  color:var(--primary-dark);
 }
 
 /* =========================
@@ -468,11 +387,14 @@ input:focus{
   text-decoration:none;
 }
 
-.row-actions{
-  display:flex;
-  gap:8px;
-  align-items:center;
-  flex-wrap:wrap;
+.copyable{
+  cursor:pointer;
+  user-select:none;
+  transition:.2s;
+}
+
+.copyable:hover{
+  color:var(--primary-dark);
 }
 
 .small{
@@ -519,15 +441,6 @@ input:focus{
     font-size:22px;
   }
 
-  .main-tabs{
-    width:100%;
-    margin-bottom:16px;
-  }
-
-  .tab{
-    flex:1;
-  }
-
   .section-grid{
     grid-template-columns:1fr;
   }
@@ -547,331 +460,231 @@ input:focus{
   <header class="header">
     <span class="eyebrow">EDIMAKOR · CONTENT WORKSPACE</span>
 
+    <h1>HTML Content Tools</h1>
 
-<h1>Content & HTML Tools</h1>
-
-<div class="subtitle">
-  FAQ Schema, URL-Analyse und Werbemodule schnell erstellen
-</div>
-
-
+    <div class="subtitle">
+      URL-Analyse und Werbemodule schnell erstellen
+    </div>
   </header>
 
-  <!-- TOP NAV -->
+  <section class="section-grid">
 
-  <nav class="main-tabs">
-    <button class="tab active" data-tab="schema">
-      FAQ → Schema
-    </button>
+    <!-- =========================
+         URL PARSER
+    ========================== -->
 
+    <div class="card full">
 
-<button class="tab" data-tab="html">
-  HTML-Tools
-</button>
+      <div class="card-head">
 
+        <div>
 
-  </nav>
+          <h2>① URL 批量解析</h2>
 
-  <!-- MENU 1 -->
+          <div class="card-desc">
+            一行一个 URL。自动提取目录和文件名，并自动去掉文件名中的 <b>-copy</b>。
+          </div>
 
-  <section id="schema" class="panel active">
-
-
-<div class="section-grid">
-
-  <div class="card">
-
-    <div class="card-head">
-
-      <div>
-        <h2>FAQ HTML</h2>
-
-        <div class="card-desc">
-          粘贴页面中的 FAQ HTML，自动识别问题与答案。
-        </div>
-      </div>
-
-      <span class="badge">INPUT</span>
-
-    </div>
-
-    <textarea
-      id="faqInput"
-      placeholder='<div class="faq">
-
-
-  <h3>Was ist ein Videoeditor?</h3>
-  <p>Ein Videoeditor ist ein Tool zur Bearbeitung von Videos.</p>
-</div>'></textarea>
-
-    <div class="actions">
-
-      <button
-        class="btn primary"
-        onclick="generateFAQ()">
-        生成 FAQ Schema
-      </button>
-
-      <button
-        class="btn ghost"
-        onclick="clearFAQ()">
-        清空
-      </button>
-
-    </div>
-
-    <div
-      class="copy-hint"
-      id="faqCount"></div>
-
-  </div>
-
-
-  <div class="card">
-
-    <div class="card-head">
-
-      <div>
-        <h2>FAQPage Schema</h2>
-
-  
-      </div>
-
-      <span class="badge">OUTPUT</span>
-
-    </div>
-
-    <div
-      id="faqOutput"
-      class="output empty">
-      Copy Schema
-    </div>
-
-    <div class="copy-hint"></div>
-
-  </div>
-
-</div>
-
-
-  </section>
-
-  <!-- MENU 2 -->
-
-  <section id="html" class="panel">
-
-
-<div class="section-grid">
-
-
-  <!-- URL PARSER -->
-
-  <div class="card full">
-
-    <div class="card-head">
-
-      <div>
-
-        <h2>① URL 批量解析</h2>
-
-        <div class="card-desc">
-          一行一个 URL。自动提取目录和文件名，并自动去掉文件名中的 <b>-copy</b>。
         </div>
 
+        <span class="badge">BATCH</span>
+
       </div>
 
-      <span class="badge">BATCH</span>
-
-    </div>
-
-    <textarea
-      id="urlInput"
-      style="min-height:150px"
-      placeholder="https://edimakor.hitpaw.de/video-editing-tips/video-project-ideas-for-school-copy.html
-
+      <textarea
+        id="urlInput"
+        style="min-height:150px"
+        placeholder="https://edimakor.hitpaw.de/video-editing-tips/video-project-ideas-for-school-copy.html
 
 https://edimakor.hitpaw.de/ai-tools/example-copy.html"></textarea>
 
+      <div class="actions">
 
-    <div class="actions">
+        <button
+          class="btn primary"
+          onclick="parseUrls()">
+          URLs analysieren
+        </button>
 
-      <button
-        class="btn primary"
-        onclick="parseUrls()">
-        URLs analysieren
-      </button>
+        <button
+          class="btn ghost"
+          onclick="clearUrls()">
+          Leeren
+        </button>
 
-      <button
-        class="btn ghost"
-        onclick="clearUrls()">
-        Leeren
-      </button>
+      </div>
+
+      <div id="urlResult"></div>
 
     </div>
 
-    <div id="urlResult"></div>
 
-  </div>
+    <!-- =========================
+         MOBILE AD
+    ========================== -->
 
+    <div class="card">
 
-  <!-- MOBILE AD -->
+      <div class="card-head">
 
-  <div class="card">
+        <div>
 
-    <div class="card-head">
+          <h2
+            class="copyable"
+            onclick="copyFixedMobile()">
+            ② Mobile Bottom Ad
+          </h2>
 
-      <div>
+          <div class="card-desc">
+            Fester HTML-Code. Titel anklicken, um den Code zu kopieren.
+          </div>
 
-        <h2
-          class="copyable"
-          onclick="copyFixedMobile()">
-          ② Mobile Bottom Ad
-        </h2>
+        </div>
 
-        <div class="card-desc">
-          Fester HTML-Code. Titel anklicken, um den Code zu kopieren.
+        <span class="badge">FIXED</span>
+
+      </div>
+
+      <div class="preview">
+
+        <div class="ad-preview">
+
+          <div class="ad-logo">
+
+            <img
+              src="https://edimakor.hitpaw.com/images/logos/hitpaw-edimakor.png"
+              alt="HitPaw Edimakor">
+
+            <span>HitPaw Edimakor</span>
+
+          </div>
+
+          <p>
+            Bester KI-Videoeditor mit vielen Videobearbeitungselementen und KI-Funktionen.
+          </p>
+
+          <a href="#">
+            Jetzt kaufen
+          </a>
+
         </div>
 
       </div>
 
-      <span class="badge">FIXED</span>
-
     </div>
 
-    <div class="preview">
 
-      <div class="ad-preview">
+    <!-- =========================
+         PC AD
+    ========================== -->
 
-        <div class="ad-logo">
+    <div class="card">
 
-          <img
-            src="https://edimakor.hitpaw.com/images/logos/hitpaw-edimakor.png"
-            alt="HitpawEdimakor">
+      <div class="card-head">
 
-          <span>HitPaw Edimakor</span>
+        <div>
+
+          <h2>
+            ③ PC-Rechtsseiten-Werbemodul
+          </h2>
+
+          <div class="card-desc">
+            Festes Template. Die Links und Texte werden aus deiner Batch-Eingabe übernommen.
+          </div>
 
         </div>
 
-        <p>
-          Bester KI-Videoeditor mit vielen Videobearbeitungselementen und KI-Funktionen.
-        </p>
-
-        <a href="#">
-          Jetzt kaufen
-        </a>
+        <span class="badge">BATCH</span>
 
       </div>
 
-    </div>
-
-  </div>
-
-
-  <!-- PC AD -->
-
-  <div class="card">
-
-    <div class="card-head">
-
-      <div>
-
-        <h2>
-          ③ PC-Rechtsseiten-Werbemodul
-        </h2>
-
-        <div class="card-desc">
-          Festes Template. Die Links und Texte werden aus deiner Batch-Eingabe übernommen.
-        </div>
-
-      </div>
-
-      <span class="badge">BATCH</span>
-
-    </div>
-
-    <textarea
-      id="pcBatchInput"
-      style="min-height:190px"
-      placeholder="URL[TAB]Text
-
+      <textarea
+        id="pcBatchInput"
+        style="min-height:190px"
+        placeholder="URL[TAB]Text
 
 https://edimakor.hitpaw.de/video-editing-tips/ai-girlfriend-generator.html	Die besten KI-Freundin-Generatoren
 https://edimakor.hitpaw.de/subtitle-tips/paramount-plus-subtitle-not-working.html	Paramount Plus Untertitel funktionieren nicht? Lösung
 https://edimakor.hitpaw.de/video-editing-tips/how-to-reverse-video-search.html	Rückwärts-Videosuche durchführen"></textarea>
 
-
-    <div
-      class="small"
-      style="margin-top:8px">
-      Eine Zeile pro Eintrag: URL + Tabulator oder | + Linktext. 3–5 Einträge sind vorgesehen.
-    </div>
-
-    <div class="actions">
-
-      <button
-        class="btn primary"
-        onclick="generatePcAd()">
-        PC-Modul erstellen
-      </button>
-
-    </div>
-
-    <div class="generated-wrap">
-
-      <div class="generated-title">
-        Vorschau
+      <div
+        class="small"
+        style="margin-top:8px">
+        Eine Zeile pro Eintrag: URL + Tabulator oder | + Linktext. 3–5 Einträge sind vorgesehen.
       </div>
 
-      <div
-        id="pcPreview"
-        class="preview">
+      <div class="actions">
 
-        <div class="small">
-          URL und Linktext eingeben, dann das Modul erstellen.
+        <button
+          class="btn primary"
+          onclick="generatePcAd()">
+          PC-Modul erstellen
+        </button>
+
+      </div>
+
+      <div class="generated-wrap">
+
+        <div class="generated-title">
+          Vorschau
+        </div>
+
+        <div
+          id="pcPreview"
+          class="preview">
+
+          <div class="small">
+            URL und Linktext eingeben, dann das Modul erstellen.
+          </div>
+
+        </div>
+
+      </div>
+
+      <div class="generated-wrap">
+
+        <div
+          class="generated-title copyable"
+          onclick="copyPcCode()">
+          PC-Rechtsseiten-Werbemodul
+        </div>
+
+        <div
+          id="pcCode"
+          class="preview"
+          style="
+            min-height:160px;
+            background:#211d2f;
+            color:#eee9ff;
+            white-space:pre-wrap;
+            word-break:break-word;
+            font:11px/1.65 ui-monospace,SFMono-Regular,Consolas,monospace;
+          ">
+          Der HTML-Code wird nach der Erstellung hier angezeigt.
         </div>
 
       </div>
 
     </div>
 
-    <div class="generated-wrap">
-
-      <div
-        class="generated-title copyable"
-        onclick="copyPcCode()">
-        PC-Rechtsseiten-Werbemodul
-      </div>
-
-      <div
-        id="pcCode"
-        class="output empty"
-        style="min-height:160px">
-        Der HTML-Code wird nach der Erstellung hier angezeigt.
-      </div>
-
-    </div>
-
-  </div>
-
-</div>
-
-
   </section>
 
 </div>
 
-<div id="toast" class="toast">
-  已复制
-</div>
+<div id="toast" class="toast"></div>
 
 <script>
+
+/* =========================
+   MOBILE AD CODE
+========================= */
 
 const MOBILE_AD_CODE = `<div class="bottom-ad">
   <div class="close-icon"></div>
   <div class="d-flex align-items-center justify-content-md-between">
     <div class="text-white">
       <div class="sub-title d-flex align-items-end">
-        <img class="img-fluid logo" src="https://edimakor.hitpaw.com/images/logos/hitpaw-edimakor.png" width="40" height="40" alt="HitpawEdimakor">
+        <img class="img-fluid logo" src="https://edimakor.hitpaw.com/images/logos/hitpaw-edimakor.png" width="40" height="40" alt="HitPaw Edimakor">
         <span class="fw-bolder">HitPaw Edimakor</span>
       </div>
       <p class="small mt-1 mb-0">Bester KI-Videoeditor mit vielen Videobearbeitungselementen und KI-Funktionen.</p>
@@ -885,11 +698,15 @@ const MOBILE_AD_CODE = `<div class="bottom-ad">
 </div>`;
 
 
+/* =========================
+   PC AD TEMPLATE
+========================= */
+
 const PC_TEMPLATE = (items) => `<div class="ad-module mb-4">
   <div class="d-flex align-items-center justify-content-center mb-2">
     <img class="lozad" src="https://images.hitpaw.com/images/common/loading.svg"
          data-src="https://edimakor.hitpaw.com/images/logos/hitpaw-edimakor.png" width="38" height="38"
-         alt="HitpawEdimakor Logo">
+         alt="HitPaw Edimakor Logo">
     <span class="h5 ms-2 mb-0">HitPaw Edimakor</span>
   </div>
 
@@ -983,7 +800,7 @@ ${items.map((x,i)=>`    <li>
         <img
           class="img-fluid"
           src="https://edimakor.hitpaw.com/images/edimakor-2025/article/hot-and-trend-icon-${i+1}.png"
-          alt="hot-and-trending">
+          alt="Hot &amp; im Trend">
         <span>${escapeHtml(x.text)}</span>
       </a>
     </li>`).join("\n")}
@@ -1026,6 +843,10 @@ ${items.map((x,i)=>`    <li>
 
 </div>`;
 
+
+/* =========================
+   HELPERS
+========================= */
 
 function escapeHtml(s){
 
@@ -1095,186 +916,9 @@ async function copyText(text){
 }
 
 
-function switchTab(id){
-
-  document.querySelectorAll(".tab")
-    .forEach(x =>
-      x.classList.toggle(
-        "active",
-        x.dataset.tab===id
-      )
-    );
-
-  document.querySelectorAll(".panel")
-    .forEach(x =>
-      x.classList.toggle(
-        "active",
-        x.id===id
-      )
-    );
-
-}
-
-
-document.querySelectorAll(".tab")
-  .forEach(b =>
-    b.addEventListener(
-      "click",
-      ()=>switchTab(b.dataset.tab)
-    )
-  );
-
-
-function generateFAQ(){
-
-  const raw=document
-    .getElementById("faqInput")
-    .value
-    .trim();
-
-  if(!raw)return;
-
-  const doc=new DOMParser()
-    .parseFromString(raw,"text/html");
-
-  const candidates=[
-    ...doc.querySelectorAll(
-      "h2,h3,h4,dt,strong,.faq-question,.question"
-    )
-  ];
-
-  const pairs=[];
-
-  candidates.forEach(q=>{
-
-    const question=q.textContent.trim();
-
-    if(
-      !question ||
-      pairs.some(x=>x.question===question)
-    )return;
-
-    let answer="";
-
-    let el=q.nextElementSibling;
-
-    while(
-      el &&
-      !["H2","H3","H4","DT","STRONG"]
-        .includes(el.tagName)
-    ){
-
-      const t=el.textContent.trim();
-
-      if(t){
-        answer+=(answer?" ":"")+t;
-      }
-
-      el=el.nextElementSibling;
-
-    }
-
-    if(
-      !answer &&
-      q.parentElement
-    ){
-
-      const all=[
-        ...q.parentElement.querySelectorAll(
-          "p,.faq-answer,.answer,dd"
-        )
-      ];
-
-      answer=all
-        .map(x=>x.textContent.trim())
-        .filter(Boolean)
-        .join(" ");
-
-    }
-
-    if(answer){
-      pairs.push({
-        question,
-        answer
-      });
-    }
-
-  });
-
-
-  if(!pairs.length)return;
-
-
-  const schema={
-    "@context":"https://schema.org",
-    "@type":"FAQPage",
-    "mainEntity":pairs.map(x=>({
-      "@type":"Question",
-      "name":x.question,
-      "acceptedAnswer":{
-        "@type":"Answer",
-        "text":x.answer
-      }
-    }))
-  };
-
-
-  const code=
-    '<script type="application/ld+json">\n'+
-    JSON.stringify(schema,null,2)+
-    '\n<\\/script>';
-
-
-  const out=document
-    .getElementById("faqOutput");
-
-  out.textContent=code;
-
-  out.classList.remove("empty");
-
-  document.getElementById("faqCount")
-    .textContent=`已识别 ${pairs.length} 个 FAQ`;
-
-}
-
-
-function clearFAQ(){
-
-  document.getElementById("faqInput")
-    .value="";
-
-  const out=document
-    .getElementById("faqOutput");
-
-  out.textContent=
-    "Copy Schema";
-
-  out.classList.add("empty");
-
-  document.getElementById("faqCount")
-    .textContent="";
-
-}
-
-
-document
-  .getElementById("faqOutput")
-  .addEventListener(
-    "click",
-    ()=>{
-
-      const el=
-        document.getElementById("faqOutput");
-
-      if(
-        !el.classList.contains("empty")
-      ){
-        copyText(el.textContent);
-      }
-
-    }
-  );
-
+/* =========================
+   URL PARSER
+========================= */
 
 function parseUrls(){
 
@@ -1286,11 +930,15 @@ function parseUrls(){
       .map(x=>x.trim())
       .filter(Boolean);
 
+  if(!urls.length){
 
-  if(!urls.length)return;
+    showToast("请输入 URL");
 
+    return;
 
-  let rows=urls.map(raw=>{
+  }
+
+  const rows=urls.map(raw=>{
 
     try{
 
@@ -1371,17 +1019,21 @@ function parseUrls(){
                 <td
                   class="copyable"
                   onclick='copyText(${JSON.stringify(r.category)})'>
+
                   <code>
                     ${escapeHtml(r.category)}
                   </code>
+
                 </td>
 
                 <td
                   class="copyable"
                   onclick='copyText(${JSON.stringify(r.file)})'>
+
                   <code>
                     ${escapeHtml(r.file)}
                   </code>
+
                 </td>
 
               </tr>
@@ -1399,6 +1051,10 @@ function parseUrls(){
 }
 
 
+/* =========================
+   CLEAR URLS
+========================= */
+
 function clearUrls(){
 
   document.getElementById("urlInput")
@@ -1410,12 +1066,20 @@ function clearUrls(){
 }
 
 
+/* =========================
+   MOBILE AD COPY
+========================= */
+
 function copyFixedMobile(){
 
   copyText(MOBILE_AD_CODE);
 
 }
 
+
+/* =========================
+   PC AD INPUT
+========================= */
 
 function getPcItems(){
 
@@ -1456,6 +1120,10 @@ function getPcItems(){
 }
 
 
+/* =========================
+   GENERATE PC AD
+========================= */
+
 function generatePcAd(){
 
   const items=getPcItems();
@@ -1477,8 +1145,7 @@ function generatePcAd(){
 
   box.textContent=code;
 
-  box.classList.remove("empty");
-
+  box.style.color="#eee9ff";
 
   document.getElementById("pcPreview")
     .innerHTML=`
@@ -1510,14 +1177,21 @@ function generatePcAd(){
 }
 
 
+/* =========================
+   COPY PC CODE
+========================= */
+
 function copyPcCode(){
 
   const box=
     document.getElementById("pcCode");
 
   if(
-    box.classList.contains("empty")
-  )return;
+    !box.textContent ||
+    box.textContent.includes("Der HTML-Code wird")
+  ){
+    return;
+  }
 
   copyText(box.textContent);
 
@@ -1527,3 +1201,4 @@ function copyPcCode(){
 
 </body>
 </html>
+```
