@@ -1,14 +1,15 @@
 <!DOCTYPE html>
+
 <html lang="zh-CN">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Edimakor Content Tools</title>
+
 <style>
 :root{
   --bg:#f7f5fc;
-  --card:rgba(255,255,255,.88);
-  --card-solid:#fff;
+  --card:rgba(255,255,255,.9);
   --primary:#7c5ce6;
   --primary-dark:#6544d4;
   --primary-soft:#eee9ff;
@@ -16,13 +17,15 @@
   --text:#252238;
   --muted:#817c95;
   --border:#e8e2f5;
-  --shadow:0 16px 45px rgba(91,67,150,.10);
-  --radius:18px;
+  --shadow:0 14px 40px rgba(91,67,150,.09);
+  --radius:17px;
 }
+
 *{box-sizing:border-box}
+
 body{
   margin:0;
-  padding:32px 20px 60px;
+  padding:28px 20px 55px;
   background:
     radial-gradient(circle at 10% 0%,rgba(168,139,250,.17),transparent 30%),
     radial-gradient(circle at 90% 10%,rgba(202,184,255,.16),transparent 28%),
@@ -30,267 +33,842 @@ body{
   color:var(--text);
   font-family:Inter,-apple-system,BlinkMacSystemFont,"Segoe UI","Microsoft YaHei",Arial,sans-serif;
 }
-button,input,textarea{font:inherit}
-.app{max-width:1060px;margin:0 auto 0 260px}
-.header{margin-bottom:26px}
+
+button,input,textarea{
+  font:inherit;
+}
+
+.app{
+  max-width:1100px;
+  margin:0 auto;
+}
+
+/* =========================
+   HEADER
+========================= */
+
+.header{
+  margin-bottom:18px;
+}
+
 .eyebrow{
-  display:inline-flex;align-items:center;gap:7px;
-  padding:6px 11px;border-radius:999px;
-  background:var(--primary-soft);color:var(--primary-dark);
-  font-size:12px;font-weight:700;letter-spacing:.3px;
+  display:inline-flex;
+  align-items:center;
+  gap:7px;
+  padding:5px 10px;
+  border-radius:999px;
+  background:var(--primary-soft);
+  color:var(--primary-dark);
+  font-size:10px;
+  font-weight:800;
+  letter-spacing:.4px;
 }
-.eyebrow:before{content:"";width:7px;height:7px;border-radius:50%;background:var(--primary)}
-h1{margin:13px 0 7px;font-size:30px;letter-spacing:-.7px}
-.subtitle{color:var(--muted);font-size:14px}
+
+.eyebrow:before{
+  content:"";
+  width:6px;
+  height:6px;
+  border-radius:50%;
+  background:var(--primary);
+}
+
+h1{
+  margin:10px 0 4px;
+  font-size:24px;
+  line-height:1.25;
+  letter-spacing:-.4px;
+}
+
+.subtitle{
+  color:var(--muted);
+  font-size:12px;
+}
+
+/* =========================
+   TOP NAV
+========================= */
+
 .main-tabs{
-  position:fixed;left:20px;top:24px;width:210px;
-  display:flex;flex-direction:column;gap:6px;padding:8px;
-  background:rgba(255,255,255,.86);
-  border:1px solid var(--border);border-radius:17px;
-  box-shadow:0 12px 35px rgba(80,60,130,.10);
-  z-index:10;backdrop-filter:blur(14px);
+  display:flex;
+  align-items:center;
+  gap:5px;
+  width:max-content;
+  max-width:100%;
+  margin:0 0 18px;
+  padding:5px;
+  background:rgba(255,255,255,.78);
+  border:1px solid var(--border);
+  border-radius:13px;
+  box-shadow:0 8px 25px rgba(80,60,130,.07);
+  backdrop-filter:blur(14px);
 }
+
 .tab{
-  border:0;background:transparent;color:var(--muted);
-  padding:13px 15px;border-radius:11px;cursor:pointer;
-  font-weight:700;text-align:left;transition:.2s;
+  border:0;
+  background:transparent;
+  color:var(--muted);
+  padding:8px 15px;
+  border-radius:9px;
+  cursor:pointer;
+  font-size:12px;
+  font-weight:750;
+  text-align:center;
+  transition:.2s;
+  white-space:nowrap;
 }
-.tab:hover{color:var(--primary-dark)}
-.tab.active{background:var(--primary-soft);color:var(--primary-dark);box-shadow:none}
-.panel{display:none}
-.panel.active{display:block}
-.section-grid{display:grid;grid-template-columns:1fr 1fr;gap:18px}
+
+.tab:hover{
+  color:var(--primary-dark);
+  background:var(--primary-soft-2);
+}
+
+.tab.active{
+  background:var(--primary);
+  color:#fff;
+  box-shadow:0 5px 14px rgba(124,92,230,.2);
+}
+
+/* =========================
+   PANELS
+========================= */
+
+.panel{
+  display:none;
+}
+
+.panel.active{
+  display:block;
+}
+
+.section-grid{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:17px;
+}
+
 .card{
-  background:var(--card);border:1px solid var(--border);
-  border-radius:var(--radius);box-shadow:var(--shadow);
-  padding:22px;backdrop-filter:blur(12px);
+  background:var(--card);
+  border:1px solid var(--border);
+  border-radius:var(--radius);
+  box-shadow:var(--shadow);
+  padding:20px;
+  backdrop-filter:blur(12px);
 }
-.card.full{grid-column:1/-1}
-.card-head{display:flex;align-items:flex-start;justify-content:space-between;gap:15px;margin-bottom:16px}
-.card h2{font-size:18px;margin:0 0 5px}
-.card-desc{font-size:13px;color:var(--muted);line-height:1.6}
+
+.card.full{
+  grid-column:1/-1;
+}
+
+.card-head{
+  display:flex;
+  align-items:flex-start;
+  justify-content:space-between;
+  gap:15px;
+  margin-bottom:14px;
+}
+
+.card h2{
+  font-size:16px;
+  margin:0 0 4px;
+}
+
+.card-desc{
+  font-size:12px;
+  color:var(--muted);
+  line-height:1.55;
+}
+
 .badge{
-  flex:none;padding:6px 9px;border-radius:8px;
-  background:var(--primary-soft);color:var(--primary-dark);
-  font-size:11px;font-weight:700;
+  flex:none;
+  padding:5px 8px;
+  border-radius:7px;
+  background:var(--primary-soft);
+  color:var(--primary-dark);
+  font-size:10px;
+  font-weight:750;
 }
-textarea,input{
-  width:100%;border:1px solid var(--border);background:#fff;
-  color:var(--text);border-radius:12px;outline:none;
+
+/* =========================
+   INPUT / OUTPUT
+========================= */
+
+textarea,
+input{
+  width:100%;
+  border:1px solid var(--border);
+  background:#fff;
+  color:var(--text);
+  border-radius:11px;
+  outline:none;
   transition:.2s;
 }
-textarea{min-height:230px;padding:14px;resize:vertical;line-height:1.65;font-family:ui-monospace,SFMono-Regular,Consolas,monospace;font-size:13px}
-input{padding:11px 12px;font-size:13px}
-textarea:focus,input:focus{border-color:#b9a8f3;box-shadow:0 0 0 4px rgba(124,92,230,.09)}
-.actions{display:flex;gap:9px;flex-wrap:wrap;margin-top:12px}
+
+textarea{
+  min-height:230px;
+  padding:13px;
+  resize:vertical;
+  line-height:1.65;
+  font-family:ui-monospace,SFMono-Regular,Consolas,monospace;
+  font-size:12px;
+}
+
+input{
+  padding:10px 11px;
+  font-size:12px;
+}
+
+textarea:focus,
+input:focus{
+  border-color:#b9a8f3;
+  box-shadow:0 0 0 4px rgba(124,92,230,.09);
+}
+
+.actions{
+  display:flex;
+  gap:8px;
+  flex-wrap:wrap;
+  margin-top:11px;
+}
+
 .btn{
-  border:0;border-radius:10px;padding:10px 15px;cursor:pointer;
-  font-weight:700;font-size:13px;transition:.2s;
+  border:0;
+  border-radius:9px;
+  padding:9px 14px;
+  cursor:pointer;
+  font-weight:700;
+  font-size:12px;
+  transition:.2s;
 }
-.btn.primary{background:var(--primary);color:#fff;box-shadow:0 7px 18px rgba(124,92,230,.22)}
-.btn.primary:hover{background:var(--primary-dark);transform:translateY(-1px)}
-.btn.ghost{background:var(--primary-soft-2);color:var(--primary-dark)}
-.btn.ghost:hover{background:var(--primary-soft)}
+
+.btn.primary{
+  background:var(--primary);
+  color:#fff;
+  box-shadow:0 6px 16px rgba(124,92,230,.2);
+}
+
+.btn.primary:hover{
+  background:var(--primary-dark);
+  transform:translateY(-1px);
+}
+
+.btn.ghost{
+  background:var(--primary-soft-2);
+  color:var(--primary-dark);
+}
+
+.btn.ghost:hover{
+  background:var(--primary-soft);
+}
+
 .output{
-  min-height:230px;background:#211d2f;color:#eee9ff;border-radius:12px;
-  padding:15px;white-space:pre-wrap;word-break:break-word;
-  font:12px/1.65 ui-monospace,SFMono-Regular,Consolas,monospace;
-  cursor:pointer;position:relative;
+  min-height:230px;
+  background:#211d2f;
+  color:#eee9ff;
+  border-radius:11px;
+  padding:14px;
+  white-space:pre-wrap;
+  word-break:break-word;
+  font:11px/1.65 ui-monospace,SFMono-Regular,Consolas,monospace;
+  cursor:pointer;
+  position:relative;
 }
-.output.empty{color:#938ca7}
+
+.output.empty{
+  color:#938ca7;
+}
+
 .copy-hint{
-  font-size:12px;color:var(--muted);margin-top:8px;
+  font-size:11px;
+  color:var(--muted);
+  margin-top:7px;
 }
+
 .copyable{
-  cursor:pointer;user-select:none;transition:.2s;
+  cursor:pointer;
+  user-select:none;
+  transition:.2s;
 }
-.copyable:hover{color:var(--primary-dark)}
+
+.copyable:hover{
+  color:var(--primary-dark);
+}
+
+/* =========================
+   PREVIEW
+========================= */
+
 .preview{
-  border:1px solid var(--border);background:#faf9fd;border-radius:13px;
-  padding:18px;min-height:180px;overflow:auto;
+  border:1px solid var(--border);
+  background:#faf9fd;
+  border-radius:12px;
+  padding:16px;
+  min-height:180px;
+  overflow:auto;
 }
+
 .notice{
-  background:var(--primary-soft-2);border:1px solid #e7defb;
-  border-radius:12px;padding:12px 14px;font-size:12px;color:#6f6684;line-height:1.6;
+  background:var(--primary-soft-2);
+  border:1px solid #e7defb;
+  border-radius:11px;
+  padding:11px 13px;
+  font-size:11px;
+  color:#6f6684;
+  line-height:1.6;
 }
-.url-table{width:100%;border-collapse:collapse}
-.url-table th{text-align:left;font-size:12px;color:var(--muted);font-weight:700;padding:9px 8px;border-bottom:1px solid var(--border)}
-.url-table td{padding:8px;border-bottom:1px solid #f0ecf7;vertical-align:top}
-.url-table input{min-width:0}
-.url-table .num{width:32px;color:#a09aaa;font-size:12px}
-.table-wrap{overflow:auto}
-.result-table{margin-top:14px}
-.result-table td{font-size:12px;padding:10px 8px}
-.result-table code{color:var(--primary-dark);background:var(--primary-soft-2);padding:4px 7px;border-radius:6px}
+
+/* =========================
+   TABLE
+========================= */
+
+.url-table{
+  width:100%;
+  border-collapse:collapse;
+}
+
+.url-table th{
+  text-align:left;
+  font-size:11px;
+  color:var(--muted);
+  font-weight:700;
+  padding:8px;
+  border-bottom:1px solid var(--border);
+}
+
+.url-table td{
+  padding:7px 8px;
+  border-bottom:1px solid #f0ecf7;
+  vertical-align:top;
+}
+
+.url-table input{
+  min-width:0;
+}
+
+.table-wrap{
+  overflow:auto;
+}
+
+.result-table{
+  margin-top:13px;
+}
+
+.result-table td{
+  font-size:11px;
+  padding:9px 8px;
+}
+
+.result-table code{
+  color:var(--primary-dark);
+  background:var(--primary-soft-2);
+  padding:4px 6px;
+  border-radius:5px;
+}
+
+/* =========================
+   AD PREVIEW
+========================= */
+
 .ad-preview{
   background:linear-gradient(135deg,#342d47,#4b4160);
-  color:#fff;border-radius:12px;padding:16px;
+  color:#fff;
+  border-radius:11px;
+  padding:15px;
 }
-.ad-preview .ad-logo{display:flex;align-items:center;gap:10px;font-weight:800}
-.ad-preview img{width:40px;height:40px;object-fit:contain;border-radius:9px;background:#fff}
-.ad-preview p{font-size:12px;color:#e7e2f1;margin:10px 0 14px;line-height:1.5}
-.ad-preview a{display:inline-block;text-decoration:none;background:#fff;color:#40365a;padding:9px 14px;border-radius:8px;font-size:12px;font-weight:800}
-.generated-wrap{margin-top:18px}
+
+.ad-preview .ad-logo{
+  display:flex;
+  align-items:center;
+  gap:9px;
+  font-weight:800;
+}
+
+.ad-preview img{
+  width:38px;
+  height:38px;
+  object-fit:contain;
+  border-radius:8px;
+  background:#fff;
+}
+
+.ad-preview p{
+  font-size:11px;
+  color:#e7e2f1;
+  margin:9px 0 13px;
+  line-height:1.5;
+}
+
+.ad-preview a{
+  display:inline-block;
+  text-decoration:none;
+  background:#fff;
+  color:#40365a;
+  padding:8px 12px;
+  border-radius:7px;
+  font-size:11px;
+  font-weight:800;
+}
+
+/* =========================
+   GENERATED
+========================= */
+
+.generated-wrap{
+  margin-top:16px;
+}
+
 .generated-title{
-  font-size:14px;font-weight:800;margin-bottom:9px;
-  display:flex;align-items:center;gap:8px;
+  font-size:12px;
+  font-weight:800;
+  margin-bottom:8px;
+  display:flex;
+  align-items:center;
+  gap:7px;
 }
-.generated-title:before{content:"";width:4px;height:16px;border-radius:4px;background:var(--primary)}
-.trend-demo{background:#fff;border:1px solid var(--border);border-radius:12px;padding:15px}
-.trend-demo h4{margin:0 0 12px;font-size:14px}
-.trend-item{display:flex;gap:9px;align-items:center;padding:9px 0;border-bottom:1px solid #f0edf5}
-.trend-item:last-child{border-bottom:0}
-.trend-item img{width:26px;height:26px}
-.trend-item a{font-size:12px;color:#514a61;text-decoration:none}
-.row-actions{display:flex;gap:8px;align-items:center;flex-wrap:wrap}
+
+.generated-title:before{
+  content:"";
+  width:3px;
+  height:14px;
+  border-radius:4px;
+  background:var(--primary);
+}
+
+.trend-demo{
+  background:#fff;
+  border:1px solid var(--border);
+  border-radius:11px;
+  padding:14px;
+}
+
+.trend-demo h4{
+  margin:0 0 10px;
+  font-size:12px;
+}
+
+.trend-item{
+  display:flex;
+  gap:8px;
+  align-items:center;
+  padding:8px 0;
+  border-bottom:1px solid #f0edf5;
+}
+
+.trend-item:last-child{
+  border-bottom:0;
+}
+
+.trend-item img{
+  width:25px;
+  height:25px;
+}
+
+.trend-item a{
+  font-size:11px;
+  color:#514a61;
+  text-decoration:none;
+}
+
+.row-actions{
+  display:flex;
+  gap:8px;
+  align-items:center;
+  flex-wrap:wrap;
+}
+
+.small{
+  font-size:10px;
+  color:var(--muted);
+}
+
 .toast{
-  position:fixed;left:50%;bottom:25px;transform:translate(-50%,20px);
-  background:#292333;color:#fff;padding:10px 16px;border-radius:10px;
-  font-size:12px;opacity:0;pointer-events:none;transition:.25s;z-index:20;
+  position:fixed;
+  left:50%;
+  bottom:25px;
+  transform:translate(-50%,20px);
+  background:#292333;
+  color:#fff;
+  padding:9px 15px;
+  border-radius:9px;
+  font-size:11px;
+  opacity:0;
+  pointer-events:none;
+  transition:.25s;
+  z-index:20;
 }
-.toast.show{opacity:1;transform:translate(-50%,0)}
-.small{font-size:11px;color:var(--muted)}
+
+.toast.show{
+  opacity:1;
+  transform:translate(-50%,0);
+}
+
+/* =========================
+   MOBILE
+========================= */
+
 @media(max-width:850px){
-  .main-tabs{position:static;width:100%;flex-direction:row;margin-bottom:18px}
-  .tab{flex:1;text-align:center}
-  .app{max-width:none;margin:0}
-  .section-grid{grid-template-columns:1fr}
-  .card.full{grid-column:auto}
-  body{padding:18px 13px 45px}
-  h1{font-size:25px}
+
+  body{
+    padding:20px 13px 45px;
+  }
+
+  .app{
+    max-width:none;
+  }
+
+  h1{
+    font-size:22px;
+  }
+
+  .main-tabs{
+    width:100%;
+    margin-bottom:16px;
+  }
+
+  .tab{
+    flex:1;
+  }
+
+  .section-grid{
+    grid-template-columns:1fr;
+  }
+
+  .card.full{
+    grid-column:auto;
+  }
 }
 </style>
+
 </head>
+
 <body>
+
 <div class="app">
+
   <header class="header">
     <span class="eyebrow">EDIMAKOR · CONTENT WORKSPACE</span>
-    <h1>Content & HTML Tools</h1>
-    <div class="subtitle">FAQ Schema, URL-Analyse und Werbemodule schnell erstellen</div>
+
+```
+<h1>Content & HTML Tools</h1>
+
+<div class="subtitle">
+  FAQ Schema, URL-Analyse und Werbemodule schnell erstellen
+</div>
+```
+
   </header>
 
+  <!-- TOP NAV -->
+
   <nav class="main-tabs">
-    <button class="tab active" data-tab="schema">FAQ → Schema</button>
-    <button class="tab" data-tab="html">HTML-Tools</button>
+    <button class="tab active" data-tab="schema">
+      FAQ → Schema
+    </button>
+
+```
+<button class="tab" data-tab="html">
+  HTML-Tools
+</button>
+```
+
   </nav>
 
   <!-- MENU 1 -->
+
   <section id="schema" class="panel active">
-    <div class="section-grid">
-      <div class="card">
-        <div class="card-head">
-          <div>
-            <h2>FAQ HTML</h2>
-            <div class="card-desc">粘贴页面中的 FAQ HTML，自动识别问题与答案。</div>
-          </div>
-          <span class="badge">INPUT</span>
+
+```
+<div class="section-grid">
+
+  <div class="card">
+
+    <div class="card-head">
+
+      <div>
+        <h2>FAQ HTML</h2>
+
+        <div class="card-desc">
+          粘贴页面中的 FAQ HTML，自动识别问题与答案。
         </div>
-        <textarea id="faqInput" placeholder='<div class="faq">
+      </div>
+
+      <span class="badge">INPUT</span>
+
+    </div>
+
+    <textarea
+      id="faqInput"
+      placeholder='<div class="faq">
+```
+
   <h3>Was ist ein Videoeditor?</h3>
   <p>Ein Videoeditor ist ein Tool zur Bearbeitung von Videos.</p>
 </div>'></textarea>
-        <div class="actions">
-          <button class="btn primary" onclick="generateFAQ()">生成 FAQ Schema</button>
-          <button class="btn ghost" onclick="clearFAQ()">清空</button>
+
+```
+    <div class="actions">
+
+      <button
+        class="btn primary"
+        onclick="generateFAQ()">
+        生成 FAQ Schema
+      </button>
+
+      <button
+        class="btn ghost"
+        onclick="clearFAQ()">
+        清空
+      </button>
+
+    </div>
+
+    <div
+      class="copy-hint"
+      id="faqCount"></div>
+
+  </div>
+
+
+  <div class="card">
+
+    <div class="card-head">
+
+      <div>
+        <h2>FAQPage Schema</h2>
+
+        <div class="card-desc">
+          点击下面代码区域即可复制，不需要复制按钮。
         </div>
-        <div class="copy-hint" id="faqCount"></div>
       </div>
 
-      <div class="card">
-        <div class="card-head">
-          <div>
-            <h2>FAQPage Schema</h2>
-            <div class="card-desc">点击下面代码区域即可复制，不需要复制按钮。</div>
-          </div>
-          <span class="badge">OUTPUT</span>
-        </div>
-        <div id="faqOutput" class="output empty">生成后，点击这里即可复制 Schema。</div>
-        <div class="copy-hint"></div>
-      </div>
+      <span class="badge">OUTPUT</span>
+
     </div>
+
+    <div
+      id="faqOutput"
+      class="output empty">
+      生成后，点击这里即可复制 Schema。
+    </div>
+
+    <div class="copy-hint"></div>
+
+  </div>
+
+</div>
+```
+
   </section>
 
   <!-- MENU 2 -->
+
   <section id="html" class="panel">
-    <div class="section-grid">
 
-      <!-- URL PARSER -->
-      <div class="card full">
-        <div class="card-head">
-          <div>
-            <h2>① URL 批量解析</h2>
-            <div class="card-desc">一行一个 URL。自动提取目录和文件名，并自动去掉文件名中的 <b>-copy</b>。</div>
-          </div>
-          <span class="badge">BATCH</span>
+```
+<div class="section-grid">
+
+
+  <!-- URL PARSER -->
+
+  <div class="card full">
+
+    <div class="card-head">
+
+      <div>
+
+        <h2>① URL 批量解析</h2>
+
+        <div class="card-desc">
+          一行一个 URL。自动提取目录和文件名，并自动去掉文件名中的 <b>-copy</b>。
         </div>
-        <textarea id="urlInput" style="min-height:150px" placeholder="https://edimakor.hitpaw.de/video-editing-tips/video-project-ideas-for-school-copy.html
+
+      </div>
+
+      <span class="badge">BATCH</span>
+
+    </div>
+
+    <textarea
+      id="urlInput"
+      style="min-height:150px"
+      placeholder="https://edimakor.hitpaw.de/video-editing-tips/video-project-ideas-for-school-copy.html
+```
+
 https://edimakor.hitpaw.de/ai-tools/example-copy.html"></textarea>
-        <div class="actions">
-          <button class="btn primary" onclick="parseUrls()">URLs analysieren</button>
-          <button class="btn ghost" onclick="clearUrls()">Leeren</button>
+
+```
+    <div class="actions">
+
+      <button
+        class="btn primary"
+        onclick="parseUrls()">
+        URLs analysieren
+      </button>
+
+      <button
+        class="btn ghost"
+        onclick="clearUrls()">
+        Leeren
+      </button>
+
+    </div>
+
+    <div id="urlResult"></div>
+
+  </div>
+
+
+  <!-- MOBILE AD -->
+
+  <div class="card">
+
+    <div class="card-head">
+
+      <div>
+
+        <h2
+          class="copyable"
+          onclick="copyFixedMobile()">
+          ② Mobile Bottom Ad
+        </h2>
+
+        <div class="card-desc">
+          Fester HTML-Code. Titel anklicken, um den Code zu kopieren.
         </div>
-        <div id="urlResult"></div>
+
       </div>
 
-      <!-- MOBILE AD -->
-      <div class="card">
-        <div class="card-head">
-          <div>
-            <h2 class="copyable" onclick="copyFixedMobile()">② Mobile Bottom Ad</h2>
-            <div class="card-desc">Fester HTML-Code. Titel anklicken, um den Code zu kopieren.</div>
-          </div>
-          <span class="badge">FIXED</span>
-        </div>
-        <div class="preview">
-          <div class="ad-preview">
-            <div class="ad-logo">
-              <img src="https://edimakor.hitpaw.com/images/logos/hitpaw-edimakor.png" alt="HitpawEdimakor">
-              <span>HitPaw Edimakor</span>
-            </div>
-            <p>Bester KI-Videoeditor mit vielen Videobearbeitungselementen und KI-Funktionen.</p>
-            <a href="#">Jetzt kaufen</a>
-          </div>
-        </div>
-        
-      </div>
+      <span class="badge">FIXED</span>
 
-      <!-- PC AD -->
-      <div class="card">
-        <div class="card-head">
-          <div>
-            <h2>③ PC-Rechtsseiten-Werbemodul</h2>
-            <div class="card-desc">Festes Template. Die Links und Texte werden aus deiner Batch-Eingabe übernommen.</div>
-          </div>
-          <span class="badge">BATCH</span>
+    </div>
+
+    <div class="preview">
+
+      <div class="ad-preview">
+
+        <div class="ad-logo">
+
+          <img
+            src="https://edimakor.hitpaw.com/images/logos/hitpaw-edimakor.png"
+            alt="HitpawEdimakor">
+
+          <span>HitPaw Edimakor</span>
+
         </div>
 
-        <textarea id="pcBatchInput" style="min-height:190px" placeholder="URL[TAB]Text
-https://edimakor.hitpaw.de/video-editing-tips/ai-girlfriend-generator.html	Die besten KI-Freundin-Generatoren
-https://edimakor.hitpaw.de/subtitle-tips/paramount-plus-subtitle-not-working.html	Paramount Plus Untertitel funktionieren nicht? Lösung
-https://edimakor.hitpaw.de/video-editing-tips/how-to-reverse-video-search.html	Rückwärts-Videosuche durchführen"></textarea>
-        <div class="small" style="margin-top:8px">Eine Zeile pro Eintrag: URL + Tabulator oder | + Linktext. 3–5 Einträge sind vorgesehen.</div>
-        <div class="actions">
-          <button class="btn primary" onclick="generatePcAd()">PC-Modul erstellen</button>
-        </div>
-        <div class="generated-wrap">
-          <div class="generated-title">Vorschau</div>
-          <div id="pcPreview" class="preview">
-            <div class="small">URL und Linktext eingeben, dann das Modul erstellen.</div>
-          </div>
-        </div>
-        <div class="generated-wrap">
-          <div class="generated-title copyable" onclick="copyPcCode()">PC-Rechtsseiten-Werbemodul</div>
-          <div id="pcCode" class="output empty" style="min-height:160px">Der HTML-Code wird nach der Erstellung hier angezeigt.</div>
-        </div>
+        <p>
+          Bester KI-Videoeditor mit vielen Videobearbeitungselementen und KI-Funktionen.
+        </p>
+
+        <a href="#">
+          Jetzt kaufen
+        </a>
+
       </div>
 
     </div>
+
+  </div>
+
+
+  <!-- PC AD -->
+
+  <div class="card">
+
+    <div class="card-head">
+
+      <div>
+
+        <h2>
+          ③ PC-Rechtsseiten-Werbemodul
+        </h2>
+
+        <div class="card-desc">
+          Festes Template. Die Links und Texte werden aus deiner Batch-Eingabe übernommen.
+        </div>
+
+      </div>
+
+      <span class="badge">BATCH</span>
+
+    </div>
+
+    <textarea
+      id="pcBatchInput"
+      style="min-height:190px"
+      placeholder="URL[TAB]Text
+```
+
+https://edimakor.hitpaw.de/video-editing-tips/ai-girlfriend-generator.html	Die besten KI-Freundin-Generatoren
+https://edimakor.hitpaw.de/subtitle-tips/paramount-plus-subtitle-not-working.html	Paramount Plus Untertitel funktionieren nicht? Lösung
+https://edimakor.hitpaw.de/video-editing-tips/how-to-reverse-video-search.html	Rückwärts-Videosuche durchführen"></textarea>
+
+```
+    <div
+      class="small"
+      style="margin-top:8px">
+      Eine Zeile pro Eintrag: URL + Tabulator oder | + Linktext. 3–5 Einträge sind vorgesehen.
+    </div>
+
+    <div class="actions">
+
+      <button
+        class="btn primary"
+        onclick="generatePcAd()">
+        PC-Modul erstellen
+      </button>
+
+    </div>
+
+    <div class="generated-wrap">
+
+      <div class="generated-title">
+        Vorschau
+      </div>
+
+      <div
+        id="pcPreview"
+        class="preview">
+
+        <div class="small">
+          URL und Linktext eingeben, dann das Modul erstellen.
+        </div>
+
+      </div>
+
+    </div>
+
+    <div class="generated-wrap">
+
+      <div
+        class="generated-title copyable"
+        onclick="copyPcCode()">
+        PC-Rechtsseiten-Werbemodul
+      </div>
+
+      <div
+        id="pcCode"
+        class="output empty"
+        style="min-height:160px">
+        Der HTML-Code wird nach der Erstellung hier angezeigt.
+      </div>
+
+    </div>
+
+  </div>
+
+</div>
+```
+
   </section>
+
 </div>
 
-<div id="toast" class="toast">已复制</div>
+<div id="toast" class="toast">
+  已复制
+</div>
 
 <script>
+
 const MOBILE_AD_CODE = `<div class="bottom-ad">
   <div class="close-icon"></div>
   <div class="d-flex align-items-center justify-content-md-between">
@@ -309,6 +887,7 @@ const MOBILE_AD_CODE = `<div class="bottom-ad">
   </div>
 </div>`;
 
+
 const PC_TEMPLATE = (items) => `<div class="ad-module mb-4">
   <div class="d-flex align-items-center justify-content-center mb-2">
     <img class="lozad" src="https://images.hitpaw.com/images/common/loading.svg"
@@ -316,197 +895,638 @@ const PC_TEMPLATE = (items) => `<div class="ad-module mb-4">
          alt="HitpawEdimakor Logo">
     <span class="h5 ms-2 mb-0">HitPaw Edimakor</span>
   </div>
-  <p class="p1 fw-normal text-center mb-0">Bester KI-Videoeditor mit vielen Videobearbeitungselementen und KI-Funktionen.</p>
+
+  <p class="p1 fw-normal text-center mb-0">
+    Bester KI-Videoeditor mit vielen Videobearbeitungselementen und KI-Funktionen.
+  </p>
+
   <div class="btn-groups">
+
     <div class="sys-win">
+
       <div class="mb-3">
-        <a href="https://download.hitpaw.com/downloads/hitpaw-edimakor-full_8670.exe" class="btn btn-lg btn-primary">
-          <svg width="28" height="28"><use xlink:href="#win-path"></use></svg>
+        <a href="https://download.hitpaw.com/downloads/hitpaw-edimakor-full_8670.exe"
+           class="btn btn-lg btn-primary">
+
+          <svg width="28" height="28">
+            <use xlink:href="#win-path"></use>
+          </svg>
+
           <span>Jetzt herunterladen</span>
+
         </a>
       </div>
+
       <div>
-        <a href="https://edimakor.hitpaw.de/buy-video-editor.html" class="btn btn-lg btn-outline-primary">
-          <svg width="22" height="22"><use xlink:href="#shop-cart-path"></use></svg>
+
+        <a href="https://edimakor.hitpaw.de/buy-video-editor.html"
+           class="btn btn-lg btn-outline-primary">
+
+          <svg width="22" height="22">
+            <use xlink:href="#shop-cart-path"></use>
+          </svg>
+
           <span>Jetzt kaufen</span>
+
         </a>
+
       </div>
+
     </div>
+
+
     <div class="sys-mac">
+
       <div class="mb-3">
-        <a href="https://download.hitpaw.com/downloads/hitpaw-edimakor-mac-full_8671.zip" class="btn btn-lg btn-primary">
-          <svg width="28" height="28"><use xlink:href="#mac-path"></use></svg>
+
+        <a href="https://download.hitpaw.com/downloads/hitpaw-edimakor-mac-full_8671.zip"
+           class="btn btn-lg btn-primary">
+
+          <svg width="28" height="28">
+            <use xlink:href="#mac-path"></use>
+          </svg>
+
           <span>Jetzt herunterladen</span>
+
         </a>
+
       </div>
+
       <div>
-        <a href="https://edimakor.hitpaw.de/buy-video-editor-mac.html" class="btn btn-lg btn-outline-primary">
-          <svg width="22" height="22"><use xlink:href="#shop-cart-path"></use></svg>
+
+        <a href="https://edimakor.hitpaw.de/buy-video-editor-mac.html"
+           class="btn btn-lg btn-outline-primary">
+
+          <svg width="22" height="22">
+            <use xlink:href="#shop-cart-path"></use>
+          </svg>
+
           <span>Jetzt kaufen</span>
+
         </a>
+
       </div>
+
     </div>
+
   </div>
+
 </div>
 
 <div class="hot-and-trending">
-  <p class="h5 mb-0">Heiß &amp; im Trend</p>
+
+  <p class="h5 mb-0">
+    Heiß &amp; im Trend
+  </p>
 
   <ul class="list-trend mb-0">
+
 ${items.map((x,i)=>`    <li>
       <a href="${escapeAttr(x.url)}" target="_blank">
-        <img class="img-fluid" src="https://edimakor.hitpaw.com/images/edimakor-2025/article/hot-and-trend-icon-${i+1}.png" alt="hot-and-trending">
+        <img
+          class="img-fluid"
+          src="https://edimakor.hitpaw.com/images/edimakor-2025/article/hot-and-trend-icon-${i+1}.png"
+          alt="hot-and-trending">
         <span>${escapeHtml(x.text)}</span>
       </a>
     </li>`).join("\n")}
+
   </ul>
 
   <ul class="hot-articles mb-0">
-    <li><a href="https://edimakor.hitpaw.de/subtitle-tips/" target="_blank">Tipps für Untertitel</a></li>
-    <li><a href="https://edimakor.hitpaw.de/ai-translation/" target="_blank">KI-Übersetzung</a></li>
-    <li><a href="https://edimakor.hitpaw.de/video-editing-tips/" target="_blank">Videobearbeitung von Filmmaterial</a></li>
-    <li><a href="https://edimakor.hitpaw.de/photo-tips/" target="_blank">Tipps für Fotobearbeitung</a></li>
-    <li><a href="https://edimakor.hitpaw.de/video-editing-footage/" target="_blank">Video-Material &amp; Footage</a></li>
+
+    <li>
+      <a href="https://edimakor.hitpaw.de/subtitle-tips/" target="_blank">
+        Tipps für Untertitel
+      </a>
+    </li>
+
+    <li>
+      <a href="https://edimakor.hitpaw.de/ai-translation/" target="_blank">
+        KI-Übersetzung
+      </a>
+    </li>
+
+    <li>
+      <a href="https://edimakor.hitpaw.de/video-editing-tips/" target="_blank">
+        Videobearbeitung von Filmmaterial
+      </a>
+    </li>
+
+    <li>
+      <a href="https://edimakor.hitpaw.de/photo-tips/" target="_blank">
+        Tipps für Fotobearbeitung
+      </a>
+    </li>
+
+    <li>
+      <a href="https://edimakor.hitpaw.de/video-editing-footage/" target="_blank">
+        Video-Material &amp; Footage
+      </a>
+    </li>
+
   </ul>
+
 </div>`;
 
+
 function escapeHtml(s){
-  return String(s).replace(/[&<>"']/g,m=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[m]));
+
+  return String(s).replace(
+    /[&<>"']/g,
+    m => ({
+      '&':'&amp;',
+      '<':'&lt;',
+      '>':'&gt;',
+      '"':'&quot;',
+      "'":'&#39;'
+    }[m])
+  );
+
 }
-function escapeAttr(s){return escapeHtml(s)}
+
+
+function escapeAttr(s){
+  return escapeHtml(s);
+}
+
+
 function showToast(msg=""){
+
   if(!msg)return;
-  const t=document.getElementById("toast"); t.textContent=msg; t.classList.add("show");
-  clearTimeout(window._toast); window._toast=setTimeout(()=>t.classList.remove("show"),900);
+
+  const t=document.getElementById("toast");
+
+  t.textContent=msg;
+
+  t.classList.add("show");
+
+  clearTimeout(window._toast);
+
+  window._toast=setTimeout(
+    ()=>t.classList.remove("show"),
+    900
+  );
+
 }
+
+
 async function copyText(text){
-  try{await navigator.clipboard.writeText(text)}
-  catch{
-    const ta=document.createElement("textarea");ta.value=text;document.body.appendChild(ta);
-    ta.select();document.execCommand("copy");ta.remove();
+
+  try{
+
+    await navigator.clipboard.writeText(text);
+
+  }catch{
+
+    const ta=document.createElement("textarea");
+
+    ta.value=text;
+
+    document.body.appendChild(ta);
+
+    ta.select();
+
+    document.execCommand("copy");
+
+    ta.remove();
+
   }
-  
+
+  showToast("已复制");
+
 }
+
+
 function switchTab(id){
-  document.querySelectorAll(".tab").forEach(x=>x.classList.toggle("active",x.dataset.tab===id));
-  document.querySelectorAll(".panel").forEach(x=>x.classList.toggle("active",x.id===id));
+
+  document.querySelectorAll(".tab")
+    .forEach(x =>
+      x.classList.toggle(
+        "active",
+        x.dataset.tab===id
+      )
+    );
+
+  document.querySelectorAll(".panel")
+    .forEach(x =>
+      x.classList.toggle(
+        "active",
+        x.id===id
+      )
+    );
+
 }
-document.querySelectorAll(".tab").forEach(b=>b.addEventListener("click",()=>switchTab(b.dataset.tab)));
+
+
+document.querySelectorAll(".tab")
+  .forEach(b =>
+    b.addEventListener(
+      "click",
+      ()=>switchTab(b.dataset.tab)
+    )
+  );
+
 
 function generateFAQ(){
-  const raw=document.getElementById("faqInput").value.trim();
-  if(!raw){return}
-  const doc=new DOMParser().parseFromString(raw,"text/html");
-  const candidates=[...doc.querySelectorAll("h2,h3,h4,dt,strong,.faq-question,.question")];
+
+  const raw=document
+    .getElementById("faqInput")
+    .value
+    .trim();
+
+  if(!raw)return;
+
+  const doc=new DOMParser()
+    .parseFromString(raw,"text/html");
+
+  const candidates=[
+    ...doc.querySelectorAll(
+      "h2,h3,h4,dt,strong,.faq-question,.question"
+    )
+  ];
+
   const pairs=[];
+
   candidates.forEach(q=>{
+
     const question=q.textContent.trim();
-    if(!question || pairs.some(x=>x.question===question))return;
+
+    if(
+      !question ||
+      pairs.some(x=>x.question===question)
+    )return;
+
     let answer="";
+
     let el=q.nextElementSibling;
-    while(el && !["H2","H3","H4","DT","STRONG"].includes(el.tagName)){
+
+    while(
+      el &&
+      !["H2","H3","H4","DT","STRONG"]
+        .includes(el.tagName)
+    ){
+
       const t=el.textContent.trim();
-      if(t){answer+=(answer?" ":"")+t}
+
+      if(t){
+        answer+=(answer?" ":"")+t;
+      }
+
       el=el.nextElementSibling;
+
     }
-    if(!answer && q.parentElement){
-      const all=[...q.parentElement.querySelectorAll("p,.faq-answer,.answer,dd")];
-      answer=all.map(x=>x.textContent.trim()).filter(Boolean).join(" ");
+
+    if(
+      !answer &&
+      q.parentElement
+    ){
+
+      const all=[
+        ...q.parentElement.querySelectorAll(
+          "p,.faq-answer,.answer,dd"
+        )
+      ];
+
+      answer=all
+        .map(x=>x.textContent.trim())
+        .filter(Boolean)
+        .join(" ");
+
     }
-    if(answer)pairs.push({question,answer});
+
+    if(answer){
+      pairs.push({
+        question,
+        answer
+      });
+    }
+
   });
-  if(!pairs.length){
-    
-    return;
-  }
+
+
+  if(!pairs.length)return;
+
+
   const schema={
     "@context":"https://schema.org",
     "@type":"FAQPage",
     "mainEntity":pairs.map(x=>({
       "@type":"Question",
       "name":x.question,
-      "acceptedAnswer":{"@type":"Answer","text":x.answer}
+      "acceptedAnswer":{
+        "@type":"Answer",
+        "text":x.answer
+      }
     }))
   };
-  const code='<script type="application/ld+json">\\n'+JSON.stringify(schema,null,2)+'\\n<\\/script>';
-  const out=document.getElementById("faqOutput");
-  out.textContent=code;out.classList.remove("empty");
-  document.getElementById("faqCount").textContent=`已识别 ${pairs.length} 个 FAQ`;
+
+
+  const code=
+    '<script type="application/ld+json">\n'+
+    JSON.stringify(schema,null,2)+
+    '\n<\\/script>';
+
+
+  const out=document
+    .getElementById("faqOutput");
+
+  out.textContent=code;
+
+  out.classList.remove("empty");
+
+  document.getElementById("faqCount")
+    .textContent=`已识别 ${pairs.length} 个 FAQ`;
+
 }
+
+
 function clearFAQ(){
-  document.getElementById("faqInput").value="";
-  const out=document.getElementById("faqOutput");out.textContent="生成后，点击这里即可复制 Schema。";out.classList.add("empty");
-  document.getElementById("faqCount").textContent="";
+
+  document.getElementById("faqInput")
+    .value="";
+
+  const out=document
+    .getElementById("faqOutput");
+
+  out.textContent=
+    "生成后，点击这里即可复制 Schema。";
+
+  out.classList.add("empty");
+
+  document.getElementById("faqCount")
+    .textContent="";
+
 }
-document.getElementById("faqOutput").addEventListener("click",()=>{
-  const el=document.getElementById("faqOutput"); if(!el.classList.contains("empty"))copyText(el.textContent);
-});
+
+
+document
+  .getElementById("faqOutput")
+  .addEventListener(
+    "click",
+    ()=>{
+
+      const el=
+        document.getElementById("faqOutput");
+
+      if(
+        !el.classList.contains("empty")
+      ){
+        copyText(el.textContent);
+      }
+
+    }
+  );
+
 
 function parseUrls(){
-  const urls=document.getElementById("urlInput").value.split(/\n+/).map(x=>x.trim()).filter(Boolean);
-  if(!urls.length){return}
+
+  const urls=
+    document
+      .getElementById("urlInput")
+      .value
+      .split(/\n+/)
+      .map(x=>x.trim())
+      .filter(Boolean);
+
+
+  if(!urls.length)return;
+
+
   let rows=urls.map(raw=>{
+
     try{
+
       const u=new URL(raw);
-      const parts=u.pathname.split("/").filter(Boolean);
-      const category=parts.length>=2?parts[parts.length-2]:"";
-      let file=parts[parts.length-1]||"";
-      file=file.replace(/-copy(?=\.html?$)/i,"");
-      return {raw,category,file};
-    }catch{return {raw,category:"无效 URL",file:""}}
+
+      const parts=
+        u.pathname
+          .split("/")
+          .filter(Boolean);
+
+      const category=
+        parts.length>=2
+          ?parts[parts.length-2]
+          :"";
+
+      let file=
+        parts[parts.length-1]||"";
+
+      file=file.replace(
+        /-copy(?=\.html?$)/i,
+        ""
+      );
+
+      return{
+        raw,
+        category,
+        file
+      };
+
+    }catch{
+
+      return{
+        raw,
+        category:"无效 URL",
+        file:""
+      };
+
+    }
+
   });
-  document.getElementById("urlResult").innerHTML=`
+
+
+  document.getElementById("urlResult")
+    .innerHTML=`
+
     <div class="generated-wrap">
-      <div class="generated-title">Ergebnisse</div>
-      <div class="table-wrap">
-        <table class="url-table result-table">
-          <thead><tr><th>URL</th><th>Verzeichnis</th><th>Dateiname</th></tr></thead>
-          <tbody>
-            ${rows.map(r=>`<tr>
-              <td class="copyable" onclick='copyText(${JSON.stringify(r.raw)})'>${escapeHtml(r.raw)}</td>
-              <td class="copyable" onclick='copyText(${JSON.stringify(r.category)})'><code>${escapeHtml(r.category)}</code></td>
-              <td class="copyable" onclick='copyText(${JSON.stringify(r.file)})'><code>${escapeHtml(r.file)}</code></td>
-            </tr>`).join("")}
-          </tbody>
-        </table>
+
+      <div class="generated-title">
+        Ergebnisse
       </div>
+
+      <div class="table-wrap">
+
+        <table class="url-table result-table">
+
+          <thead>
+
+            <tr>
+              <th>URL</th>
+              <th>Verzeichnis</th>
+              <th>Dateiname</th>
+            </tr>
+
+          </thead>
+
+          <tbody>
+
+            ${rows.map(r=>`
+
+              <tr>
+
+                <td
+                  class="copyable"
+                  onclick='copyText(${JSON.stringify(r.raw)})'>
+                  ${escapeHtml(r.raw)}
+                </td>
+
+                <td
+                  class="copyable"
+                  onclick='copyText(${JSON.stringify(r.category)})'>
+                  <code>
+                    ${escapeHtml(r.category)}
+                  </code>
+                </td>
+
+                <td
+                  class="copyable"
+                  onclick='copyText(${JSON.stringify(r.file)})'>
+                  <code>
+                    ${escapeHtml(r.file)}
+                  </code>
+                </td>
+
+              </tr>
+
+            `).join("")}
+
+          </tbody>
+
+        </table>
+
+      </div>
+
     </div>`;
+
 }
+
+
 function clearUrls(){
-  document.getElementById("urlInput").value="";
-  document.getElementById("urlResult").innerHTML="";
+
+  document.getElementById("urlInput")
+    .value="";
+
+  document.getElementById("urlResult")
+    .innerHTML="";
+
 }
-function copyFixedMobile(){copyText(MOBILE_AD_CODE)}
+
+
+function copyFixedMobile(){
+
+  copyText(MOBILE_AD_CODE);
+
+}
+
 
 function getPcItems(){
-  const raw=document.getElementById("pcBatchInput").value.trim();
-  if(!raw)return [];
-  return raw.split(/\n+/).map(line=>{
-    let parts=line.split(/\t/);
-    if(parts.length<2)parts=line.split(/\s*\|\s*/);
-    if(parts.length<2)return null;
-    return {url:parts[0].trim(),text:parts.slice(1).join(" ").trim()};
-  }).filter(x=>x&&x.url&&x.text);
+
+  const raw=
+    document
+      .getElementById("pcBatchInput")
+      .value
+      .trim();
+
+  if(!raw)return[];
+
+
+  return raw
+    .split(/\n+/)
+    .map(line=>{
+
+      let parts=line.split(/\t/);
+
+      if(parts.length<2){
+        parts=line.split(/\s*\|\s*/);
+      }
+
+      if(parts.length<2)return null;
+
+      return{
+        url:parts[0].trim(),
+        text:parts
+          .slice(1)
+          .join(" ")
+          .trim()
+      };
+
+    })
+    .filter(
+      x=>x&&x.url&&x.text
+    );
+
 }
+
+
 function generatePcAd(){
+
   const items=getPcItems();
-  if(!items.length){showToast("Keine gültigen Einträge");return}
+
+  if(!items.length){
+
+    showToast("Keine gültigen Einträge");
+
+    return;
+
+  }
+
+
   const code=PC_TEMPLATE(items);
-  const box=document.getElementById("pcCode");box.textContent=code;box.classList.remove("empty");
-  document.getElementById("pcPreview").innerHTML=`
+
+
+  const box=
+    document.getElementById("pcCode");
+
+  box.textContent=code;
+
+  box.classList.remove("empty");
+
+
+  document.getElementById("pcPreview")
+    .innerHTML=`
+
     <div class="trend-demo">
-      <h4>Heiß &amp; im Trend</h4>
-      ${items.map((x,i)=>`<div class="trend-item">
-        <img src="https://edimakor.hitpaw.com/images/edimakor-2025/article/hot-and-trend-icon-${i+1}.png" alt="">
-        <a href="#">${escapeHtml(x.text)}</a>
-      </div>`).join("")}
+
+      <h4>
+        Heiß &amp; im Trend
+      </h4>
+
+      ${items.map((x,i)=>`
+
+        <div class="trend-item">
+
+          <img
+            src="https://edimakor.hitpaw.com/images/edimakor-2025/article/hot-and-trend-icon-${i+1}.png"
+            alt="">
+
+          <a href="#">
+            ${escapeHtml(x.text)}
+          </a>
+
+        </div>
+
+      `).join("")}
+
     </div>`;
+
 }
+
+
 function copyPcCode(){
-  const box=document.getElementById("pcCode");
-  if(box.classList.contains("empty"))return;
+
+  const box=
+    document.getElementById("pcCode");
+
+  if(
+    box.classList.contains("empty")
+  )return;
+
   copyText(box.textContent);
+
 }
+
 </script>
+
 </body>
 </html>
