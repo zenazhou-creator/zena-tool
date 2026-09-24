@@ -1004,43 +1004,56 @@ function parseUrls(){
 
           </thead>
 
-          <tbody>
+   <tbody>
 
-            ${rows.map(r=>`
+  ${rows.map(r => {
 
-              <tr>
+    const url = new URL(r.raw);
+    const parts = url.pathname.split("/").filter(Boolean);
 
-                <td
-                  class="copyable"
-                  onclick='copyText(${JSON.stringify(r.raw)})'>
-                  ${escapeHtml(r.raw)}
-                </td>
+    // 最后一个目录 = 分组
+    const category = parts.length >= 2
+      ? parts[parts.length - 2]
+      : "";
 
-                <td
-                  class="copyable"
-                  onclick='copyText(${JSON.stringify(r.category)})'>
+    // 最后两个路径部分 = 分组/文件名.html
+    const htmlPath = parts.length >= 2
+      ? parts.slice(-2).join("/")
+      : "";
 
-                  <code>
-                    ${escapeHtml(r.category)}
-                  </code>
+    return `
 
-                </td>
+      <tr>
 
-                <td
-                  class="copyable"
-                  onclick='copyText(${JSON.stringify(r.file)})'>
+        <td
+          class="copyable"
+          onclick='copyText(${JSON.stringify(r.raw)})'>
+          ${escapeHtml(r.raw)}
+        </td>
 
-                  <code>
-                    ${escapeHtml(r.file)}
-                  </code>
+        <td
+          class="copyable"
+          onclick='copyText(${JSON.stringify(category)})'>
+          <code>
+            ${escapeHtml(category)}
+          </code>
+        </td>
 
-                </td>
+        <td
+          class="copyable"
+          onclick='copyText(${JSON.stringify(htmlPath)})'>
+          <code>
+            ${escapeHtml(htmlPath)}
+          </code>
+        </td>
 
-              </tr>
+      </tr>
 
-            `).join("")}
+    `;
 
-          </tbody>
+  }).join("")}
+
+</tbody>
 
         </table>
 
