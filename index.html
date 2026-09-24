@@ -1011,15 +1011,26 @@ function parseUrls(){
     const url = new URL(r.raw);
     const parts = url.pathname.split("/").filter(Boolean);
 
-    // 最后一个目录 = 分组
+    // 最后一级目录 = 分组
     const category = parts.length >= 2
       ? parts[parts.length - 2]
       : "";
 
-    // 最后两个路径部分 = 分组/文件名.html
-    const htmlPath = parts.length >= 2
-      ? parts.slice(-2).join("/")
+    // 原始文件名
+    let filename = parts.length >= 2
+      ? parts[parts.length - 1]
       : "";
+
+    // 去掉 .html
+    filename = filename.replace(/\.html$/i, "");
+
+    // 去掉结尾的 -copy
+    filename = filename.replace(/-copy$/i, "");
+
+    // 重新加回 .html
+    const htmlPath = category
+      ? `${category}/${filename}.html`
+      : `${filename}.html`;
 
     return `
 
