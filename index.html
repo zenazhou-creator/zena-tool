@@ -1,6 +1,6 @@
 
 <!DOCTYPE html>
-<html lang="zh-CN">
+<html lang="de">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -9,7 +9,7 @@
 <style>
 :root{
   --bg:#f7f5fc;
-  --card:rgba(255,255,255,.9);
+  --card:rgba(255,255,255,.97);
   --primary:#7c5ce6;
   --primary-dark:#6544d4;
   --primary-soft:#eee9ff;
@@ -17,405 +17,674 @@
   --text:#252238;
   --muted:#817c95;
   --border:#e8e2f5;
-  --shadow:0 14px 40px rgba(91,67,150,.09);
-  --radius:17px;
+  --shadow:0 8px 24px rgba(91,67,150,.065);
+  --radius:14px;
 }
 
 *{
   box-sizing:border-box;
 }
 
+html{
+  scroll-behavior:smooth;
+}
+
 body{
   margin:0;
-  padding:28px 20px 55px;
   background:
-    radial-gradient(circle at 10% 0%,rgba(168,139,250,.17),transparent 30%),
-    radial-gradient(circle at 90% 10%,rgba(202,184,255,.16),transparent 28%),
+    radial-gradient(circle at 8% 0%,rgba(124,92,230,.10),transparent 25%),
+    radial-gradient(circle at 92% 8%,rgba(185,160,255,.11),transparent 22%),
     var(--bg);
   color:var(--text);
-  font-family:Inter,-apple-system,BlinkMacSystemFont,"Segoe UI","Microsoft YaHei",Arial,sans-serif;
+  font-family:Inter,-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Arial,sans-serif;
+  font-size:12px;
 }
 
 button,
-input,
 textarea{
   font:inherit;
 }
 
-.app{
-  max-width:1100px;
-  margin:0 auto;
+button{
+  cursor:pointer;
 }
+
+.app{
+  width:min(1180px,calc(100% - 28px));
+  margin:0 auto;
+  padding:20px 0 35px;
+}
+
 
 /* =========================
    HEADER
 ========================= */
 
 .header{
-  margin-bottom:22px;
+  display:flex;
+  align-items:flex-end;
+  justify-content:space-between;
+  gap:15px;
+  margin-bottom:12px;
+}
+
+.header-main{
+  min-width:0;
 }
 
 .eyebrow{
   display:inline-flex;
-  align-items:center;
-  gap:7px;
-  padding:5px 10px;
+  padding:5px 9px;
   border-radius:999px;
   background:var(--primary-soft);
   color:var(--primary-dark);
-  font-size:10px;
+  font-size:9px;
   font-weight:800;
-  letter-spacing:.4px;
-}
-
-.eyebrow:before{
-  content:"";
-  width:6px;
-  height:6px;
-  border-radius:50%;
-  background:var(--primary);
+  letter-spacing:.08em;
 }
 
 h1{
-  margin:10px 0 4px;
+  margin:7px 0 3px;
   font-size:24px;
-  line-height:1.25;
-  letter-spacing:-.4px;
+  line-height:1.15;
+  letter-spacing:-.03em;
 }
 
-.subtitle{
+.header p{
+  margin:0;
   color:var(--muted);
-  font-size:12px;
+  font-size:11px;
 }
+
 
 /* =========================
-   PANELS
+   GLOBAL LANGUAGE
 ========================= */
 
-.section-grid{
+.global-lang{
+  display:flex;
+  align-items:center;
+  gap:2px;
+  padding:3px;
+  flex:none;
+  border:1px solid var(--border);
+  border-radius:8px;
+  background:rgba(255,255,255,.9);
+  box-shadow:0 4px 14px rgba(70,50,110,.06);
+}
+
+.global-lang button{
+  appearance:none;
+  border:0;
+  outline:0;
+  padding:5px 9px;
+  border-radius:5px;
+  background:transparent;
+  color:var(--muted);
+  font-size:9px;
+  font-weight:800;
+}
+
+.global-lang button.active{
+  background:var(--primary-soft);
+  color:var(--primary-dark);
+}
+
+
+/* =========================
+   FLOATING MODULE NAV
+========================= */
+
+.module-nav{
+  position:sticky;
+  top:10px;
+  z-index:100;
+  display:flex;
+  justify-content:center;
+  margin:0 auto 12px;
+  pointer-events:none;
+}
+
+.module-nav-inner{
+  display:flex;
+  align-items:center;
+  gap:3px;
+  padding:4px;
+  border:1px solid var(--border);
+  border-radius:10px;
+  background:rgba(255,255,255,.92);
+  box-shadow:0 7px 22px rgba(70,50,110,.09);
+  backdrop-filter:blur(12px);
+  pointer-events:auto;
+}
+
+.module-nav a{
+  display:block;
+  padding:5px 9px;
+  border-radius:6px;
+  color:#70697f;
+  text-decoration:none;
+  font-size:9px;
+  font-weight:800;
+  white-space:nowrap;
+}
+
+.module-nav a:hover{
+  color:var(--primary-dark);
+  background:var(--primary-soft);
+}
+
+
+/* =========================
+   GRID
+========================= */
+
+.grid{
   display:grid;
-  grid-template-columns:1fr 1fr;
-  gap:17px;
+  grid-template-columns:repeat(12,1fr);
+  gap:11px;
 }
 
 .card{
+  min-width:0;
+  padding:13px;
   background:var(--card);
   border:1px solid var(--border);
   border-radius:var(--radius);
   box-shadow:var(--shadow);
-  padding:20px;
-  backdrop-filter:blur(12px);
 }
 
 .card.full{
   grid-column:1/-1;
 }
 
+.card.third{
+  grid-column:span 6;
+}
+
 .card-head{
   display:flex;
-  align-items:flex-start;
-  justify-content:space-between;
-  gap:15px;
-  margin-bottom:14px;
-}
-
-.card h2{
-  font-size:16px;
-  margin:0 0 4px;
-}
-
-.card-desc{
-  font-size:12px;
-  color:var(--muted);
-  line-height:1.55;
-}
-
-.badge{
-  flex:none;
-  padding:5px 8px;
-  border-radius:7px;
-  background:var(--primary-soft);
-  color:var(--primary-dark);
-  font-size:10px;
-  font-weight:750;
-}
-
-/* =========================
-   INPUT
-========================= */
-
-textarea,
-input{
-  width:100%;
-  border:1px solid var(--border);
-  background:#fff;
-  color:var(--text);
-  border-radius:11px;
-  outline:none;
-  transition:.2s;
-}
-
-textarea{
-  min-height:230px;
-  padding:13px;
-  resize:vertical;
-  line-height:1.65;
-  font-family:ui-monospace,SFMono-Regular,Consolas,monospace;
-  font-size:12px;
-}
-
-input{
-  padding:10px 11px;
-  font-size:12px;
-}
-
-textarea:focus,
-input:focus{
-  border-color:#b9a8f3;
-  box-shadow:0 0 0 4px rgba(124,92,230,.09);
-}
-
-.actions{
-  display:flex;
-  gap:8px;
-  flex-wrap:wrap;
-  margin-top:11px;
-}
-
-.btn{
-  border:0;
-  border-radius:9px;
-  padding:9px 14px;
-  cursor:pointer;
-  font-weight:700;
-  font-size:12px;
-  transition:.2s;
-}
-
-.btn.primary{
-  background:var(--primary);
-  color:#fff;
-  box-shadow:0 6px 16px rgba(124,92,230,.2);
-}
-
-.btn.primary:hover{
-  background:var(--primary-dark);
-  transform:translateY(-1px);
-}
-
-.btn.ghost{
-  background:var(--primary-soft-2);
-  color:var(--primary-dark);
-}
-
-.btn.ghost:hover{
-  background:var(--primary-soft);
-}
-
-/* =========================
-   PREVIEW
-========================= */
-
-.preview{
-  border:1px solid var(--border);
-  background:#faf9fd;
-  border-radius:12px;
-  padding:16px;
-  min-height:180px;
-  overflow:auto;
-}
-
-.notice{
-  background:var(--primary-soft-2);
-  border:1px solid #e7defb;
-  border-radius:11px;
-  padding:11px 13px;
-  font-size:11px;
-  color:#6f6684;
-  line-height:1.6;
-}
-
-/* =========================
-   TABLE
-========================= */
-
-.url-table{
-  width:100%;
-  border-collapse:collapse;
-}
-
-.url-table th{
-  text-align:left;
-  font-size:11px;
-  color:var(--muted);
-  font-weight:700;
-  padding:8px;
-  border-bottom:1px solid var(--border);
-}
-
-.url-table td{
-  padding:7px 8px;
-  border-bottom:1px solid #f0ecf7;
-  vertical-align:top;
-}
-
-.url-table input{
-  min-width:0;
-}
-
-.table-wrap{
-  overflow:auto;
-}
-
-.result-table{
-  margin-top:13px;
-}
-
-.result-table td{
-  font-size:11px;
-  padding:9px 8px;
-}
-
-.result-table code{
-  color:var(--primary-dark);
-  background:var(--primary-soft-2);
-  padding:4px 6px;
-  border-radius:5px;
-}
-
-/* =========================
-   AD PREVIEW
-========================= */
-
-.ad-preview{
-  background:linear-gradient(135deg,#342d47,#4b4160);
-  color:#fff;
-  border-radius:11px;
-  padding:15px;
-}
-
-.ad-preview .ad-logo{
-  display:flex;
   align-items:center;
-  gap:9px;
-  font-weight:800;
-}
-
-.ad-preview img{
-  width:38px;
-  height:38px;
-  object-fit:contain;
-  border-radius:8px;
-  background:#fff;
-}
-
-.ad-preview p{
-  font-size:11px;
-  color:#e7e2f1;
-  margin:9px 0 13px;
-  line-height:1.5;
-}
-
-.ad-preview a{
-  display:inline-block;
-  text-decoration:none;
-  background:#fff;
-  color:#40365a;
-  padding:8px 12px;
-  border-radius:7px;
-  font-size:11px;
-  font-weight:800;
-}
-
-/* =========================
-   GENERATED
-========================= */
-
-.generated-wrap{
-  margin-top:16px;
-}
-
-.generated-title{
-  font-size:12px;
-  font-weight:800;
+  justify-content:space-between;
+  gap:8px;
   margin-bottom:8px;
+}
+
+.card-title{
   display:flex;
   align-items:center;
   gap:7px;
 }
 
-.generated-title:before{
-  content:"";
-  width:3px;
-  height:14px;
-  border-radius:4px;
-  background:var(--primary);
-}
-
-.trend-demo{
-  background:#fff;
-  border:1px solid var(--border);
-  border-radius:11px;
-  padding:14px;
-}
-
-.trend-demo h4{
-  margin:0 0 10px;
-  font-size:12px;
-}
-
-.trend-item{
+.card-number{
+  width:21px;
+  height:21px;
   display:flex;
-  gap:8px;
   align-items:center;
-  padding:8px 0;
-  border-bottom:1px solid #f0edf5;
+  justify-content:center;
+  flex:none;
+  border-radius:6px;
+  background:var(--primary-soft);
+  color:var(--primary-dark);
+  font-size:9px;
+  font-weight:900;
 }
 
-.trend-item:last-child{
+.card h2{
+  margin:0;
+  font-size:13px;
+  line-height:1.2;
+}
+
+.card-desc{
+  margin:3px 0 0 28px;
+  color:var(--muted);
+  font-size:9px;
+  line-height:1.35;
+}
+
+
+/* =========================
+   INPUT
+========================= */
+
+textarea{
+  width:100%;
+  min-height:68px;
+  padding:8px 9px;
+  resize:vertical;
+  border:1px solid var(--border);
+  border-radius:8px;
+  outline:none;
+  background:#fcfbfe;
+  color:var(--text);
+  font-size:10px;
+  line-height:1.45;
+}
+
+textarea:focus{
+  border-color:#b8a8ef;
+  box-shadow:0 0 0 3px rgba(124,92,230,.07);
+  background:#fff;
+}
+
+#urlInput,
+#pcTrendInput{
+  min-height:68px;
+}
+
+#htmlReplaceInput{
+  min-height:125px;
+  font-family:Consolas,Monaco,"Courier New",monospace;
+  font-size:9px;
+}
+
+.actions{
+  display:flex;
+  gap:6px;
+  margin-top:6px;
+}
+
+.btn{
+  border:0;
+  border-radius:7px;
+  padding:6px 10px;
+  font-size:9px;
+  font-weight:750;
+  transition:.15s ease;
+}
+
+.btn-primary{
+  color:#fff;
+  background:linear-gradient(135deg,#8568ea,#7153dc);
+}
+
+.btn-soft{
+  color:var(--primary-dark);
+  background:var(--primary-soft);
+}
+
+.btn:hover{
+  transform:translateY(-1px);
+}
+
+
+/* =========================
+   URL TABLE
+========================= */
+
+.table-wrap{
+  margin-top:7px;
+  overflow:auto;
+  border:1px solid var(--border);
+  border-radius:8px;
+}
+
+table{
+  width:100%;
+  border-collapse:collapse;
+  min-width:650px;
+}
+
+th{
+  padding:5px 7px;
+  text-align:left;
+  background:#faf9fd;
+  color:#77708b;
+  font-size:8px;
+  font-weight:800;
+  border-bottom:1px solid var(--border);
+}
+
+td{
+  padding:5px 7px;
+  border-bottom:1px solid #eeeaf5;
+  vertical-align:top;
+  font-size:9px;
+  line-height:1.35;
+}
+
+tr:last-child td{
   border-bottom:0;
 }
 
-.trend-item img{
-  width:25px;
-  height:25px;
-}
-
-.trend-item a{
-  font-size:11px;
-  color:#514a61;
-  text-decoration:none;
-}
-
-.copyable{
+.copy-cell{
   cursor:pointer;
+}
+
+.copy-cell:hover{
+  background:var(--primary-soft-2);
+}
+
+.cell-url{
+  width:42%;
+  max-width:42%;
+  color:#5e4bb4;
+}
+
+.cell-url .url-text{
+  display:-webkit-box;
+  -webkit-box-orient:vertical;
+  -webkit-line-clamp:2;
+  overflow:hidden;
+  word-break:break-all;
+  line-height:1.35;
+}
+
+.cell-path{
+  color:#49425b;
+  word-break:break-word;
+}
+
+.path-main{
+  font-weight:700;
+}
+
+.path-note{
+  color:var(--muted);
+  font-size:8px;
+}
+
+.empty{
+  padding:14px;
+  text-align:center;
+  color:var(--muted);
+  font-size:9px;
+}
+
+
+/* =========================
+   AD PREVIEW
+   The visual itself is clickable.
+========================= */
+
+.preview{
+  margin-top:7px;
+}
+
+.click-preview{
+  cursor:pointer;
+  transition:.15s ease;
   user-select:none;
-  transition:.2s;
 }
 
-.copyable:hover{
+.click-preview:hover{
+  box-shadow:0 0 0 2px rgba(124,92,230,.16);
+}
+
+
+/* =========================
+   MOBILE PREVIEW
+========================= */
+
+.mobile-preview-frame{
+  padding:7px 6px 5px;
+  border:1px dashed #d9d0ec;
+  border-radius:8px;
+  background:#faf9fd;
+}
+
+.mobile-preview-inner{
+  max-width:390px;
+  margin:auto;
+}
+
+.bottom-ad-preview{
+  padding:7px 8px;
+  color:#fff;
+  background:linear-gradient(135deg,#241d3a,#6544d4);
+  border-radius:6px;
+}
+
+.bottom-ad-preview .ad-row{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:8px;
+}
+
+.ad-brand{
+  display:flex;
+  align-items:center;
+  gap:4px;
+}
+
+.ad-brand img{
+  width:20px;
+  height:20px;
+  object-fit:contain;
+}
+
+.ad-brand strong{
+  font-size:7px;
+}
+
+.ad-copy{
+  margin-top:2px;
+  max-width:285px;
+  color:rgba(255,255,255,.78);
+  font-size:5.5px;
+  line-height:1.3;
+}
+
+.ad-btn{
+  flex:none;
+  padding:3px 6px;
+  border-radius:4px;
+  background:#fff;
+  color:#5d45bd;
+  font-size:5.5px;
+  font-weight:800;
+}
+
+
+/* =========================
+   PC PREVIEW
+========================= */
+
+.pc-preview{
+  display:flex;
+  justify-content:flex-end;
+  min-height:165px;
+  padding:6px;
+  border:1px dashed #d9d0ec;
+  border-radius:8px;
+  background:linear-gradient(135deg,#f4f1fa,#ebe6f7);
+}
+
+.pc-page{
+  width:100%;
+  min-height:153px;
+  padding:6px;
+  border-radius:5px;
+  background:#fff;
+  box-shadow:0 2px 9px rgba(70,50,110,.06);
+  display:flex;
+  justify-content:flex-end;
+}
+
+.pc-sidebar{
+  width:160px;
+  padding:7px;
+  border:1px solid #ece8f3;
+  border-radius:6px;
+  background:#fff;
+}
+
+.pc-logo-row{
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  gap:4px;
+  margin-bottom:5px;
+}
+
+.pc-logo-row img{
+  width:19px;
+  height:19px;
+  object-fit:contain;
+}
+
+.pc-logo-row strong{
+  font-size:7px;
+}
+
+.pc-description{
+  margin-bottom:6px;
+  text-align:center;
+  color:#70697f;
+  font-size:5.3px;
+  line-height:1.35;
+}
+
+.pc-system{
+  display:grid;
+  gap:4px;
+}
+
+.pc-preview-btn{
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  gap:3px;
+  min-height:19px;
+  padding:3px;
+  border-radius:3px;
+  font-size:5.3px;
+  font-weight:800;
+}
+
+.pc-preview-btn.download{
+  color:#fff;
+  background:#7c5ce6;
+}
+
+.pc-preview-btn.buy{
+  color:#6b52cb;
+  border:1px solid #bcaeed;
+  background:#fff;
+}
+
+.pc-trend-title{
+  margin:7px 0 4px;
+  padding-top:5px;
+  border-top:1px solid #eeeaf5;
+  font-size:6px;
+  font-weight:800;
+}
+
+.pc-trend-item{
+  display:flex;
+  gap:3px;
+  align-items:center;
+  margin-bottom:3px;
+}
+
+.pc-trend-item img{
+  width:9px;
+  height:9px;
+  object-fit:contain;
+}
+
+.pc-trend-item span{
+  color:#625b72;
+  font-size:4.8px;
+  line-height:1.2;
+}
+
+
+/* =========================
+   REPLACER
+========================= */
+
+.replace-rules{
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:5px;
+  margin-bottom:6px;
+}
+
+.replace-rule{
+  min-width:0;
+  padding:6px 7px;
+  border:1px solid var(--border);
+  border-radius:7px;
+  background:#faf9fd;
+  font-size:7.5px;
+  line-height:1.35;
+}
+
+.replace-rule code{
   color:var(--primary-dark);
+  background:var(--primary-soft-2);
+  padding:2px 4px;
+  border-radius:4px;
+  word-break:break-all;
 }
 
-.small{
-  font-size:10px;
+.replace-arrow{
+  display:block;
+  margin:2px 0;
   color:var(--muted);
 }
+
+.replace-result{
+  margin-top:5px;
+  padding:5px 7px;
+  border:1px solid var(--border);
+  border-radius:7px;
+  background:#faf9fd;
+  color:#625b72;
+  font-size:8px;
+  line-height:1.35;
+}
+
+.replace-count{
+  color:var(--primary-dark);
+  font-weight:800;
+}
+
+.code-box{
+  max-height:150px;
+  overflow:auto;
+  margin-top:6px;
+  padding:7px 8px;
+  border:1px solid var(--border);
+  border-radius:7px;
+  background:#191720;
+  color:#e9e4f6;
+  font-family:Consolas,Monaco,"Courier New",monospace;
+  font-size:7.5px;
+  line-height:1.45;
+  white-space:pre-wrap;
+  word-break:break-word;
+  cursor:pointer;
+}
+
+.code-box:hover{
+  border-color:#b9a9ec;
+}
+
+
+/* =========================
+   TOAST
+========================= */
 
 .toast{
   position:fixed;
   left:50%;
-  bottom:25px;
-  transform:translate(-50%,20px);
-  background:#292333;
+  bottom:18px;
+  transform:translate(-50%,15px);
+  padding:7px 11px;
+  border-radius:7px;
+  background:#292433;
   color:#fff;
-  padding:9px 15px;
-  border-radius:9px;
-  font-size:11px;
+  font-size:9px;
+  box-shadow:0 8px 25px rgba(30,20,50,.2);
   opacity:0;
   pointer-events:none;
-  transition:.25s;
-  z-index:20;
+  transition:.2s ease;
+  z-index:9999;
 }
 
 .toast.show{
@@ -423,327 +692,1310 @@ input:focus{
   transform:translate(-50%,0);
 }
 
+
 /* =========================
-   MOBILE
+   RESPONSIVE
 ========================= */
 
-@media(max-width:850px){
+@media(max-width:900px){
 
-  body{
-    padding:20px 13px 45px;
+  .card.third{
+    grid-column:1/-1;
   }
 
-  .app{
-    max-width:none;
-  }
-
-  h1{
-    font-size:22px;
-  }
-
-  .section-grid{
+  .replace-rules{
     grid-template-columns:1fr;
   }
 
-  .card.full{
-    grid-column:auto;
+}
+
+@media(max-width:600px){
+
+  .app{
+    width:calc(100% - 18px);
+    padding-top:12px;
   }
+
+  .header{
+    display:block;
+  }
+
+  .global-lang{
+    margin-top:10px;
+    width:max-content;
+  }
+
+  h1{
+    font-size:21px;
+  }
+
+  .card{
+    padding:10px;
+  }
+
+  .module-nav{
+    top:6px;
+  }
+
+  .module-nav-inner{
+    max-width:100%;
+    overflow:auto;
+    justify-content:flex-start;
+  }
+
+  .module-nav a{
+    padding:5px 7px;
+    font-size:8px;
+  }
+
+  .pc-sidebar{
+    width:150px;
+  }
+
+  .cell-url{
+    width:38%;
+    max-width:38%;
+  }
+
 }
 </style>
-
 </head>
+
 
 <body>
 
 <div class="app">
 
-  <header class="header">
-    <span class="eyebrow">EDIMAKOR · CONTENT WORKSPACE</span>
 
-    <h1>HTML Content Tools</h1>
+<!-- =========================
+     HEADER
+========================= -->
 
-    <div class="subtitle">
-      URL-Analyse und Werbemodule schnell erstellen
+<header class="header">
+
+  <div class="header-main">
+
+    <div class="eyebrow">
+      EDIMAKOR · CONTENT WORKSPACE
     </div>
-  </header>
 
-  <section class="section-grid">
+    <h1 id="pageTitle">
+      HTML Content Tools
+    </h1>
+
+    <p id="pageSubtitle">
+      URL-Analyse, Werbemodule und HTML-Link-Ersetzung schnell erstellen.
+    </p>
+
+  </div>
+
+
+  <!-- ONE GLOBAL LANGUAGE SWITCH -->
+
+  <div class="global-lang">
+
+    <button
+      type="button"
+      id="globalDeBtn">
+      DE
+    </button>
+
+    <button
+      type="button"
+      id="globalEsBtn">
+      ES
+    </button>
+
+  </div>
+
+</header>
+
+
+
+<!-- =========================
+     FLOATING NAV
+========================= -->
+
+<nav class="module-nav">
+
+  <div class="module-nav-inner">
+
+    <a
+      href="#urlTool"
+      id="navUrl">
+      ① URL
+    </a>
+
+    <a
+      href="#adTools"
+      id="navAds">
+      ②③ Ads
+    </a>
+
+    <a
+      href="#replacerTool"
+      id="navReplacer">
+      ④ Replacer
+    </a>
+
+  </div>
+
+</nav>
+
+
+
+<main class="grid">
+
+
+<!-- =====================================================
+     ① URL ANALYZER
+===================================================== -->
+
+<section
+  class="card full"
+  id="urlTool">
+
+  <div class="card-head">
+
+    <div>
+
+      <div class="card-title">
+
+        <div class="card-number">
+          ①
+        </div>
+
+        <h2 id="urlTitle">
+          URL-Analyse
+        </h2>
+
+      </div>
+
+      <p
+        class="card-desc"
+        id="urlDesc">
+        Eine URL pro Zeile · Klick auf Tabellenzelle = kopieren
+      </p>
+
+    </div>
+
+  </div>
+
+
+  <textarea
+    id="urlInput"
+    placeholder="https://edimakor.hitpaw.de/photo-generation-tips/ai-cake-generator-copy.html
+https://edimakor.hitpaw.de/ai-video-tools/create-ai-streamer.html"></textarea>
+
+
+  <div class="actions">
+
+    <button
+      type="button"
+      class="btn btn-primary"
+      id="analyzeBtn">
+      URLs analysieren
+    </button>
+
+    <button
+      type="button"
+      class="btn btn-soft"
+      id="clearUrlBtn">
+      Leeren
+    </button>
+
+  </div>
+
+
+  <div
+    class="table-wrap"
+    id="urlTableWrap">
+
+    <div
+      class="empty"
+      id="urlEmpty">
+      Noch keine URLs analysiert.
+    </div>
+
+  </div>
+
+</section>
+
+
+
+<!-- =====================================================
+     ② + ③ ADS
+===================================================== -->
+
+<div
+  class="card full"
+  id="adTools"
+  style="padding:0;border:0;background:transparent;box-shadow:none;">
+
+  <div
+    style="
+      display:grid;
+      grid-template-columns:repeat(12,1fr);
+      gap:11px;
+    ">
+
 
     <!-- =========================
-         URL PARSER
-    ========================== -->
+         ② MOBILE
+    ========================= -->
 
-    <div class="card full">
+    <section class="card third">
 
       <div class="card-head">
 
         <div>
 
-          <h2>① URL 批量解析</h2>
+          <div class="card-title">
 
-          <div class="card-desc">
-            一行一个 URL。自动提取目录和文件名，并自动去掉文件名中的 <b>-copy</b>。
+            <div class="card-number">
+              ②
+            </div>
+
+            <h2 id="mobileTitle">
+              Mobile Bottom Ad
+            </h2>
+
           </div>
 
         </div>
 
-        <span class="badge">BATCH</span>
+      </div>
+
+
+      <!--
+        IMPORTANT:
+        The preview itself is the copy button.
+        There is NO visible "Preview" or copy hint.
+      -->
+
+      <div class="preview">
+
+        <div
+          class="mobile-preview-frame click-preview"
+          id="mobilePreviewClick">
+
+          <div
+            class="mobile-preview-inner"
+            id="mobileAdPreview">
+          </div>
+
+        </div>
 
       </div>
 
-      <textarea
-        id="urlInput"
-        style="min-height:150px"
-        placeholder="https://edimakor.hitpaw.de/video-editing-tips/video-project-ideas-for-school-copy.html
+    </section>
 
-https://edimakor.hitpaw.de/ai-tools/example-copy.html"></textarea>
+
+
+    <!-- =========================
+         ③ PC
+    ========================= -->
+
+    <section class="card third">
+
+      <div class="card-head">
+
+        <div>
+
+          <div class="card-title">
+
+            <div class="card-number">
+              ③
+            </div>
+
+            <h2 id="pcTitle">
+              PC Right-side Ad
+            </h2>
+
+          </div>
+
+          <p
+            class="card-desc"
+            id="pcInputHint">
+            URL + Tab + Beschriftung · 3–5 Einträge
+          </p>
+
+        </div>
+
+      </div>
+
+
+      <textarea
+        id="pcTrendInput"
+        placeholder="URL[TAB]Beschriftung
+https://edimakor.hitpaw.de/ai-video-tools/example.html    Beispielartikel
+https://edimakor.hitpaw.de/photo-tips/example.html    Foto-Tipps
+https://edimakor.hitpaw.de/video-editing-tips/example.html    Video-Tipps"></textarea>
+
 
       <div class="actions">
 
         <button
-          class="btn primary"
-          onclick="parseUrls()">
-          URLs analysieren
+          type="button"
+          class="btn btn-primary"
+          id="pcGenerateBtn">
+          PC-Modul erstellen
         </button>
 
         <button
-          class="btn ghost"
-          onclick="clearUrls()">
+          type="button"
+          class="btn btn-soft"
+          id="pcClearBtn">
           Leeren
         </button>
 
       </div>
 
-      <div id="urlResult"></div>
 
-    </div>
-
-
-    <!-- =========================
-         MOBILE AD
-    ========================== -->
-
-    <div class="card">
-
-      <div class="card-head">
-
-        <div>
-
-          <h2
-            class="copyable"
-            onclick="copyFixedMobile()">
-            ② Mobile Bottom Ad
-          </h2>
-
-          <div class="card-desc">
-            Fester HTML-Code. Titel anklicken, um den Code zu kopieren.
-          </div>
-
-        </div>
-
-        <span class="badge">FIXED</span>
-
-      </div>
+      <!--
+        IMPORTANT:
+        The whole PC preview is the copy button.
+        No visible helper text.
+      -->
 
       <div class="preview">
 
-        <div class="ad-preview">
-
-          <div class="ad-logo">
-
-            <img
-              src="https://edimakor.hitpaw.com/images/logos/hitpaw-edimakor.png"
-              alt="HitPaw Edimakor">
-
-            <span>HitPaw Edimakor</span>
-
-          </div>
-
-          <p>
-            Bester KI-Videoeditor mit vielen Videobearbeitungselementen und KI-Funktionen.
-          </p>
-
-          <a href="#">
-            Jetzt kaufen
-          </a>
-
-        </div>
-
-      </div>
-
-    </div>
-
-
-    <!-- =========================
-         PC AD
-    ========================== -->
-
-    <div class="card">
-
-      <div class="card-head">
-
-        <div>
-
-          <h2>
-            ③ PC-Rechtsseiten-Werbemodul
-          </h2>
-
-          <div class="card-desc">
-            Festes Template. Die Links und Texte werden aus deiner Batch-Eingabe übernommen.
-          </div>
-
-        </div>
-
-        <span class="badge">BATCH</span>
-
-      </div>
-
-      <textarea
-        id="pcBatchInput"
-        style="min-height:190px"
-        placeholder="URL[TAB]Text
-
-https://edimakor.hitpaw.de/video-editing-tips/ai-girlfriend-generator.html	Die besten KI-Freundin-Generatoren
-https://edimakor.hitpaw.de/subtitle-tips/paramount-plus-subtitle-not-working.html	Paramount Plus Untertitel funktionieren nicht? Lösung
-https://edimakor.hitpaw.de/video-editing-tips/how-to-reverse-video-search.html	Rückwärts-Videosuche durchführen"></textarea>
-
-      <div
-        class="small"
-        style="margin-top:8px">
-        Eine Zeile pro Eintrag: URL + Tabulator oder | + Linktext. 3–5 Einträge sind vorgesehen.
-      </div>
-
-      <div class="actions">
-
-        <button
-          class="btn primary"
-          onclick="generatePcAd()">
-          PC-Modul erstellen
-        </button>
-
-      </div>
-
-      <div class="generated-wrap">
-
-        <div class="generated-title">
-          Vorschau
-        </div>
-
         <div
-          id="pcPreview"
-          class="preview">
-
-          <div class="small">
-            URL und Linktext eingeben, dann das Modul erstellen.
-          </div>
-
+          id="pcPreview">
         </div>
 
       </div>
 
-      <div class="generated-wrap">
+    </section>
 
-        <div
-          class="generated-title copyable"
-          onclick="copyPcCode()">
-          PC-Rechtsseiten-Werbemodul
-        </div>
-
-        <div
-          id="pcCode"
-          class="preview"
-          style="
-            min-height:160px;
-            background:#211d2f;
-            color:#eee9ff;
-            white-space:pre-wrap;
-            word-break:break-word;
-            font:11px/1.65 ui-monospace,SFMono-Regular,Consolas,monospace;
-          ">
-          Der HTML-Code wird nach der Erstellung hier angezeigt.
-        </div>
-
-      </div>
-
-    </div>
-
-  </section>
+  </div>
 
 </div>
 
-<div id="toast" class="toast"></div>
+
+
+<!-- =====================================================
+     ④ HTML REPLACER
+===================================================== -->
+
+<section
+  class="card full"
+  id="replacerTool">
+
+  <div class="card-head">
+
+    <div>
+
+      <div class="card-title">
+
+        <div class="card-number">
+          ④
+        </div>
+
+        <h2 id="replaceTitle">
+          HTML Code Batch Replacer
+        </h2>
+
+      </div>
+
+      <p
+        class="card-desc"
+        id="replaceDesc">
+        Vollständigen HTML-Code einfügen · nur definierte Links werden ersetzt
+      </p>
+
+    </div>
+
+  </div>
+
+
+  <div
+    class="replace-rules"
+    id="replaceRules">
+  </div>
+
+
+  <textarea
+    id="htmlReplaceInput"
+    placeholder="Hier den vollständigen HTML-Code einfügen..."></textarea>
+
+
+  <div class="actions">
+
+    <button
+      type="button"
+      class="btn btn-primary"
+      id="replaceButton">
+      Links ersetzen
+    </button>
+
+    <button
+      type="button"
+      class="btn btn-soft"
+      id="replaceClearButton">
+      Leeren
+    </button>
+
+  </div>
+
+
+  <div
+    id="replaceResult"
+    class="replace-result">
+    Noch kein Ergebnis.
+  </div>
+
+
+  <!--
+    The output itself is clickable.
+    No separate copy button.
+  -->
+
+  <div
+    id="replaceOutput"
+    class="code-box">
+    Der ersetzte HTML-Code wird hier angezeigt.
+  </div>
+
+</section>
+
+
+</main>
+
+</div>
+
+
+
+<div
+  class="toast"
+  id="toast">
+</div>
+
+
 
 <script>
 
-/* =========================
-   MOBILE AD CODE
-========================= */
+/* =========================================================
+   GLOBAL STATE
+========================================================= */
 
-const MOBILE_AD_CODE = `<div class="bottom-ad">
+let currentLang = "de";
+let toastTimer = null;
+
+
+/* =========================================================
+   GENERAL
+========================================================= */
+
+function showToast(message){
+
+  const toast =
+    document.getElementById("toast");
+
+  toast.textContent =
+    message;
+
+  toast.classList.add("show");
+
+  clearTimeout(toastTimer);
+
+  toastTimer =
+    setTimeout(() => {
+
+      toast.classList.remove("show");
+
+    },1600);
+
+}
+
+
+async function copyText(text){
+
+  if(!text) return;
+
+  try{
+
+    await navigator.clipboard.writeText(text);
+
+  }catch(error){
+
+    const textarea =
+      document.createElement("textarea");
+
+    textarea.value =
+      text;
+
+    textarea.style.position =
+      "fixed";
+
+    textarea.style.left =
+      "-9999px";
+
+    document.body.appendChild(textarea);
+
+    textarea.select();
+
+    document.execCommand("copy");
+
+    textarea.remove();
+
+  }
+
+  showToast(
+    currentLang === "de"
+      ? "Kopiert"
+      : "Copiado"
+  );
+
+}
+
+
+function escapeHtml(value){
+
+  return String(value)
+    .replace(/&/g,"&amp;")
+    .replace(/</g,"&lt;")
+    .replace(/>/g,"&gt;")
+    .replace(/"/g,"&quot;")
+    .replace(/'/g,"&#039;");
+
+}
+
+
+function escapeAttribute(value){
+
+  return String(value)
+    .replace(/&/g,"&amp;")
+    .replace(/"/g,"&quot;");
+
+}
+
+
+/* =========================================================
+   LANGUAGE CONFIG
+========================================================= */
+
+const UI = {
+
+  de:{
+
+    pageTitle:
+      "HTML Content Tools",
+
+    pageSubtitle:
+      "URL-Analyse, Werbemodule und HTML-Link-Ersetzung schnell erstellen.",
+
+    navUrl:
+      "① URL",
+
+    navAds:
+      "②③ Ads",
+
+    navReplacer:
+      "④ Replacer",
+
+
+    urlTitle:
+      "URL-Analyse",
+
+    urlDesc:
+      "Eine URL pro Zeile · Klick auf Tabellenzelle = kopieren",
+
+    urlPlaceholder:
+      `https://edimakor.hitpaw.de/photo-generation-tips/ai-cake-generator-copy.html
+https://edimakor.hitpaw.de/ai-video-tools/create-ai-streamer.html`,
+
+    analyze:
+      "URLs analysieren",
+
+    clear:
+      "Leeren",
+
+    urlEmpty:
+      "Noch keine URLs analysiert.",
+
+    urlInputEmpty:
+      "Bitte zuerst URLs eingeben.",
+
+    invalidUrl:
+      "Ungültige URL",
+
+    tableUrl:
+      "URL",
+
+    tableDirectory:
+      "Verzeichnis",
+
+    tableForm:
+      "Form",
+
+    tableFilename:
+      "Dateiname",
+
+
+    mobileTitle:
+      "Mobile Bottom Ad",
+
+
+    pcTitle:
+      "PC Right-side Ad",
+
+    pcInputHint:
+      "URL + Tab + Beschriftung · 3–5 Einträge",
+
+    pcPlaceholder:
+      `URL[TAB]Beschriftung
+https://edimakor.hitpaw.de/ai-video-tools/example.html    Beispielartikel
+https://edimakor.hitpaw.de/photo-tips/example.html    Foto-Tipps
+https://edimakor.hitpaw.de/video-editing-tips/example.html    Video-Tipps`,
+
+    pcGenerate:
+      "PC-Modul erstellen",
+
+    pcEmpty:
+      "Artikel oben eingeben",
+
+
+    replaceTitle:
+      "HTML Code Batch Replacer",
+
+    replaceDesc:
+      "Vollständigen HTML-Code einfügen · nur definierte Links werden ersetzt",
+
+    replacePlaceholder:
+      "Hier den vollständigen HTML-Code einfügen...",
+
+    replaceButton:
+      "Links ersetzen",
+
+    replaceClear:
+      "Leeren",
+
+    replaceEmptyResult:
+      "Noch kein Ergebnis.",
+
+    replaceEmptyOutput:
+      "Der ersetzte HTML-Code wird hier angezeigt.",
+
+    replaceNoInput:
+      "Bitte HTML-Code eingeben",
+
+    replaceNoResult:
+      "Noch kein Ergebnis",
+
+    replaceNoLinks:
+      "Keine passenden Links gefunden",
+
+    replaceRules:[
+
+      [
+        '<a href="https://edimakor.hitpaw.com',
+        '<a href="https://edimakor.hitpaw.de'
+      ],
+
+      [
+        '<a href="https://app.edimakor.ai/en',
+        '<a href="https://app.edimakor.ai/de'
+      ],
+
+      [
+        '<a href="https://www.edimakor.ai/',
+        '<a href="https://www.edimakor.ai/de'
+      ]
+
+    ]
+
+  },
+
+
+  es:{
+
+    pageTitle:
+      "Herramientas de contenido HTML",
+
+    pageSubtitle:
+      "Analiza URLs, crea módulos publicitarios y reemplaza enlaces HTML rápidamente.",
+
+    navUrl:
+      "① URL",
+
+    navAds:
+      "②③ Anuncios",
+
+    navReplacer:
+      "④ Reemplazador",
+
+
+    urlTitle:
+      "Análisis de URL",
+
+    urlDesc:
+      "Una URL por línea · Haz clic en una celda para copiar",
+
+    urlPlaceholder:
+      `https://edimakor.hitpaw.es/photo-generation-tips/ai-cake-generator-copy.html
+https://edimakor.hitpaw.es/ai-video-tools/create-ai-streamer.html`,
+
+    analyze:
+      "Analizar URLs",
+
+    clear:
+      "Limpiar",
+
+    urlEmpty:
+      "Aún no hay URLs analizadas.",
+
+    urlInputEmpty:
+      "Introduce primero las URLs.",
+
+    invalidUrl:
+      "URL no válida",
+
+    tableUrl:
+      "URL",
+
+    tableDirectory:
+      "Directorio",
+
+    tableForm:
+      "Forma",
+
+    tableFilename:
+      "Nombre de archivo",
+
+
+    mobileTitle:
+      "Anuncio inferior móvil",
+
+
+    pcTitle:
+      "Anuncio lateral PC",
+
+    pcInputHint:
+      "URL + Tab + texto · 3–5 entradas",
+
+    pcPlaceholder:
+      `URL[TAB]Texto
+https://edimakor.hitpaw.es/ai-video-tools/example.html    Artículo de ejemplo
+https://edimakor.hitpaw.es/photo-tips/example.html    Consejos de fotos
+https://edimakor.hitpaw.es/video-editing-tips/example.html    Consejos de edición`,
+
+    pcGenerate:
+      "Crear módulo PC",
+
+    pcEmpty:
+      "Introduce artículos arriba",
+
+
+    replaceTitle:
+      "Reemplazador de código HTML",
+
+    replaceDesc:
+      "Pega el código HTML completo · solo se reemplazarán los enlaces definidos",
+
+    replacePlaceholder:
+      "Pega aquí el código HTML completo...",
+
+    replaceButton:
+      "Reemplazar enlaces",
+
+    replaceClear:
+      "Limpiar",
+
+    replaceEmptyResult:
+      "Aún no hay resultados.",
+
+    replaceEmptyOutput:
+      "El código HTML reemplazado aparecerá aquí.",
+
+    replaceNoInput:
+      "Introduce el código HTML",
+
+    replaceNoResult:
+      "Aún no hay resultados",
+
+    replaceNoLinks:
+      "No se encontraron enlaces para reemplazar",
+
+    replaceRules:[
+
+      [
+        '<a href="https://edimakor.hitpaw.com',
+        '<a href="https://edimakor.hitpaw.es'
+      ],
+
+      [
+        '<a href="https://app.edimakor.ai/en',
+        '<a href="https://app.edimakor.ai/es'
+      ],
+
+      [
+        '<a href="https://www.edimakor.ai/',
+        '<a href="https://www.edimakor.ai/es'
+      ]
+
+    ]
+
+  }
+
+};
+
+
+/* =========================================================
+   MOBILE AD
+========================================================= */
+
+const MOBILE_AD = {
+
+  de:{
+
+    id:"v80im6",
+
+    logoAlt:
+      "HitPaw Edimakor",
+
+    description:
+      "Bester KI-Videoeditor mit vielen Videobearbeitungselementen und KI-Funktionen.",
+
+    buyText:
+      "Jetzt kaufen",
+
+    buyUrl:
+      "https://edimakor.hitpaw.de/buy-video-editor.html"
+
+  },
+
+
+  es:{
+
+    id:"a3ooxh",
+
+    logoAlt:
+      "HitpawEdimakor",
+
+    description:
+      "El mejor editor de video de IA con muchos recursos de edición de video y funciones de IA.",
+
+    buyText:
+      "Comprar Ahora",
+
+    buyUrl:
+      "https://edimakor.hitpaw.es/buy-video-editor.html"
+
+  }
+
+};
+
+
+function getMobileAdCode(){
+
+  const d =
+    MOBILE_AD[currentLang];
+
+
+  return `<div class="bottom-ad" id="${d.id}">
   <div class="close-icon"></div>
   <div class="d-flex align-items-center justify-content-md-between">
     <div class="text-white">
       <div class="sub-title d-flex align-items-end">
-        <img class="img-fluid logo" src="https://edimakor.hitpaw.com/images/logos/hitpaw-edimakor.png" width="40" height="40" alt="HitPaw Edimakor">
+        <img class="img-fluid logo" src="https://edimakor.hitpaw.com/images/logos/hitpaw-edimakor.png" width="40" height="40" alt="${d.logoAlt}">
         <span class="fw-bolder">HitPaw Edimakor</span>
       </div>
-      <p class="small mt-1 mb-0">Bester KI-Videoeditor mit vielen Videobearbeitungselementen und KI-Funktionen.</p>
+      <p class="small mt-1 mb-0">${d.description}</p>
     </div>
     <div class="btn-box">
-      <a href="https://edimakor.hitpaw.de/buy-video-editor.html" class="btn btn-white">
-        Jetzt kaufen
+      <a href="${d.buyUrl}" class="btn btn-white">
+        ${d.buyText}
       </a>
     </div>
   </div>
 </div>`;
 
+}
 
-/* =========================
-   PC AD TEMPLATE
-========================= */
 
-const PC_TEMPLATE = (items) => `<div class="ad-module mb-4">
+function renderMobileAd(){
+
+  const d =
+    MOBILE_AD[currentLang];
+
+
+  document
+    .getElementById("mobileAdPreview")
+    .innerHTML = `
+
+      <div class="bottom-ad-preview">
+
+        <div class="ad-row">
+
+          <div>
+
+            <div class="ad-brand">
+
+              <img
+                src="https://edimakor.hitpaw.com/images/logos/hitpaw-edimakor.png"
+                alt="${escapeHtml(d.logoAlt)}">
+
+              <strong>
+                HitPaw Edimakor
+              </strong>
+
+            </div>
+
+
+            <div class="ad-copy">
+              ${escapeHtml(d.description)}
+            </div>
+
+          </div>
+
+
+          <div class="ad-btn">
+            ${escapeHtml(d.buyText)}
+          </div>
+
+        </div>
+
+      </div>
+
+    `;
+
+}
+
+
+/* =========================================================
+   PC AD
+========================================================= */
+
+const PC_CONFIG = {
+
+  de:{
+
+    winDownload:
+      "https://download.hitpaw.com/downloads/hitpaw-edimakor-full_8670.exe",
+
+    macDownload:
+      "https://download.hitpaw.com/downloads/hitpaw-edimakor-mac-full_8671.zip",
+
+    winBuy:
+      "https://edimakor.hitpaw.de/buy-video-editor.html",
+
+    macBuy:
+      "https://edimakor.hitpaw.de/buy-video-editor-mac.html",
+
+    downloadText:
+      "Jetzt herunterladen",
+
+    buyText:
+      "Jetzt kaufen",
+
+    description:
+      "Bester KI-Videoeditor mit vielen Videobearbeitungselementen und KI-Funktionen.",
+
+    hotTitle:
+      "Heiß &amp; im Trend",
+
+    hotArticles:[
+
+      [
+        "https://edimakor.hitpaw.de/subtitle-tips/",
+        "Tipps für Untertitel"
+      ],
+
+      [
+        "https://edimakor.hitpaw.de/ai-translation/",
+        "KI-Übersetzung"
+      ],
+
+      [
+        "https://edimakor.hitpaw.de/video-editing-tips/",
+        "Videobearbeitung von Filmmaterial"
+      ],
+
+      [
+        "https://edimakor.hitpaw.de/photo-tips/",
+        "Tipps für Fotobearbeitung"
+      ],
+
+      [
+        "https://edimakor.hitpaw.de/video-editing-footage/",
+        "Video-Material &amp; Footage"
+      ]
+
+    ]
+
+  },
+
+
+  es:{
+
+    winDownload:
+      "https://download.hitpaw.com/downloads/hitpaw-edimakor-full_8692.exe",
+
+    macDownload:
+      "https://download.hitpaw.com/downloads/hitpaw-edimakor-mac-full_8693.zip",
+
+    winBuy:
+      "https://edimakor.hitpaw.es/buy-video-editor.html",
+
+    macBuy:
+      "https://edimakor.hitpaw.es/buy-video-editor-mac.html",
+
+    downloadText:
+      "Descargar Ahora",
+
+    buyText:
+      "Comprar Ahora",
+
+    description:
+      "El mejor editor de video con IA, con numerosos recursos de edición y funciones de IA.",
+
+    hotTitle:
+      "Popular &amp; Tendencia",
+
+    hotArticles:[
+
+      [
+        "https://edimakor.hitpaw.es/subtitle-tips/",
+        "Consejos de Subtítulos"
+      ],
+
+      [
+        "https://edimakor.hitpaw.es/ai-translation/",
+        "Traducción de IA"
+      ],
+
+      [
+        "https://edimakor.hitpaw.es/video-recording-tips/",
+        "Consejos de Grabación"
+      ],
+
+      [
+        "https://edimakor.hitpaw.es/video-editing-tips/",
+        "Consejos para Editar Vídeo"
+      ]
+
+    ]
+
+  }
+
+};
+
+
+/*
+  IMPORTANT:
+  The user-entered PC trend articles are NEVER replaced
+  when switching DE / ES.
+*/
+
+function parseTrendInput(){
+
+  const input =
+    document
+      .getElementById("pcTrendInput")
+      .value
+      .trim();
+
+
+  if(!input){
+    return [];
+  }
+
+
+  return input
+
+    .split(/\n+/)
+
+    .map(line => line.trim())
+
+    .filter(Boolean)
+
+    .map(line => {
+
+      let parts;
+
+
+      if(line.includes("\t")){
+
+        parts =
+          line.split("\t");
+
+      }else if(line.includes(" | ")){
+
+        parts =
+          line.split(" | ");
+
+      }else{
+
+        parts =
+          line.split(/\s{2,}/);
+
+      }
+
+
+      return {
+
+        url:
+          (parts[0] || "").trim(),
+
+        text:
+          (parts.slice(1).join(" ") || "").trim()
+
+      };
+
+    })
+
+    .filter(item =>
+      item.url &&
+      item.text
+    );
+
+}
+
+
+function generateTrendPreview(){
+
+  const items =
+    parseTrendInput()
+      .slice(0,5);
+
+
+  if(!items.length){
+
+    return `
+
+      <div class="pc-trend-item">
+
+        <span style="color:#9a94a6;">
+          ${escapeHtml(PC_CONFIG[currentLang].hotTitle.replace("&amp;","&"))}
+        </span>
+
+      </div>
+
+    `;
+
+  }
+
+
+  return items
+    .map((item,index) => {
+
+      const icon =
+        Math.min(index + 1,3);
+
+
+      return `
+
+        <div class="pc-trend-item">
+
+          <img
+            src="https://edimakor.hitpaw.com/images/edimakor-2025/article/hot-and-trend-icon-${icon}.png"
+            alt="">
+
+          <span>
+            ${escapeHtml(item.text)}
+          </span>
+
+        </div>
+
+      `;
+
+    })
+    .join("");
+
+}
+
+
+function generateTrendHtml(items){
+
+  return items
+    .map((item,index) => {
+
+      const iconNumber =
+        Math.min(index + 1,3);
+
+
+      return `
+    <li>
+      <a href="${escapeAttribute(item.url)}">
+        <img
+          class="img-fluid"
+          src="https://edimakor.hitpaw.com/images/edimakor-2025/article/hot-and-trend-icon-${iconNumber}.png"
+          alt="hot-and-trending">
+        <span>${escapeHtml(item.text)}</span>
+      </a>
+    </li>`;
+
+    })
+    .join("");
+
+}
+
+
+function generateHotArticles(items){
+
+  return items
+    .map(item => `
+
+    <li>
+      <a
+        href="${escapeAttribute(item[0])}"
+        target="_blank">
+        ${item[1]}
+      </a>
+    </li>
+
+  `)
+    .join("");
+
+}
+
+
+function getPcCode(){
+
+  const config =
+    PC_CONFIG[currentLang];
+
+
+  /*
+    Always use exactly the articles entered by the user.
+    Language switching only changes the fixed module content.
+  */
+
+  const trendItems =
+    parseTrendInput();
+
+
+  return `<div class="ad-module mb-4">
   <div class="d-flex align-items-center justify-content-center mb-2">
     <img class="lozad" src="https://images.hitpaw.com/images/common/loading.svg"
          data-src="https://edimakor.hitpaw.com/images/logos/hitpaw-edimakor.png" width="38" height="38"
-         alt="HitPaw Edimakor Logo">
+         alt="${currentLang === "es" ? "HitpawEdimakor Logo" : "HitPaw Edimakor Logo"}">
     <span class="h5 ms-2 mb-0">HitPaw Edimakor</span>
   </div>
 
-  <p class="p1 fw-normal text-center mb-0">
-    Bester KI-Videoeditor mit vielen Videobearbeitungselementen und KI-Funktionen.
-  </p>
+  <p class="p1 fw-normal text-center mb-0">${config.description}</p>
 
   <div class="btn-groups">
 
     <div class="sys-win">
 
       <div class="mb-3">
-        <a href="https://download.hitpaw.com/downloads/hitpaw-edimakor-full_8670.exe"
-           class="btn btn-lg btn-primary">
-
+        <a href="${config.winDownload}" class="btn btn-lg btn-primary">
           <svg width="28" height="28">
             <use xlink:href="#win-path"></use>
           </svg>
-
-          <span>Jetzt herunterladen</span>
-
+          <span>${config.downloadText}</span>
         </a>
       </div>
 
       <div>
-
-        <a href="https://edimakor.hitpaw.de/buy-video-editor.html"
-           class="btn btn-lg btn-outline-primary">
-
+        <a href="${config.winBuy}" class="btn btn-lg btn-outline-primary">
           <svg width="22" height="22">
             <use xlink:href="#shop-cart-path"></use>
           </svg>
-
-          <span>Jetzt kaufen</span>
-
+          <span>${config.buyText}</span>
         </a>
-
       </div>
 
     </div>
@@ -752,477 +2004,1021 @@ const PC_TEMPLATE = (items) => `<div class="ad-module mb-4">
     <div class="sys-mac">
 
       <div class="mb-3">
-
-        <a href="https://download.hitpaw.com/downloads/hitpaw-edimakor-mac-full_8671.zip"
-           class="btn btn-lg btn-primary">
-
+        <a href="${config.macDownload}" class="btn btn-lg btn-primary">
           <svg width="28" height="28">
             <use xlink:href="#mac-path"></use>
           </svg>
-
-          <span>Jetzt herunterladen</span>
-
+          <span>${config.downloadText}</span>
         </a>
-
       </div>
 
       <div>
-
-        <a href="https://edimakor.hitpaw.de/buy-video-editor-mac.html"
-           class="btn btn-lg btn-outline-primary">
-
+        <a href="${config.macBuy}" class="btn btn-lg btn-outline-primary">
           <svg width="22" height="22">
             <use xlink:href="#shop-cart-path"></use>
           </svg>
-
-          <span>Jetzt kaufen</span>
-
+          <span>${config.buyText}</span>
         </a>
-
       </div>
 
     </div>
 
   </div>
-
 </div>
 
 <div class="hot-and-trending">
 
-  <p class="h5 mb-0">
-    Heiß &amp; im Trend
-  </p>
+  <p class="h5 mb-0">${config.hotTitle}</p>
 
   <ul class="list-trend mb-0">
-
-${items.map((x,i)=>`    <li>
-      <a href="${escapeAttr(x.url)}" target="_blank">
-        <img
-          class="img-fluid"
-          src="https://edimakor.hitpaw.com/images/edimakor-2025/article/hot-and-trend-icon-${i+1}.png"
-          alt="Hot &amp; im Trend">
-        <span>${escapeHtml(x.text)}</span>
-      </a>
-    </li>`).join("\n")}
-
+    ${generateTrendHtml(trendItems)}
   </ul>
 
   <ul class="hot-articles mb-0">
-
-    <li>
-      <a href="https://edimakor.hitpaw.de/subtitle-tips/" target="_blank">
-        Tipps für Untertitel
-      </a>
-    </li>
-
-    <li>
-      <a href="https://edimakor.hitpaw.de/ai-translation/" target="_blank">
-        KI-Übersetzung
-      </a>
-    </li>
-
-    <li>
-      <a href="https://edimakor.hitpaw.de/video-editing-tips/" target="_blank">
-        Videobearbeitung von Filmmaterial
-      </a>
-    </li>
-
-    <li>
-      <a href="https://edimakor.hitpaw.de/photo-tips/" target="_blank">
-        Tipps für Fotobearbeitung
-      </a>
-    </li>
-
-    <li>
-      <a href="https://edimakor.hitpaw.de/video-editing-footage/" target="_blank">
-        Video-Material &amp; Footage
-      </a>
-    </li>
-
+    ${generateHotArticles(config.hotArticles)}
   </ul>
 
 </div>`;
 
+}
 
-/* =========================
-   HELPERS
-========================= */
 
-function escapeHtml(s){
+function renderPcPreview(){
 
-  return String(s).replace(
-    /[&<>"']/g,
-    m => ({
-      '&':'&amp;',
-      '<':'&lt;',
-      '>':'&gt;',
-      '"':'&quot;',
-      "'":'&#39;'
-    }[m])
+  const config =
+    PC_CONFIG[currentLang];
+
+
+  document
+    .getElementById("pcPreview")
+    .innerHTML = `
+
+      <div
+        class="pc-preview click-preview"
+        id="pcPreviewClick">
+
+        <div class="pc-page">
+
+          <div class="pc-sidebar">
+
+            <div class="pc-logo-row">
+
+              <img
+                src="https://edimakor.hitpaw.com/images/logos/hitpaw-edimakor.png"
+                alt="HitPaw Edimakor">
+
+              <strong>
+                HitPaw Edimakor
+              </strong>
+
+            </div>
+
+
+            <div class="pc-description">
+              ${escapeHtml(config.description)}
+            </div>
+
+
+            <div class="pc-system">
+
+              <div class="pc-preview-btn download">
+                ↓ ${escapeHtml(config.downloadText)}
+              </div>
+
+              <div class="pc-preview-btn buy">
+                🛒 ${escapeHtml(config.buyText)}
+              </div>
+
+            </div>
+
+
+            <div class="pc-trend-title">
+              ${config.hotTitle.replace("&amp;","&")}
+            </div>
+
+
+            ${generateTrendPreview()}
+
+          </div>
+
+        </div>
+
+      </div>
+
+    `;
+
+
+  /*
+    IMPORTANT:
+    Event is attached directly to the newly rendered
+    preview element. Clicking ANYWHERE on the visual
+    copies the complete PC HTML code.
+  */
+
+  const preview =
+    document.getElementById("pcPreviewClick");
+
+
+  preview.addEventListener(
+    "click",
+    () => {
+
+      copyText(
+        getPcCode()
+      );
+
+    }
   );
 
 }
 
 
-function escapeAttr(s){
-  return escapeHtml(s);
-}
+function generatePcCode(){
 
-
-function showToast(msg=""){
-
-  if(!msg)return;
-
-  const t=document.getElementById("toast");
-
-  t.textContent=msg;
-
-  t.classList.add("show");
-
-  clearTimeout(window._toast);
-
-  window._toast=setTimeout(
-    ()=>t.classList.remove("show"),
-    900
-  );
+  renderPcPreview();
 
 }
 
 
-async function copyText(text){
+function clearPc(){
 
-  try{
+  document
+    .getElementById("pcTrendInput")
+    .value = "";
 
-    await navigator.clipboard.writeText(text);
+  renderPcPreview();
 
-  }catch{
+}
 
-    const ta=document.createElement("textarea");
 
-    ta.value=text;
+/* =========================================================
+   ④ HTML BATCH REPLACER
+========================================================= */
 
-    document.body.appendChild(ta);
+function renderReplaceUI(){
 
-    ta.select();
+  const config =
+    UI[currentLang];
 
-    document.execCommand("copy");
 
-    ta.remove();
+  document
+    .getElementById("replaceTitle")
+    .textContent =
+      config.replaceTitle;
+
+
+  document
+    .getElementById("replaceDesc")
+    .textContent =
+      config.replaceDesc;
+
+
+  document
+    .getElementById("htmlReplaceInput")
+    .placeholder =
+      config.replacePlaceholder;
+
+
+  document
+    .getElementById("replaceButton")
+    .textContent =
+      config.replaceButton;
+
+
+  document
+    .getElementById("replaceClearButton")
+    .textContent =
+      config.replaceClear;
+
+
+  document
+    .getElementById("replaceRules")
+    .innerHTML =
+      config.replaceRules
+        .map(rule => `
+
+          <div class="replace-rule">
+
+            <code>
+              ${escapeHtml(rule[0])}
+            </code>
+
+            <span class="replace-arrow">
+              ↓
+            </span>
+
+            <code>
+              ${escapeHtml(rule[1])}
+            </code>
+
+          </div>
+
+        `)
+        .join("");
+
+
+  /*
+    IMPORTANT:
+    We intentionally DO NOT touch:
+    - htmlReplaceInput.value
+    - replaceOutput.textContent
+    - replaceResult.textContent
+  */
+
+}
+
+
+function replaceAllExact(
+  source,
+  search,
+  replacement
+){
+
+  let result =
+    source;
+
+  let count =
+    0;
+
+  let position =
+    0;
+
+
+  while(true){
+
+    const index =
+      result.indexOf(
+        search,
+        position
+      );
+
+
+    if(index === -1){
+      break;
+    }
+
+
+    result =
+      result.slice(0,index) +
+      replacement +
+      result.slice(index + search.length);
+
+
+    position =
+      index + replacement.length;
+
+
+    count++;
 
   }
 
-  showToast("已复制");
+
+  return {
+    result,
+    count
+  };
 
 }
 
 
-/* =========================
-   URL PARSER
-========================= */
+function replaceHtmlLinks(){
 
-function parseUrls(){
+  const config =
+    UI[currentLang];
 
-  const urls=
+
+  const input =
     document
-      .getElementById("urlInput")
-      .value
-      .split(/\n+/)
-      .map(x=>x.trim())
-      .filter(Boolean);
+      .getElementById("htmlReplaceInput")
+      .value;
 
-  if(!urls.length){
 
-    showToast("请输入 URL");
+  if(!input.trim()){
+
+    showToast(
+      config.replaceNoInput
+    );
 
     return;
 
   }
 
-  const rows=urls.map(raw=>{
+
+  let output =
+    input;
+
+
+  const counts = [];
+
+
+  config.replaceRules.forEach(rule => {
+
+    const result =
+      replaceAllExact(
+        output,
+        rule[0],
+        rule[1]
+      );
+
+
+    output =
+      result.result;
+
+
+    counts.push(
+      result.count
+    );
+
+  });
+
+
+  const total =
+    counts.reduce(
+      (sum,count) =>
+        sum + count,
+      0
+    );
+
+
+  document
+    .getElementById("replaceOutput")
+    .textContent =
+      output;
+
+
+  if(currentLang === "de"){
+
+    document
+      .getElementById("replaceResult")
+      .innerHTML = `
+
+        <span class="replace-count">
+          ${total}
+          ${total === 1 ? "Link" : "Links"}
+          ersetzt
+        </span>
+
+        · edimakor.hitpaw.com: ${counts[0]}
+        · app.edimakor.ai/en: ${counts[1]}
+        · www.edimakor.ai/: ${counts[2]}
+
+      `;
+
+  }else{
+
+    document
+      .getElementById("replaceResult")
+      .innerHTML = `
+
+        <span class="replace-count">
+          ${total} enlaces reemplazados
+        </span>
+
+        · edimakor.hitpaw.com: ${counts[0]}
+        · app.edimakor.ai/en: ${counts[1]}
+        · www.edimakor.ai/: ${counts[2]}
+
+      `;
+
+  }
+
+
+  showToast(
+
+    total
+
+      ? currentLang === "de"
+        ? `${total} ${total === 1 ? "Link" : "Links"} ersetzt`
+        : `${total} enlaces reemplazados`
+
+      : config.replaceNoLinks
+
+  );
+
+}
+
+
+function clearHtmlReplacer(){
+
+  const config =
+    UI[currentLang];
+
+
+  document
+    .getElementById("htmlReplaceInput")
+    .value = "";
+
+
+  document
+    .getElementById("replaceOutput")
+    .textContent =
+      config.replaceEmptyOutput;
+
+
+  document
+    .getElementById("replaceResult")
+    .textContent =
+      config.replaceEmptyResult;
+
+}
+
+
+function copyReplacedHtml(){
+
+  const output =
+    document
+      .getElementById("replaceOutput")
+      .textContent;
+
+
+  const config =
+    UI[currentLang];
+
+
+  if(
+    !output ||
+    output === config.replaceEmptyOutput
+  ){
+
+    showToast(
+      config.replaceNoResult
+    );
+
+    return;
+
+  }
+
+
+  copyText(output);
+
+}
+
+
+/* =========================================================
+   URL ANALYZER
+========================================================= */
+
+function analyzeUrls(){
+
+  const config =
+    UI[currentLang];
+
+
+  const input =
+    document
+      .getElementById("urlInput")
+      .value
+      .trim();
+
+
+  const wrap =
+    document
+      .getElementById("urlTableWrap");
+
+
+  if(!input){
+
+    wrap.innerHTML = `
+      <div class="empty">
+        ${config.urlInputEmpty}
+      </div>
+    `;
+
+    return;
+
+  }
+
+
+  const urls =
+    input
+      .split(/\n+/)
+      .map(item => item.trim())
+      .filter(Boolean);
+
+
+  let rows = "";
+
+
+  urls.forEach(url => {
 
     try{
 
-      const u=new URL(raw);
+      const parsed =
+        new URL(url);
 
-      const parts=
-        u.pathname
-          .split("/")
-          .filter(Boolean);
 
-      const category=
-        parts.length>=2
-          ?parts[parts.length-2]
-          :"";
+      let pathname =
+        parsed.pathname
+          .replace(/^\/+|\/+$/g,"");
 
-      let file=
-        parts[parts.length-1]||"";
 
-      file=file.replace(
-        /-copy(?=\.html?$)/i,
-        ""
-      );
+      const parts =
+        pathname.split("/");
 
-      return{
-        raw,
-        category,
-        file
-      };
 
-    }catch{
+      let filename =
+        parts.pop() || "";
 
-      return{
-        raw,
-        category:"无效 URL",
-        file:""
-      };
+
+      filename =
+        filename
+          .replace(/\.html$/i,"")
+          .replace(/-copy$/i,"");
+
+
+      const directory =
+        parts.length
+          ? parts[parts.length - 1]
+          : "";
+
+
+      const formed =
+        directory
+          ? directory + "/" + filename + ".html"
+          : filename + ".html";
+
+
+      rows += `
+
+        <tr>
+
+          <td
+            class="copy-cell cell-url"
+            data-copy="${escapeAttribute(url)}">
+
+            <div class="url-text">
+              ${escapeHtml(url)}
+            </div>
+
+          </td>
+
+
+          <td
+            class="copy-cell cell-path"
+            data-copy="${escapeAttribute(directory)}">
+
+            ${escapeHtml(directory)}
+
+          </td>
+
+
+          <td
+            class="copy-cell cell-path"
+            data-copy="${escapeAttribute(formed)}">
+
+            <div class="path-main">
+              ${escapeHtml(formed)}
+            </div>
+
+            <div class="path-note">
+              ${escapeHtml(filename)}
+            </div>
+
+          </td>
+
+
+          <td
+            class="copy-cell cell-path"
+            data-copy="${escapeAttribute(filename)}">
+
+            ${escapeHtml(filename)}
+
+          </td>
+
+        </tr>
+
+      `;
+
+    }catch(error){
+
+      rows += `
+
+        <tr>
+
+          <td
+            class="copy-cell cell-url"
+            data-copy="${escapeAttribute(url)}">
+
+            <div class="url-text">
+              ${escapeHtml(url)}
+            </div>
+
+          </td>
+
+
+          <td colspan="3">
+
+            <span style="color:#b05a67;">
+              ${config.invalidUrl}
+            </span>
+
+          </td>
+
+        </tr>
+
+      `;
 
     }
 
   });
 
 
-  document.getElementById("urlResult")
-    .innerHTML=`
+  wrap.innerHTML = `
 
-    <div class="generated-wrap">
+    <table>
 
-      <div class="generated-title">
-        Ergebnisse
-      </div>
+      <thead>
 
-      <div class="table-wrap">
+        <tr>
 
-        <table class="url-table result-table">
+          <th>
+            ${config.tableUrl}
+          </th>
 
-          <thead>
+          <th>
+            ${config.tableDirectory}
+          </th>
 
-            <tr>
-              <th>URL</th>
-              <th>Verzeichnis</th>
-              <th>Dateiname</th>
-            </tr>
+          <th>
+            ${config.tableForm}
+          </th>
 
-          </thead>
+          <th>
+            ${config.tableFilename}
+          </th>
 
-   <tbody>
+        </tr>
 
-  ${rows.map(r => {
+      </thead>
 
-    const url = new URL(r.raw);
-    const parts = url.pathname.split("/").filter(Boolean);
 
-    // 最后一级目录 = 分组
-    const category = parts.length >= 2
-      ? parts[parts.length - 2]
-      : "";
+      <tbody>
+        ${rows}
+      </tbody>
 
-    // 原始文件名
-    let filename = parts.length >= 2
-      ? parts[parts.length - 1]
-      : "";
+    </table>
 
-    // 去掉 .html
-    filename = filename.replace(/\.html$/i, "");
+  `;
 
-    // 去掉结尾的 -copy
-    filename = filename.replace(/-copy$/i, "");
 
-    // 重新加回 .html
-    const htmlPath = category
-      ? `${category}/${filename}.html`
-      : `${filename}.html`;
+  wrap
+    .querySelectorAll(".copy-cell")
+    .forEach(cell => {
 
-    return `
+      cell.addEventListener(
+        "click",
+        () => {
 
-      <tr>
+          copyText(
+            cell.dataset.copy
+          );
 
-        <td
-          class="copyable"
-          onclick='copyText(${JSON.stringify(r.raw)})'>
-          ${escapeHtml(r.raw)}
-        </td>
+        }
+      );
 
-        <td
-          class="copyable"
-          onclick='copyText(${JSON.stringify(category)})'>
-          <code>
-            ${escapeHtml(category)}
-          </code>
-        </td>
-
-        <td
-          class="copyable"
-          onclick='copyText(${JSON.stringify(htmlPath)})'>
-          <code>
-            ${escapeHtml(htmlPath)}
-          </code>
-        </td>
-
-      </tr>
-
-    `;
-
-  }).join("")}
-
-</tbody>
-
-        </table>
-
-      </div>
-
-    </div>`;
+    });
 
 }
 
-
-/* =========================
-   CLEAR URLS
-========================= */
 
 function clearUrls(){
 
-  document.getElementById("urlInput")
-    .value="";
+  const config =
+    UI[currentLang];
 
-  document.getElementById("urlResult")
-    .innerHTML="";
+
+  document
+    .getElementById("urlInput")
+    .value = "";
+
+
+  document
+    .getElementById("urlTableWrap")
+    .innerHTML = `
+
+      <div class="empty">
+        ${config.urlEmpty}
+      </div>
+
+    `;
 
 }
 
 
-/* =========================
-   MOBILE AD COPY
-========================= */
+/* =========================================================
+   GLOBAL LANGUAGE SWITCH
+========================================================= */
 
-function copyFixedMobile(){
+function setLanguage(lang){
 
-  copyText(MOBILE_AD_CODE);
+  if(
+    lang !== "de" &&
+    lang !== "es"
+  ){
+    return;
+  }
+
+
+  currentLang =
+    lang;
+
+
+  updateGlobalLanguageUI();
+
+  renderAll();
 
 }
 
 
-/* =========================
-   PC AD INPUT
-========================= */
+function updateGlobalLanguageUI(){
 
-function getPcItems(){
-
-  const raw=
-    document
-      .getElementById("pcBatchInput")
-      .value
-      .trim();
-
-  if(!raw)return[];
+  document
+    .getElementById("globalDeBtn")
+    .classList.toggle(
+      "active",
+      currentLang === "de"
+    );
 
 
-  return raw
-    .split(/\n+/)
-    .map(line=>{
-
-      let parts=line.split(/\t/);
-
-      if(parts.length<2){
-        parts=line.split(/\s*\|\s*/);
-      }
-
-      if(parts.length<2)return null;
-
-      return{
-        url:parts[0].trim(),
-        text:parts
-          .slice(1)
-          .join(" ")
-          .trim()
-      };
-
-    })
-    .filter(
-      x=>x&&x.url&&x.text
+  document
+    .getElementById("globalEsBtn")
+    .classList.toggle(
+      "active",
+      currentLang === "es"
     );
 
 }
 
 
-/* =========================
-   GENERATE PC AD
-========================= */
+function renderAll(){
 
-function generatePcAd(){
-
-  const items=getPcItems();
-
-  if(!items.length){
-
-    showToast("Keine gültigen Einträge");
-
-    return;
-
-  }
+  const config =
+    UI[currentLang];
 
 
-  const code=PC_TEMPLATE(items);
+  /*
+    Header
+  */
+
+  document
+    .getElementById("pageTitle")
+    .textContent =
+      config.pageTitle;
 
 
-  const box=
-    document.getElementById("pcCode");
+  document
+    .getElementById("pageSubtitle")
+    .textContent =
+      config.pageSubtitle;
 
-  box.textContent=code;
 
-  box.style.color="#eee9ff";
+  /*
+    Navigation
+  */
 
-  document.getElementById("pcPreview")
-    .innerHTML=`
+  document
+    .getElementById("navUrl")
+    .textContent =
+      config.navUrl;
 
-    <div class="trend-demo">
 
-      <h4>
-        Heiß &amp; im Trend
-      </h4>
+  document
+    .getElementById("navAds")
+    .textContent =
+      config.navAds;
 
-      ${items.map((x,i)=>`
 
-        <div class="trend-item">
+  document
+    .getElementById("navReplacer")
+    .textContent =
+      config.navReplacer;
 
-          <img
-            src="https://edimakor.hitpaw.com/images/edimakor-2025/article/hot-and-trend-icon-${i+1}.png"
-            alt="">
 
-          <a href="#">
-            ${escapeHtml(x.text)}
-          </a>
+  /*
+    URL module
+  */
 
-        </div>
+  document
+    .getElementById("urlTitle")
+    .textContent =
+      config.urlTitle;
 
-      `).join("")}
 
-    </div>`;
+  document
+    .getElementById("urlDesc")
+    .textContent =
+      config.urlDesc;
+
+
+  document
+    .getElementById("urlInput")
+    .placeholder =
+      config.urlPlaceholder;
+
+
+  document
+    .getElementById("analyzeBtn")
+    .textContent =
+      config.analyze;
+
+
+  document
+    .getElementById("clearUrlBtn")
+    .textContent =
+      config.clear;
+
+
+  /*
+    IMPORTANT:
+    Do not automatically re-analyze or clear
+    existing URL input when changing language.
+    Existing table also remains untouched.
+  */
+
+
+  /*
+    Mobile
+  */
+
+  document
+    .getElementById("mobileTitle")
+    .textContent =
+      config.mobileTitle;
+
+
+  renderMobileAd();
+
+
+  /*
+    PC
+  */
+
+  document
+    .getElementById("pcTitle")
+    .textContent =
+      config.pcTitle;
+
+
+  document
+    .getElementById("pcInputHint")
+    .textContent =
+      config.pcInputHint;
+
+
+  document
+    .getElementById("pcTrendInput")
+    .placeholder =
+      config.pcPlaceholder;
+
+
+  document
+    .getElementById("pcGenerateBtn")
+    .textContent =
+      config.pcGenerate;
+
+
+  /*
+    Re-rendering PC preview does NOT touch input.
+  */
+
+  renderPcPreview();
+
+
+  /*
+    Replacer
+  */
+
+  renderReplaceUI();
 
 }
 
 
-/* =========================
-   COPY PC CODE
-========================= */
+/* =========================================================
+   EVENT BINDINGS
+========================================================= */
 
-function copyPcCode(){
 
-  const box=
-    document.getElementById("pcCode");
+/* Global language */
 
-  if(
-    !box.textContent ||
-    box.textContent.includes("Der HTML-Code wird")
-  ){
-    return;
-  }
+document
+  .getElementById("globalDeBtn")
+  .addEventListener(
+    "click",
+    () => setLanguage("de")
+  );
 
-  copyText(box.textContent);
 
-}
+document
+  .getElementById("globalEsBtn")
+  .addEventListener(
+    "click",
+    () => setLanguage("es")
+  );
+
+
+/* URL */
+
+document
+  .getElementById("analyzeBtn")
+  .addEventListener(
+    "click",
+    analyzeUrls
+  );
+
+
+document
+  .getElementById("clearUrlBtn")
+  .addEventListener(
+    "click",
+    clearUrls
+  );
+
+
+/* Mobile preview = COPY */
+
+document
+  .getElementById("mobilePreviewClick")
+  .addEventListener(
+    "click",
+    () => {
+
+      copyText(
+        getMobileAdCode()
+      );
+
+    }
+  );
+
+
+/* PC */
+
+document
+  .getElementById("pcGenerateBtn")
+  .addEventListener(
+    "click",
+    generatePcCode
+  );
+
+
+document
+  .getElementById("pcClearBtn")
+  .addEventListener(
+    "click",
+    clearPc
+  );
+
+
+/*
+  Update PC preview live while typing.
+  This does NOT change the input.
+*/
+
+document
+  .getElementById("pcTrendInput")
+  .addEventListener(
+    "input",
+    renderPcPreview
+  );
+
+
+/* Replacer */
+
+document
+  .getElementById("replaceButton")
+  .addEventListener(
+    "click",
+    replaceHtmlLinks
+  );
+
+
+document
+  .getElementById("replaceClearButton")
+  .addEventListener(
+    "click",
+    clearHtmlReplacer
+  );
+
+
+/*
+  Output itself = copy.
+*/
+
+document
+  .getElementById("replaceOutput")
+  .addEventListener(
+    "click",
+    copyReplacedHtml
+  );
+
+
+/* =========================================================
+   INIT
+========================================================= */
+
+renderAll();
 
 </script>
 
 </body>
 </html>
-```
+
