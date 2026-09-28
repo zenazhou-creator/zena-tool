@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="de">
 <head>
@@ -21,13 +20,9 @@
   --radius:14px;
 }
 
-*{
-  box-sizing:border-box;
-}
+*{ box-sizing:border-box; }
 
-html{
-  scroll-behavior:smooth;
-}
+html{ scroll-behavior:smooth; }
 
 body{
   margin:0;
@@ -41,13 +36,9 @@ body{
 }
 
 button,
-textarea{
-  font:inherit;
-}
+textarea{ font:inherit; }
 
-button{
-  cursor:pointer;
-}
+button{ cursor:pointer; }
 
 .app{
   width:min(1180px,calc(100% - 28px));
@@ -68,9 +59,7 @@ button{
   margin-bottom:12px;
 }
 
-.header-main{
-  min-width:0;
-}
+.header-main{ min-width:0; }
 
 .eyebrow{
   display:inline-flex;
@@ -194,13 +183,7 @@ h1{
   box-shadow:var(--shadow);
 }
 
-.card.full{
-  grid-column:1/-1;
-}
-
-.card.third{
-  grid-column:span 6;
-}
+.card.full{ grid-column:1/-1; }
 
 .card-head{
   display:flex;
@@ -269,9 +252,7 @@ textarea:focus{
 }
 
 #urlInput,
-#pcTrendInput{
-  min-height:68px;
-}
+#pcTrendInput{ min-height:68px; }
 
 #htmlReplaceInput{
   min-height:125px;
@@ -304,9 +285,7 @@ textarea:focus{
   background:var(--primary-soft);
 }
 
-.btn:hover{
-  transform:translateY(-1px);
-}
+.btn:hover{ transform:translateY(-1px); }
 
 
 /* =========================
@@ -342,19 +321,14 @@ td{
   vertical-align:top;
   font-size:9px;
   line-height:1.35;
+  transition:background .15s ease;
 }
 
-tr:last-child td{
-  border-bottom:0;
-}
+tr:last-child td{ border-bottom:0; }
 
-.copy-cell{
-  cursor:pointer;
-}
+.copy-cell{ cursor:pointer; }
 
-.copy-cell:hover{
-  background:var(--primary-soft-2);
-}
+.copy-cell:hover{ background:var(--primary-soft-2); }
 
 .cell-url{
   width:42%;
@@ -376,9 +350,7 @@ tr:last-child td{
   word-break:break-word;
 }
 
-.path-main{
-  font-weight:700;
-}
+.path-main{ font-weight:700; }
 
 .path-note{
   color:var(--muted);
@@ -398,9 +370,7 @@ tr:last-child td{
    The visual itself is clickable.
 ========================= */
 
-.preview{
-  margin-top:7px;
-}
+.preview{ margin-top:7px; }
 
 .click-preview{
   cursor:pointer;
@@ -414,23 +384,38 @@ tr:last-child td{
 
 
 /* =========================
-   MOBILE PREVIEW
+   AD MODULES (② + ③)
+   紧凑卡片预览，只显示文本内容
+========================= */
+
+.ad-grid{
+  display:grid;
+  grid-template-columns:repeat(12,1fr);
+  gap:11px;
+  align-items:start;
+}
+
+.ad-card.ad-mobile{ grid-column:span 5; }
+.ad-card.ad-pc{ grid-column:span 7; }
+
+.ad-card .preview{ margin-top:8px; }
+
+
+/* =========================
+   MOBILE PREVIEW（卡片）
 ========================= */
 
 .mobile-preview-frame{
-  padding:7px 6px 5px;
+  padding:8px;
   border:1px dashed #d9d0ec;
   border-radius:8px;
   background:#faf9fd;
 }
 
-.mobile-preview-inner{
-  max-width:390px;
-  margin:auto;
-}
+.mobile-preview-inner{ width:100%; }
 
 .bottom-ad-preview{
-  padding:7px 8px;
+  padding:10px 12px;
   color:#fff;
   background:linear-gradient(135deg,#241d3a,#6544d4);
   border-radius:6px;
@@ -440,13 +425,13 @@ tr:last-child td{
   display:flex;
   align-items:center;
   justify-content:space-between;
-  gap:8px;
+  gap:10px;
 }
 
 .ad-brand{
   display:flex;
   align-items:center;
-  gap:4px;
+  gap:5px;
 }
 
 .ad-brand img{
@@ -455,102 +440,75 @@ tr:last-child td{
   object-fit:contain;
 }
 
-.ad-brand strong{
-  font-size:7px;
-}
+.ad-brand strong{ font-size:10px; }
 
 .ad-copy{
-  margin-top:2px;
-  max-width:285px;
-  color:rgba(255,255,255,.78);
-  font-size:5.5px;
-  line-height:1.3;
+  margin-top:3px;
+  color:rgba(255,255,255,.8);
+  font-size:8px;
+  line-height:1.4;
 }
 
 .ad-btn{
   flex:none;
-  padding:3px 6px;
-  border-radius:4px;
+  padding:5px 9px;
+  border-radius:5px;
   background:#fff;
   color:#5d45bd;
-  font-size:5.5px;
+  font-size:8.5px;
   font-weight:800;
+  white-space:nowrap;
 }
 
 
 /* =========================
-   PC PREVIEW
+   PC PREVIEW（卡片）
 ========================= */
 
 .pc-preview{
-  display:flex;
-  justify-content:flex-end;
-  min-height:165px;
-  padding:6px;
+  padding:11px 12px;
   border:1px dashed #d9d0ec;
   border-radius:8px;
-  background:linear-gradient(135deg,#f4f1fa,#ebe6f7);
-}
-
-.pc-page{
-  width:100%;
-  min-height:153px;
-  padding:6px;
-  border-radius:5px;
-  background:#fff;
-  box-shadow:0 2px 9px rgba(70,50,110,.06);
-  display:flex;
-  justify-content:flex-end;
-}
-
-.pc-sidebar{
-  width:160px;
-  padding:7px;
-  border:1px solid #ece8f3;
-  border-radius:6px;
-  background:#fff;
+  background:#faf9fd;
 }
 
 .pc-logo-row{
   display:flex;
   align-items:center;
-  justify-content:center;
-  gap:4px;
-  margin-bottom:5px;
+  gap:6px;
+  margin-bottom:4px;
 }
 
 .pc-logo-row img{
-  width:19px;
-  height:19px;
+  width:20px;
+  height:20px;
   object-fit:contain;
 }
 
-.pc-logo-row strong{
-  font-size:7px;
-}
+.pc-logo-row strong{ font-size:10.5px; }
 
 .pc-description{
-  margin-bottom:6px;
-  text-align:center;
+  margin-bottom:8px;
   color:#70697f;
-  font-size:5.3px;
-  line-height:1.35;
+  font-size:8.5px;
+  line-height:1.45;
 }
 
 .pc-system{
   display:grid;
-  gap:4px;
+  grid-template-columns:1fr 1fr;
+  gap:6px;
 }
 
 .pc-preview-btn{
   display:flex;
   align-items:center;
   justify-content:center;
-  gap:3px;
-  min-height:19px;
-  padding:3px;
-  border-radius:3px;
-  font-size:5.3px;
+  gap:4px;
+  min-height:24px;
+  padding:4px 6px;
+  border-radius:5px;
+  font-size:8.5px;
   font-weight:800;
 }
 
@@ -566,30 +524,33 @@ tr:last-child td{
 }
 
 .pc-trend-title{
-  margin:7px 0 4px;
-  padding-top:5px;
+  margin:10px 0 6px;
+  padding-top:8px;
   border-top:1px solid #eeeaf5;
-  font-size:6px;
+  font-size:9.5px;
   font-weight:800;
 }
 
 .pc-trend-item{
   display:flex;
-  gap:3px;
+  gap:6px;
   align-items:center;
-  margin-bottom:3px;
+  margin-bottom:5px;
 }
 
+.pc-trend-item:last-child{ margin-bottom:0; }
+
 .pc-trend-item img{
-  width:9px;
-  height:9px;
+  width:13px;
+  height:13px;
+  flex:none;
   object-fit:contain;
 }
 
 .pc-trend-item span{
   color:#625b72;
-  font-size:4.8px;
-  line-height:1.2;
+  font-size:8.5px;
+  line-height:1.35;
 }
 
 
@@ -659,11 +620,36 @@ tr:last-child td{
   white-space:pre-wrap;
   word-break:break-word;
   cursor:pointer;
+  transition:background .15s ease,border-color .15s ease;
 }
 
-.code-box:hover{
-  border-color:#b9a9ec;
-}
+.code-box:hover{ border-color:#b9a9ec; }
+
+
+/* =========================================================
+   CLICK COLOR CYCLE
+   每点击一次就换一种颜色：
+   绿 → 蓝 → 黄 → 粉 → 绿 ...（循环）
+   这些规则放在 hover 规则之后，所以会覆盖 hover 颜色。
+========================================================= */
+
+/* 表格单元格 */
+.copy-cell.click-c1{ background:#dff3e6; }
+.copy-cell.click-c2{ background:#deeafb; }
+.copy-cell.click-c3{ background:#fdefcf; }
+.copy-cell.click-c4{ background:#fbe1ec; }
+
+/* Mobile / PC 预览框 */
+.click-preview.click-c1{ background:#dff3e6; border-color:#8fcfa8; }
+.click-preview.click-c2{ background:#deeafb; border-color:#93b7ea; }
+.click-preview.click-c3{ background:#fdefcf; border-color:#e6c064; }
+.click-preview.click-c4{ background:#fbe1ec; border-color:#e79ab9; }
+
+/* 替换结果代码框（深色底，用深色调 + 彩色边框） */
+.code-box.click-c1{ background:#15281d; border-color:#5fb583; }
+.code-box.click-c2{ background:#15243a; border-color:#6c9be0; }
+.code-box.click-c3{ background:#33291a; border-color:#d9b04d; }
+.code-box.click-c4{ background:#341c28; border-color:#d97ba1; }
 
 
 /* =========================
@@ -698,15 +684,9 @@ tr:last-child td{
 ========================= */
 
 @media(max-width:900px){
-
-  .card.third{
-    grid-column:1/-1;
-  }
-
-  .replace-rules{
-    grid-template-columns:1fr;
-  }
-
+  .ad-card.ad-mobile,
+  .ad-card.ad-pc{ grid-column:1/-1; }
+  .replace-rules{ grid-template-columns:1fr; }
 }
 
 @media(max-width:600px){
@@ -716,26 +696,18 @@ tr:last-child td{
     padding-top:12px;
   }
 
-  .header{
-    display:block;
-  }
+  .header{ display:block; }
 
   .global-lang{
     margin-top:10px;
     width:max-content;
   }
 
-  h1{
-    font-size:21px;
-  }
+  h1{ font-size:21px; }
 
-  .card{
-    padding:10px;
-  }
+  .card{ padding:10px; }
 
-  .module-nav{
-    top:6px;
-  }
+  .module-nav{ top:6px; }
 
   .module-nav-inner{
     max-width:100%;
@@ -748,9 +720,6 @@ tr:last-child td{
     font-size:8px;
   }
 
-  .pc-sidebar{
-    width:150px;
-  }
 
   .cell-url{
     width:38%;
@@ -775,41 +744,21 @@ tr:last-child td{
 
   <div class="header-main">
 
-    <div class="eyebrow">
-      EDIMAKOR · CONTENT WORKSPACE
-    </div>
+    <div class="eyebrow">EDIMAKOR · CONTENT WORKSPACE</div>
 
-    <h1 id="pageTitle">
-      HTML Content Tools
-    </h1>
+    <h1 id="pageTitle">HTML Content Tools</h1>
 
-    <p id="pageSubtitle">
-      URL-Analyse, Werbemodule und HTML-Link-Ersetzung schnell erstellen.
-    </p>
+    <p id="pageSubtitle">URL-Analyse, Werbemodule und HTML-Link-Ersetzung schnell erstellen.</p>
 
   </div>
 
-
   <!-- ONE GLOBAL LANGUAGE SWITCH -->
-
   <div class="global-lang">
-
-    <button
-      type="button"
-      id="globalDeBtn">
-      DE
-    </button>
-
-    <button
-      type="button"
-      id="globalEsBtn">
-      ES
-    </button>
-
+    <button type="button" id="globalDeBtn">DE</button>
+    <button type="button" id="globalEsBtn">ES</button>
   </div>
 
 </header>
-
 
 
 <!-- =========================
@@ -817,31 +766,12 @@ tr:last-child td{
 ========================= -->
 
 <nav class="module-nav">
-
   <div class="module-nav-inner">
-
-    <a
-      href="#urlTool"
-      id="navUrl">
-      ① URL
-    </a>
-
-    <a
-      href="#adTools"
-      id="navAds">
-      ②③ Ads
-    </a>
-
-    <a
-      href="#replacerTool"
-      id="navReplacer">
-      ④ Replacer
-    </a>
-
+    <a href="#urlTool" id="navUrl">① URL</a>
+    <a href="#adTools" id="navAds">②③ Ads</a>
+    <a href="#replacerTool" id="navReplacer">④ Replacer</a>
   </div>
-
 </nav>
-
 
 
 <main class="grid">
@@ -851,76 +781,33 @@ tr:last-child td{
      ① URL ANALYZER
 ===================================================== -->
 
-<section
-  class="card full"
-  id="urlTool">
+<section class="card full" id="urlTool">
 
   <div class="card-head">
-
     <div>
-
       <div class="card-title">
-
-        <div class="card-number">
-          ①
-        </div>
-
-        <h2 id="urlTitle">
-          URL-Analyse
-        </h2>
-
+        <div class="card-number">①</div>
+        <h2 id="urlTitle">URL-Analyse</h2>
       </div>
-
-      <p
-        class="card-desc"
-        id="urlDesc">
-        Eine URL pro Zeile · Klick auf Tabellenzelle = kopieren
-      </p>
-
+      <p class="card-desc" id="urlDesc">Eine URL pro Zeile · Klick auf Tabellenzelle = kopieren</p>
     </div>
-
   </div>
-
 
   <textarea
     id="urlInput"
     placeholder="https://edimakor.hitpaw.de/photo-generation-tips/ai-cake-generator-copy.html
 https://edimakor.hitpaw.de/ai-video-tools/create-ai-streamer.html"></textarea>
 
-
   <div class="actions">
-
-    <button
-      type="button"
-      class="btn btn-primary"
-      id="analyzeBtn">
-      URLs analysieren
-    </button>
-
-    <button
-      type="button"
-      class="btn btn-soft"
-      id="clearUrlBtn">
-      Leeren
-    </button>
-
+    <button type="button" class="btn btn-primary" id="analyzeBtn">URLs analysieren</button>
+    <button type="button" class="btn btn-soft" id="clearUrlBtn">Leeren</button>
   </div>
 
-
-  <div
-    class="table-wrap"
-    id="urlTableWrap">
-
-    <div
-      class="empty"
-      id="urlEmpty">
-      Noch keine URLs analysiert.
-    </div>
-
+  <div class="table-wrap" id="urlTableWrap">
+    <div class="empty" id="urlEmpty">Noch keine URLs analysiert.</div>
   </div>
 
 </section>
-
 
 
 <!-- =====================================================
@@ -932,98 +819,42 @@ https://edimakor.hitpaw.de/ai-video-tools/create-ai-streamer.html"></textarea>
   id="adTools"
   style="padding:0;border:0;background:transparent;box-shadow:none;">
 
-  <div
-    style="
-      display:grid;
-      grid-template-columns:repeat(12,1fr);
-      gap:11px;
-    ">
+  <div class="ad-grid">
 
-
-    <!-- =========================
-         ② MOBILE
-    ========================= -->
-
-    <section class="card third">
+    <!-- ② MOBILE -->
+    <section class="card ad-card ad-mobile">
 
       <div class="card-head">
-
         <div>
-
           <div class="card-title">
-
-            <div class="card-number">
-              ②
-            </div>
-
-            <h2 id="mobileTitle">
-              Mobile Bottom Ad
-            </h2>
-
+            <div class="card-number">②</div>
+            <h2 id="mobileTitle">Mobile Bottom Ad</h2>
           </div>
-
         </div>
-
       </div>
 
-
-      <!--
-        IMPORTANT:
-        The preview itself is the copy button.
-        There is NO visible "Preview" or copy hint.
-      -->
-
+      <!-- The preview itself is the copy button. -->
       <div class="preview">
-
-        <div
-          class="mobile-preview-frame click-preview"
-          id="mobilePreviewClick">
-
-          <div
-            class="mobile-preview-inner"
-            id="mobileAdPreview">
-          </div>
-
+        <div class="mobile-preview-frame click-preview" id="mobilePreviewClick">
+          <div class="mobile-preview-inner" id="mobileAdPreview"></div>
         </div>
-
       </div>
 
     </section>
 
 
-
-    <!-- =========================
-         ③ PC
-    ========================= -->
-
-    <section class="card third">
+    <!-- ③ PC -->
+    <section class="card ad-card ad-pc">
 
       <div class="card-head">
-
         <div>
-
           <div class="card-title">
-
-            <div class="card-number">
-              ③
-            </div>
-
-            <h2 id="pcTitle">
-              PC Right-side Ad
-            </h2>
-
+            <div class="card-number">③</div>
+            <h2 id="pcTitle">PC Right-side Ad</h2>
           </div>
-
-          <p
-            class="card-desc"
-            id="pcInputHint">
-            URL + Tab + Beschriftung · 3–5 Einträge
-          </p>
-
+          <p class="card-desc" id="pcInputHint">URL + Tab + Beschriftung · 3–5 Einträge</p>
         </div>
-
       </div>
-
 
       <textarea
         id="pcTrendInput"
@@ -1032,38 +863,14 @@ https://edimakor.hitpaw.de/ai-video-tools/example.html    Beispielartikel
 https://edimakor.hitpaw.de/photo-tips/example.html    Foto-Tipps
 https://edimakor.hitpaw.de/video-editing-tips/example.html    Video-Tipps"></textarea>
 
-
       <div class="actions">
-
-        <button
-          type="button"
-          class="btn btn-primary"
-          id="pcGenerateBtn">
-          PC-Modul erstellen
-        </button>
-
-        <button
-          type="button"
-          class="btn btn-soft"
-          id="pcClearBtn">
-          Leeren
-        </button>
-
+        <button type="button" class="btn btn-primary" id="pcGenerateBtn">PC-Modul erstellen</button>
+        <button type="button" class="btn btn-soft" id="pcClearBtn">Leeren</button>
       </div>
 
-
-      <!--
-        IMPORTANT:
-        The whole PC preview is the copy button.
-        No visible helper text.
-      -->
-
+      <!-- The whole PC preview is the copy button. -->
       <div class="preview">
-
-        <div
-          id="pcPreview">
-        </div>
-
+        <div id="pcPreview"></div>
       </div>
 
     </section>
@@ -1073,89 +880,37 @@ https://edimakor.hitpaw.de/video-editing-tips/example.html    Video-Tipps"></tex
 </div>
 
 
-
 <!-- =====================================================
      ④ HTML REPLACER
 ===================================================== -->
 
-<section
-  class="card full"
-  id="replacerTool">
+<section class="card full" id="replacerTool">
 
   <div class="card-head">
-
     <div>
-
       <div class="card-title">
-
-        <div class="card-number">
-          ④
-        </div>
-
-        <h2 id="replaceTitle">
-          HTML Code Batch Replacer
-        </h2>
-
+        <div class="card-number">④</div>
+        <h2 id="replaceTitle">HTML Code Batch Replacer</h2>
       </div>
-
-      <p
-        class="card-desc"
-        id="replaceDesc">
-        Vollständigen HTML-Code einfügen · nur definierte Links werden ersetzt
-      </p>
-
+      <p class="card-desc" id="replaceDesc">Vollständigen HTML-Code einfügen · nur definierte Links werden ersetzt</p>
     </div>
-
   </div>
 
-
-  <div
-    class="replace-rules"
-    id="replaceRules">
-  </div>
-
+  <div class="replace-rules" id="replaceRules"></div>
 
   <textarea
     id="htmlReplaceInput"
     placeholder="Hier den vollständigen HTML-Code einfügen..."></textarea>
 
-
   <div class="actions">
-
-    <button
-      type="button"
-      class="btn btn-primary"
-      id="replaceButton">
-      Links ersetzen
-    </button>
-
-    <button
-      type="button"
-      class="btn btn-soft"
-      id="replaceClearButton">
-      Leeren
-    </button>
-
+    <button type="button" class="btn btn-primary" id="replaceButton">Links ersetzen</button>
+    <button type="button" class="btn btn-soft" id="replaceClearButton">Leeren</button>
   </div>
 
+  <div id="replaceResult" class="replace-result">Noch kein Ergebnis.</div>
 
-  <div
-    id="replaceResult"
-    class="replace-result">
-    Noch kein Ergebnis.
-  </div>
-
-
-  <!--
-    The output itself is clickable.
-    No separate copy button.
-  -->
-
-  <div
-    id="replaceOutput"
-    class="code-box">
-    Der ersetzte HTML-Code wird hier angezeigt.
-  </div>
+  <!-- The output itself is clickable. No separate copy button. -->
+  <div id="replaceOutput" class="code-box">Der ersetzte HTML-Code wird hier angezeigt.</div>
 
 </section>
 
@@ -1165,12 +920,7 @@ https://edimakor.hitpaw.de/video-editing-tips/example.html    Video-Tipps"></tex
 </div>
 
 
-
-<div
-  class="toast"
-  id="toast">
-</div>
-
+<div class="toast" id="toast"></div>
 
 
 <script>
@@ -1182,6 +932,58 @@ https://edimakor.hitpaw.de/video-editing-tips/example.html    Video-Tipps"></tex
 let currentLang = "de";
 let toastTimer = null;
 
+/* PC 预览会被重新渲染，所以点击次数单独保存 */
+let pcClicks = 0;
+
+
+/* =========================================================
+   CLICK COLOR CYCLE
+   每点击一次换一种颜色，共 4 种（绿 → 蓝 → 黄 → 粉），循环。
+   颜色样式见 CSS：.click-c1 ~ .click-c4
+========================================================= */
+
+const CLICK_COLOR_COUNT = 4;
+
+function applyClickColor(el){
+
+  if(!el) return;
+
+  for(let i = 1; i <= CLICK_COLOR_COUNT; i++){
+    el.classList.remove("click-c" + i);
+  }
+
+  const n = parseInt(el.dataset.clicks || "0", 10);
+
+  if(n > 0){
+    el.classList.add("click-c" + (((n - 1) % CLICK_COLOR_COUNT) + 1));
+  }
+
+}
+
+function cycleClick(el){
+
+  if(!el) return 0;
+
+  const n = parseInt(el.dataset.clicks || "0", 10) + 1;
+
+  el.dataset.clicks = String(n);
+
+  applyClickColor(el);
+
+  return n;
+
+}
+
+function resetClick(el){
+
+  if(!el) return;
+
+  el.dataset.clicks = "0";
+
+  applyClickColor(el);
+
+}
+
 
 /* =========================================================
    GENERAL
@@ -1189,22 +991,17 @@ let toastTimer = null;
 
 function showToast(message){
 
-  const toast =
-    document.getElementById("toast");
+  const toast = document.getElementById("toast");
 
-  toast.textContent =
-    message;
+  toast.textContent = message;
 
   toast.classList.add("show");
 
   clearTimeout(toastTimer);
 
-  toastTimer =
-    setTimeout(() => {
-
-      toast.classList.remove("show");
-
-    },1600);
+  toastTimer = setTimeout(() => {
+    toast.classList.remove("show");
+  }, 1600);
 
 }
 
@@ -1219,17 +1016,11 @@ async function copyText(text){
 
   }catch(error){
 
-    const textarea =
-      document.createElement("textarea");
+    const textarea = document.createElement("textarea");
 
-    textarea.value =
-      text;
-
-    textarea.style.position =
-      "fixed";
-
-    textarea.style.left =
-      "-9999px";
+    textarea.value = text;
+    textarea.style.position = "fixed";
+    textarea.style.left = "-9999px";
 
     document.body.appendChild(textarea);
 
@@ -1241,11 +1032,7 @@ async function copyText(text){
 
   }
 
-  showToast(
-    currentLang === "de"
-      ? "Kopiert"
-      : "Copiado"
-  );
+  showToast(currentLang === "de" ? "Kopiert" : "Copiado");
 
 }
 
@@ -1279,130 +1066,60 @@ const UI = {
 
   de:{
 
-    pageTitle:
-      "HTML Content Tools",
+    pageTitle:"HTML Content Tools",
+    pageSubtitle:"URL-Analyse, Werbemodule und HTML-Link-Ersetzung schnell erstellen.",
 
-    pageSubtitle:
-      "URL-Analyse, Werbemodule und HTML-Link-Ersetzung schnell erstellen.",
+    navUrl:"① URL",
+    navAds:"②③ Ads",
+    navReplacer:"④ Replacer",
 
-    navUrl:
-      "① URL",
-
-    navAds:
-      "②③ Ads",
-
-    navReplacer:
-      "④ Replacer",
-
-
-    urlTitle:
-      "URL-Analyse",
-
-    urlDesc:
-      "Eine URL pro Zeile · Klick auf Tabellenzelle = kopieren",
+    urlTitle:"URL-Analyse",
+    urlDesc:"Eine URL pro Zeile · Klick auf Tabellenzelle = kopieren",
 
     urlPlaceholder:
-      `https://edimakor.hitpaw.de/photo-generation-tips/ai-cake-generator-copy.html
+`https://edimakor.hitpaw.de/photo-generation-tips/ai-cake-generator-copy.html
 https://edimakor.hitpaw.de/ai-video-tools/create-ai-streamer.html`,
 
-    analyze:
-      "URLs analysieren",
+    analyze:"URLs analysieren",
+    clear:"Leeren",
+    urlEmpty:"Noch keine URLs analysiert.",
+    urlInputEmpty:"Bitte zuerst URLs eingeben.",
+    invalidUrl:"Ungültige URL",
 
-    clear:
-      "Leeren",
+    tableUrl:"URL",
+    tableDirectory:"Verzeichnis",
+    tableForm:"Form",
+    tableFilename:"Dateiname",
 
-    urlEmpty:
-      "Noch keine URLs analysiert.",
+    mobileTitle:"Mobile Bottom Ad",
 
-    urlInputEmpty:
-      "Bitte zuerst URLs eingeben.",
-
-    invalidUrl:
-      "Ungültige URL",
-
-    tableUrl:
-      "URL",
-
-    tableDirectory:
-      "Verzeichnis",
-
-    tableForm:
-      "Form",
-
-    tableFilename:
-      "Dateiname",
-
-
-    mobileTitle:
-      "Mobile Bottom Ad",
-
-
-    pcTitle:
-      "PC Right-side Ad",
-
-    pcInputHint:
-      "URL + Tab + Beschriftung · 3–5 Einträge",
+    pcTitle:"PC Right-side Ad",
+    pcInputHint:"URL + Tab + Beschriftung · 3–5 Einträge",
 
     pcPlaceholder:
-      `URL[TAB]Beschriftung
+`URL[TAB]Beschriftung
 https://edimakor.hitpaw.de/ai-video-tools/example.html    Beispielartikel
 https://edimakor.hitpaw.de/photo-tips/example.html    Foto-Tipps
 https://edimakor.hitpaw.de/video-editing-tips/example.html    Video-Tipps`,
 
-    pcGenerate:
-      "PC-Modul erstellen",
+    pcGenerate:"PC-Modul erstellen",
+    pcEmpty:"Artikel oben eingeben",
 
-    pcEmpty:
-      "Artikel oben eingeben",
-
-
-    replaceTitle:
-      "HTML Code Batch Replacer",
-
-    replaceDesc:
-      "Vollständigen HTML-Code einfügen · nur definierte Links werden ersetzt",
-
-    replacePlaceholder:
-      "Hier den vollständigen HTML-Code einfügen...",
-
-    replaceButton:
-      "Links ersetzen",
-
-    replaceClear:
-      "Leeren",
-
-    replaceEmptyResult:
-      "Noch kein Ergebnis.",
-
-    replaceEmptyOutput:
-      "Der ersetzte HTML-Code wird hier angezeigt.",
-
-    replaceNoInput:
-      "Bitte HTML-Code eingeben",
-
-    replaceNoResult:
-      "Noch kein Ergebnis",
-
-    replaceNoLinks:
-      "Keine passenden Links gefunden",
+    replaceTitle:"HTML Code Batch Replacer",
+    replaceDesc:"Vollständigen HTML-Code einfügen · nur definierte Links werden ersetzt",
+    replacePlaceholder:"Hier den vollständigen HTML-Code einfügen...",
+    replaceButton:"Links ersetzen",
+    replaceClear:"Leeren",
+    replaceEmptyResult:"Noch kein Ergebnis.",
+    replaceEmptyOutput:"Der ersetzte HTML-Code wird hier angezeigt.",
+    replaceNoInput:"Bitte HTML-Code eingeben",
+    replaceNoResult:"Noch kein Ergebnis",
+    replaceNoLinks:"Keine passenden Links gefunden",
 
     replaceRules:[
-
-      [
-        '<a href="https://edimakor.hitpaw.com',
-        '<a href="https://edimakor.hitpaw.de'
-      ],
-
-      [
-        '<a href="https://app.edimakor.ai/en',
-        '<a href="https://app.edimakor.ai/de'
-      ],
-
-      [
-        '<a href="https://www.edimakor.ai/',
-        '<a href="https://www.edimakor.ai/de'
-      ]
-
+      ['<a href="https://edimakor.hitpaw.com','<a href="https://edimakor.hitpaw.de'],
+      ['<a href="https://app.edimakor.ai/en','<a href="https://app.edimakor.ai/de'],
+      ['<a href="https://www.edimakor.ai/','<a href="https://www.edimakor.ai/de']
     ]
 
   },
@@ -1410,130 +1127,60 @@ https://edimakor.hitpaw.de/video-editing-tips/example.html    Video-Tipps`,
 
   es:{
 
-    pageTitle:
-      "Herramientas de contenido HTML",
+    pageTitle:"Herramientas de contenido HTML",
+    pageSubtitle:"Analiza URLs, crea módulos publicitarios y reemplaza enlaces HTML rápidamente.",
 
-    pageSubtitle:
-      "Analiza URLs, crea módulos publicitarios y reemplaza enlaces HTML rápidamente.",
+    navUrl:"① URL",
+    navAds:"②③ Anuncios",
+    navReplacer:"④ Reemplazador",
 
-    navUrl:
-      "① URL",
-
-    navAds:
-      "②③ Anuncios",
-
-    navReplacer:
-      "④ Reemplazador",
-
-
-    urlTitle:
-      "Análisis de URL",
-
-    urlDesc:
-      "Una URL por línea · Haz clic en una celda para copiar",
+    urlTitle:"Análisis de URL",
+    urlDesc:"Una URL por línea · Haz clic en una celda para copiar",
 
     urlPlaceholder:
-      `https://edimakor.hitpaw.es/photo-generation-tips/ai-cake-generator-copy.html
+`https://edimakor.hitpaw.es/photo-generation-tips/ai-cake-generator-copy.html
 https://edimakor.hitpaw.es/ai-video-tools/create-ai-streamer.html`,
 
-    analyze:
-      "Analizar URLs",
+    analyze:"Analizar URLs",
+    clear:"Limpiar",
+    urlEmpty:"Aún no hay URLs analizadas.",
+    urlInputEmpty:"Introduce primero las URLs.",
+    invalidUrl:"URL no válida",
 
-    clear:
-      "Limpiar",
+    tableUrl:"URL",
+    tableDirectory:"Directorio",
+    tableForm:"Forma",
+    tableFilename:"Nombre de archivo",
 
-    urlEmpty:
-      "Aún no hay URLs analizadas.",
+    mobileTitle:"Anuncio inferior móvil",
 
-    urlInputEmpty:
-      "Introduce primero las URLs.",
-
-    invalidUrl:
-      "URL no válida",
-
-    tableUrl:
-      "URL",
-
-    tableDirectory:
-      "Directorio",
-
-    tableForm:
-      "Forma",
-
-    tableFilename:
-      "Nombre de archivo",
-
-
-    mobileTitle:
-      "Anuncio inferior móvil",
-
-
-    pcTitle:
-      "Anuncio lateral PC",
-
-    pcInputHint:
-      "URL + Tab + texto · 3–5 entradas",
+    pcTitle:"Anuncio lateral PC",
+    pcInputHint:"URL + Tab + texto · 3–5 entradas",
 
     pcPlaceholder:
-      `URL[TAB]Texto
+`URL[TAB]Texto
 https://edimakor.hitpaw.es/ai-video-tools/example.html    Artículo de ejemplo
 https://edimakor.hitpaw.es/photo-tips/example.html    Consejos de fotos
 https://edimakor.hitpaw.es/video-editing-tips/example.html    Consejos de edición`,
 
-    pcGenerate:
-      "Crear módulo PC",
+    pcGenerate:"Crear módulo PC",
+    pcEmpty:"Introduce artículos arriba",
 
-    pcEmpty:
-      "Introduce artículos arriba",
-
-
-    replaceTitle:
-      "Reemplazador de código HTML",
-
-    replaceDesc:
-      "Pega el código HTML completo · solo se reemplazarán los enlaces definidos",
-
-    replacePlaceholder:
-      "Pega aquí el código HTML completo...",
-
-    replaceButton:
-      "Reemplazar enlaces",
-
-    replaceClear:
-      "Limpiar",
-
-    replaceEmptyResult:
-      "Aún no hay resultados.",
-
-    replaceEmptyOutput:
-      "El código HTML reemplazado aparecerá aquí.",
-
-    replaceNoInput:
-      "Introduce el código HTML",
-
-    replaceNoResult:
-      "Aún no hay resultados",
-
-    replaceNoLinks:
-      "No se encontraron enlaces para reemplazar",
+    replaceTitle:"Reemplazador de código HTML",
+    replaceDesc:"Pega el código HTML completo · solo se reemplazarán los enlaces definidos",
+    replacePlaceholder:"Pega aquí el código HTML completo...",
+    replaceButton:"Reemplazar enlaces",
+    replaceClear:"Limpiar",
+    replaceEmptyResult:"Aún no hay resultados.",
+    replaceEmptyOutput:"El código HTML reemplazado aparecerá aquí.",
+    replaceNoInput:"Introduce el código HTML",
+    replaceNoResult:"Aún no hay resultados",
+    replaceNoLinks:"No se encontraron enlaces para reemplazar",
 
     replaceRules:[
-
-      [
-        '<a href="https://edimakor.hitpaw.com',
-        '<a href="https://edimakor.hitpaw.es'
-      ],
-
-      [
-        '<a href="https://app.edimakor.ai/en',
-        '<a href="https://app.edimakor.ai/es'
-      ],
-
-      [
-        '<a href="https://www.edimakor.ai/',
-        '<a href="https://www.edimakor.ai/es'
-      ]
-
+      ['<a href="https://edimakor.hitpaw.com','<a href="https://edimakor.hitpaw.es'],
+      ['<a href="https://app.edimakor.ai/en','<a href="https://app.edimakor.ai/es'],
+      ['<a href="https://www.edimakor.ai/','<a href="https://www.edimakor.ai/es']
     ]
 
   }
@@ -1548,40 +1195,19 @@ https://edimakor.hitpaw.es/video-editing-tips/example.html    Consejos de edici�
 const MOBILE_AD = {
 
   de:{
-
     id:"v80im6",
-
-    logoAlt:
-      "HitPaw Edimakor",
-
-    description:
-      "Bester KI-Videoeditor mit vielen Videobearbeitungselementen und KI-Funktionen.",
-
-    buyText:
-      "Jetzt kaufen",
-
-    buyUrl:
-      "https://edimakor.hitpaw.de/buy-video-editor.html"
-
+    logoAlt:"HitPaw Edimakor",
+    description:"Bester KI-Videoeditor mit vielen Videobearbeitungselementen und KI-Funktionen.",
+    buyText:"Jetzt kaufen",
+    buyUrl:"https://edimakor.hitpaw.de/buy-video-editor.html"
   },
 
-
   es:{
-
     id:"a3ooxh",
-
-    logoAlt:
-      "HitpawEdimakor",
-
-    description:
-      "El mejor editor de video de IA con muchos recursos de edición de video y funciones de IA.",
-
-    buyText:
-      "Comprar Ahora",
-
-    buyUrl:
-      "https://edimakor.hitpaw.es/buy-video-editor.html"
-
+    logoAlt:"HitpawEdimakor",
+    description:"El mejor editor de video de IA con muchos recursos de edición de video y funciones de IA.",
+    buyText:"Comprar Ahora",
+    buyUrl:"https://edimakor.hitpaw.es/buy-video-editor.html"
   }
 
 };
@@ -1589,9 +1215,7 @@ const MOBILE_AD = {
 
 function getMobileAdCode(){
 
-  const d =
-    MOBILE_AD[currentLang];
-
+  const d = MOBILE_AD[currentLang];
 
   return `<div class="bottom-ad" id="${d.id}">
   <div class="close-icon"></div>
@@ -1616,13 +1240,9 @@ function getMobileAdCode(){
 
 function renderMobileAd(){
 
-  const d =
-    MOBILE_AD[currentLang];
+  const d = MOBILE_AD[currentLang];
 
-
-  document
-    .getElementById("mobileAdPreview")
-    .innerHTML = `
+  document.getElementById("mobileAdPreview").innerHTML = `
 
       <div class="bottom-ad-preview">
 
@@ -1631,28 +1251,17 @@ function renderMobileAd(){
           <div>
 
             <div class="ad-brand">
-
               <img
                 src="https://edimakor.hitpaw.com/images/logos/hitpaw-edimakor.png"
                 alt="${escapeHtml(d.logoAlt)}">
-
-              <strong>
-                HitPaw Edimakor
-              </strong>
-
+              <strong>HitPaw Edimakor</strong>
             </div>
 
-
-            <div class="ad-copy">
-              ${escapeHtml(d.description)}
-            </div>
+            <div class="ad-copy">${escapeHtml(d.description)}</div>
 
           </div>
 
-
-          <div class="ad-btn">
-            ${escapeHtml(d.buyText)}
-          </div>
+          <div class="ad-btn">${escapeHtml(d.buyText)}</div>
 
         </div>
 
@@ -1671,57 +1280,24 @@ const PC_CONFIG = {
 
   de:{
 
-    winDownload:
-      "https://download.hitpaw.com/downloads/hitpaw-edimakor-full_8670.exe",
+    winDownload:"https://download.hitpaw.com/downloads/hitpaw-edimakor-full_8670.exe",
+    macDownload:"https://download.hitpaw.com/downloads/hitpaw-edimakor-mac-full_8671.zip",
+    winBuy:"https://edimakor.hitpaw.de/buy-video-editor.html",
+    macBuy:"https://edimakor.hitpaw.de/buy-video-editor-mac.html",
 
-    macDownload:
-      "https://download.hitpaw.com/downloads/hitpaw-edimakor-mac-full_8671.zip",
+    downloadText:"Jetzt herunterladen",
+    buyText:"Jetzt kaufen",
 
-    winBuy:
-      "https://edimakor.hitpaw.de/buy-video-editor.html",
+    description:"Bester KI-Videoeditor mit vielen Videobearbeitungselementen und KI-Funktionen.",
 
-    macBuy:
-      "https://edimakor.hitpaw.de/buy-video-editor-mac.html",
-
-    downloadText:
-      "Jetzt herunterladen",
-
-    buyText:
-      "Jetzt kaufen",
-
-    description:
-      "Bester KI-Videoeditor mit vielen Videobearbeitungselementen und KI-Funktionen.",
-
-    hotTitle:
-      "Heiß &amp; im Trend",
+    hotTitle:"Heiß &amp; im Trend",
 
     hotArticles:[
-
-      [
-        "https://edimakor.hitpaw.de/subtitle-tips/",
-        "Tipps für Untertitel"
-      ],
-
-      [
-        "https://edimakor.hitpaw.de/ai-translation/",
-        "KI-Übersetzung"
-      ],
-
-      [
-        "https://edimakor.hitpaw.de/video-editing-tips/",
-        "Videobearbeitung von Filmmaterial"
-      ],
-
-      [
-        "https://edimakor.hitpaw.de/photo-tips/",
-        "Tipps für Fotobearbeitung"
-      ],
-
-      [
-        "https://edimakor.hitpaw.de/video-editing-footage/",
-        "Video-Material &amp; Footage"
-      ]
-
+      ["https://edimakor.hitpaw.de/subtitle-tips/","Tipps für Untertitel"],
+      ["https://edimakor.hitpaw.de/ai-translation/","KI-Übersetzung"],
+      ["https://edimakor.hitpaw.de/video-editing-tips/","Videobearbeitung von Filmmaterial"],
+      ["https://edimakor.hitpaw.de/photo-tips/","Tipps für Fotobearbeitung"],
+      ["https://edimakor.hitpaw.de/video-editing-footage/","Video-Material &amp; Footage"]
     ]
 
   },
@@ -1729,52 +1305,23 @@ const PC_CONFIG = {
 
   es:{
 
-    winDownload:
-      "https://download.hitpaw.com/downloads/hitpaw-edimakor-full_8692.exe",
+    winDownload:"https://download.hitpaw.com/downloads/hitpaw-edimakor-full_8692.exe",
+    macDownload:"https://download.hitpaw.com/downloads/hitpaw-edimakor-mac-full_8693.zip",
+    winBuy:"https://edimakor.hitpaw.es/buy-video-editor.html",
+    macBuy:"https://edimakor.hitpaw.es/buy-video-editor-mac.html",
 
-    macDownload:
-      "https://download.hitpaw.com/downloads/hitpaw-edimakor-mac-full_8693.zip",
+    downloadText:"Descargar Ahora",
+    buyText:"Comprar Ahora",
 
-    winBuy:
-      "https://edimakor.hitpaw.es/buy-video-editor.html",
+    description:"El mejor editor de video con IA, con numerosos recursos de edición y funciones de IA.",
 
-    macBuy:
-      "https://edimakor.hitpaw.es/buy-video-editor-mac.html",
-
-    downloadText:
-      "Descargar Ahora",
-
-    buyText:
-      "Comprar Ahora",
-
-    description:
-      "El mejor editor de video con IA, con numerosos recursos de edición y funciones de IA.",
-
-    hotTitle:
-      "Popular &amp; Tendencia",
+    hotTitle:"Popular &amp; Tendencia",
 
     hotArticles:[
-
-      [
-        "https://edimakor.hitpaw.es/subtitle-tips/",
-        "Consejos de Subtítulos"
-      ],
-
-      [
-        "https://edimakor.hitpaw.es/ai-translation/",
-        "Traducción de IA"
-      ],
-
-      [
-        "https://edimakor.hitpaw.es/video-recording-tips/",
-        "Consejos de Grabación"
-      ],
-
-      [
-        "https://edimakor.hitpaw.es/video-editing-tips/",
-        "Consejos para Editar Vídeo"
-      ]
-
+      ["https://edimakor.hitpaw.es/subtitle-tips/","Consejos de Subtítulos"],
+      ["https://edimakor.hitpaw.es/ai-translation/","Traducción de IA"],
+      ["https://edimakor.hitpaw.es/video-recording-tips/","Consejos de Grabación"],
+      ["https://edimakor.hitpaw.es/video-editing-tips/","Consejos para Editar Vídeo"]
     ]
 
   }
@@ -1790,17 +1337,11 @@ const PC_CONFIG = {
 
 function parseTrendInput(){
 
-  const input =
-    document
-      .getElementById("pcTrendInput")
-      .value
-      .trim();
-
+  const input = document.getElementById("pcTrendInput").value.trim();
 
   if(!input){
     return [];
   }
-
 
   return input
 
@@ -1814,51 +1355,29 @@ function parseTrendInput(){
 
       let parts;
 
-
       if(line.includes("\t")){
-
-        parts =
-          line.split("\t");
-
+        parts = line.split("\t");
       }else if(line.includes(" | ")){
-
-        parts =
-          line.split(" | ");
-
+        parts = line.split(" | ");
       }else{
-
-        parts =
-          line.split(/\s{2,}/);
-
+        parts = line.split(/\s{2,}/);
       }
 
-
       return {
-
-        url:
-          (parts[0] || "").trim(),
-
-        text:
-          (parts.slice(1).join(" ") || "").trim()
-
+        url:(parts[0] || "").trim(),
+        text:(parts.slice(1).join(" ") || "").trim()
       };
 
     })
 
-    .filter(item =>
-      item.url &&
-      item.text
-    );
+    .filter(item => item.url && item.text);
 
 }
 
 
 function generateTrendPreview(){
 
-  const items =
-    parseTrendInput()
-      .slice(0,5);
-
+  const items = parseTrendInput().slice(0,5);
 
   if(!items.length){
 
@@ -1876,13 +1395,10 @@ function generateTrendPreview(){
 
   }
 
-
   return items
     .map((item,index) => {
 
-      const icon =
-        Math.min(index + 1,3);
-
+      const icon = Math.min(index + 1,3);
 
       return `
 
@@ -1892,9 +1408,7 @@ function generateTrendPreview(){
             src="https://edimakor.hitpaw.com/images/edimakor-2025/article/hot-and-trend-icon-${icon}.png"
             alt="">
 
-          <span>
-            ${escapeHtml(item.text)}
-          </span>
+          <span>${escapeHtml(item.text)}</span>
 
         </div>
 
@@ -1911,9 +1425,7 @@ function generateTrendHtml(items){
   return items
     .map((item,index) => {
 
-      const iconNumber =
-        Math.min(index + 1,3);
-
+      const iconNumber = Math.min(index + 1,3);
 
       return `
     <li>
@@ -1953,18 +1465,14 @@ function generateHotArticles(items){
 
 function getPcCode(){
 
-  const config =
-    PC_CONFIG[currentLang];
-
+  const config = PC_CONFIG[currentLang];
 
   /*
     Always use exactly the articles entered by the user.
     Language switching only changes the fixed module content.
   */
 
-  const trendItems =
-    parseTrendInput();
-
+  const trendItems = parseTrendInput();
 
   return `<div class="ad-module mb-4">
   <div class="d-flex align-items-center justify-content-center mb-2">
@@ -2045,68 +1553,49 @@ function getPcCode(){
 
 function renderPcPreview(){
 
-  const config =
-    PC_CONFIG[currentLang];
+  const config = PC_CONFIG[currentLang];
 
-
-  document
-    .getElementById("pcPreview")
-    .innerHTML = `
+  document.getElementById("pcPreview").innerHTML = `
 
       <div
         class="pc-preview click-preview"
         id="pcPreviewClick">
 
-        <div class="pc-page">
+        <div class="pc-logo-row">
 
-          <div class="pc-sidebar">
+          <img
+            src="https://edimakor.hitpaw.com/images/logos/hitpaw-edimakor.png"
+            alt="HitPaw Edimakor">
 
-            <div class="pc-logo-row">
+          <strong>HitPaw Edimakor</strong>
 
-              <img
-                src="https://edimakor.hitpaw.com/images/logos/hitpaw-edimakor.png"
-                alt="HitPaw Edimakor">
+        </div>
 
-              <strong>
-                HitPaw Edimakor
-              </strong>
+        <div class="pc-description">
+          ${escapeHtml(config.description)}
+        </div>
 
-            </div>
+        <div class="pc-system">
 
+          <div class="pc-preview-btn download">
+            ↓ ${escapeHtml(config.downloadText)}
+          </div>
 
-            <div class="pc-description">
-              ${escapeHtml(config.description)}
-            </div>
-
-
-            <div class="pc-system">
-
-              <div class="pc-preview-btn download">
-                ↓ ${escapeHtml(config.downloadText)}
-              </div>
-
-              <div class="pc-preview-btn buy">
-                🛒 ${escapeHtml(config.buyText)}
-              </div>
-
-            </div>
-
-
-            <div class="pc-trend-title">
-              ${config.hotTitle.replace("&amp;","&")}
-            </div>
-
-
-            ${generateTrendPreview()}
-
+          <div class="pc-preview-btn buy">
+            🛒 ${escapeHtml(config.buyText)}
           </div>
 
         </div>
 
+        <div class="pc-trend-title">
+          ${config.hotTitle.replace("&amp;","&")}
+        </div>
+
+        ${generateTrendPreview()}
+
       </div>
 
     `;
-
 
   /*
     IMPORTANT:
@@ -2115,20 +1604,21 @@ function renderPcPreview(){
     copies the complete PC HTML code.
   */
 
-  const preview =
-    document.getElementById("pcPreviewClick");
+  const preview = document.getElementById("pcPreviewClick");
 
+  /* 预览被重新渲染后，恢复之前的点击颜色 */
+  preview.dataset.clicks = String(pcClicks);
+  applyClickColor(preview);
 
-  preview.addEventListener(
-    "click",
-    () => {
+  preview.addEventListener("click", () => {
 
-      copyText(
-        getPcCode()
-      );
+    copyText(getPcCode());
 
-    }
-  );
+    cycleClick(preview);
+
+    pcClicks = parseInt(preview.dataset.clicks, 10);
+
+  });
 
 }
 
@@ -2142,9 +1632,10 @@ function generatePcCode(){
 
 function clearPc(){
 
-  document
-    .getElementById("pcTrendInput")
-    .value = "";
+  document.getElementById("pcTrendInput").value = "";
+
+  /* 内容已变化 → 颜色重置 */
+  pcClicks = 0;
 
   renderPcPreview();
 
@@ -2157,65 +1648,30 @@ function clearPc(){
 
 function renderReplaceUI(){
 
-  const config =
-    UI[currentLang];
+  const config = UI[currentLang];
 
+  document.getElementById("replaceTitle").textContent = config.replaceTitle;
+  document.getElementById("replaceDesc").textContent = config.replaceDesc;
+  document.getElementById("htmlReplaceInput").placeholder = config.replacePlaceholder;
+  document.getElementById("replaceButton").textContent = config.replaceButton;
+  document.getElementById("replaceClearButton").textContent = config.replaceClear;
 
-  document
-    .getElementById("replaceTitle")
-    .textContent =
-      config.replaceTitle;
+  document.getElementById("replaceRules").innerHTML =
+    config.replaceRules
+      .map(rule => `
 
+        <div class="replace-rule">
 
-  document
-    .getElementById("replaceDesc")
-    .textContent =
-      config.replaceDesc;
+          <code>${escapeHtml(rule[0])}</code>
 
+          <span class="replace-arrow">↓</span>
 
-  document
-    .getElementById("htmlReplaceInput")
-    .placeholder =
-      config.replacePlaceholder;
+          <code>${escapeHtml(rule[1])}</code>
 
+        </div>
 
-  document
-    .getElementById("replaceButton")
-    .textContent =
-      config.replaceButton;
-
-
-  document
-    .getElementById("replaceClearButton")
-    .textContent =
-      config.replaceClear;
-
-
-  document
-    .getElementById("replaceRules")
-    .innerHTML =
-      config.replaceRules
-        .map(rule => `
-
-          <div class="replace-rule">
-
-            <code>
-              ${escapeHtml(rule[0])}
-            </code>
-
-            <span class="replace-arrow">
-              ↓
-            </span>
-
-            <code>
-              ${escapeHtml(rule[1])}
-            </code>
-
-          </div>
-
-        `)
-        .join("");
-
+      `)
+      .join("");
 
   /*
     IMPORTANT:
@@ -2228,129 +1684,76 @@ function renderReplaceUI(){
 }
 
 
-function replaceAllExact(
-  source,
-  search,
-  replacement
-){
+function replaceAllExact(source, search, replacement){
 
-  let result =
-    source;
-
-  let count =
-    0;
-
-  let position =
-    0;
-
+  let result = source;
+  let count = 0;
+  let position = 0;
 
   while(true){
 
-    const index =
-      result.indexOf(
-        search,
-        position
-      );
-
+    const index = result.indexOf(search, position);
 
     if(index === -1){
       break;
     }
-
 
     result =
       result.slice(0,index) +
       replacement +
       result.slice(index + search.length);
 
-
-    position =
-      index + replacement.length;
-
+    position = index + replacement.length;
 
     count++;
 
   }
 
-
-  return {
-    result,
-    count
-  };
+  return { result, count };
 
 }
 
 
 function replaceHtmlLinks(){
 
-  const config =
-    UI[currentLang];
+  const config = UI[currentLang];
 
-
-  const input =
-    document
-      .getElementById("htmlReplaceInput")
-      .value;
-
+  const input = document.getElementById("htmlReplaceInput").value;
 
   if(!input.trim()){
 
-    showToast(
-      config.replaceNoInput
-    );
+    showToast(config.replaceNoInput);
 
     return;
 
   }
 
-
-  let output =
-    input;
-
+  let output = input;
 
   const counts = [];
 
-
   config.replaceRules.forEach(rule => {
 
-    const result =
-      replaceAllExact(
-        output,
-        rule[0],
-        rule[1]
-      );
+    const result = replaceAllExact(output, rule[0], rule[1]);
 
+    output = result.result;
 
-    output =
-      result.result;
-
-
-    counts.push(
-      result.count
-    );
+    counts.push(result.count);
 
   });
 
+  const total = counts.reduce((sum,count) => sum + count, 0);
 
-  const total =
-    counts.reduce(
-      (sum,count) =>
-        sum + count,
-      0
-    );
+  const outputBox = document.getElementById("replaceOutput");
 
+  outputBox.textContent = output;
 
-  document
-    .getElementById("replaceOutput")
-    .textContent =
-      output;
-
+  /* 生成了新的结果 → 颜色重置 */
+  resetClick(outputBox);
 
   if(currentLang === "de"){
 
-    document
-      .getElementById("replaceResult")
-      .innerHTML = `
+    document.getElementById("replaceResult").innerHTML = `
 
         <span class="replace-count">
           ${total}
@@ -2366,9 +1769,7 @@ function replaceHtmlLinks(){
 
   }else{
 
-    document
-      .getElementById("replaceResult")
-      .innerHTML = `
+    document.getElementById("replaceResult").innerHTML = `
 
         <span class="replace-count">
           ${total} enlaces reemplazados
@@ -2381,7 +1782,6 @@ function replaceHtmlLinks(){
       `;
 
   }
-
 
   showToast(
 
@@ -2400,56 +1800,43 @@ function replaceHtmlLinks(){
 
 function clearHtmlReplacer(){
 
-  const config =
-    UI[currentLang];
+  const config = UI[currentLang];
 
+  document.getElementById("htmlReplaceInput").value = "";
 
-  document
-    .getElementById("htmlReplaceInput")
-    .value = "";
+  const outputBox = document.getElementById("replaceOutput");
 
+  outputBox.textContent = config.replaceEmptyOutput;
 
-  document
-    .getElementById("replaceOutput")
-    .textContent =
-      config.replaceEmptyOutput;
+  resetClick(outputBox);
 
-
-  document
-    .getElementById("replaceResult")
-    .textContent =
-      config.replaceEmptyResult;
+  document.getElementById("replaceResult").textContent = config.replaceEmptyResult;
 
 }
 
 
 function copyReplacedHtml(){
 
-  const output =
-    document
-      .getElementById("replaceOutput")
-      .textContent;
+  const outputBox = document.getElementById("replaceOutput");
 
+  const output = outputBox.textContent;
 
-  const config =
-    UI[currentLang];
-
+  const config = UI[currentLang];
 
   if(
     !output ||
     output === config.replaceEmptyOutput
   ){
 
-    showToast(
-      config.replaceNoResult
-    );
+    showToast(config.replaceNoResult);
 
     return;
 
   }
 
-
   copyText(output);
+
+  cycleClick(outputBox);
 
 }
 
@@ -2460,21 +1847,11 @@ function copyReplacedHtml(){
 
 function analyzeUrls(){
 
-  const config =
-    UI[currentLang];
+  const config = UI[currentLang];
 
+  const input = document.getElementById("urlInput").value.trim();
 
-  const input =
-    document
-      .getElementById("urlInput")
-      .value
-      .trim();
-
-
-  const wrap =
-    document
-      .getElementById("urlTableWrap");
-
+  const wrap = document.getElementById("urlTableWrap");
 
   if(!input){
 
@@ -2488,55 +1865,36 @@ function analyzeUrls(){
 
   }
 
-
-  const urls =
-    input
-      .split(/\n+/)
-      .map(item => item.trim())
-      .filter(Boolean);
-
+  const urls = input
+    .split(/\n+/)
+    .map(item => item.trim())
+    .filter(Boolean);
 
   let rows = "";
-
 
   urls.forEach(url => {
 
     try{
 
-      const parsed =
-        new URL(url);
+      const parsed = new URL(url);
 
+      let pathname = parsed.pathname.replace(/^\/+|\/+$/g,"");
 
-      let pathname =
-        parsed.pathname
-          .replace(/^\/+|\/+$/g,"");
+      const parts = pathname.split("/");
 
+      let filename = parts.pop() || "";
 
-      const parts =
-        pathname.split("/");
+      filename = filename
+        .replace(/\.html$/i,"")
+        .replace(/-copy$/i,"");
 
+      const directory = parts.length
+        ? parts[parts.length - 1]
+        : "";
 
-      let filename =
-        parts.pop() || "";
-
-
-      filename =
-        filename
-          .replace(/\.html$/i,"")
-          .replace(/-copy$/i,"");
-
-
-      const directory =
-        parts.length
-          ? parts[parts.length - 1]
-          : "";
-
-
-      const formed =
-        directory
-          ? directory + "/" + filename + ".html"
-          : filename + ".html";
-
+      const formed = directory
+        ? directory + "/" + filename + ".html"
+        : filename + ".html";
 
       rows += `
 
@@ -2622,7 +1980,6 @@ function analyzeUrls(){
 
   });
 
-
   wrap.innerHTML = `
 
     <table>
@@ -2630,27 +1987,13 @@ function analyzeUrls(){
       <thead>
 
         <tr>
-
-          <th>
-            ${config.tableUrl}
-          </th>
-
-          <th>
-            ${config.tableDirectory}
-          </th>
-
-          <th>
-            ${config.tableForm}
-          </th>
-
-          <th>
-            ${config.tableFilename}
-          </th>
-
+          <th>${config.tableUrl}</th>
+          <th>${config.tableDirectory}</th>
+          <th>${config.tableForm}</th>
+          <th>${config.tableFilename}</th>
         </tr>
 
       </thead>
-
 
       <tbody>
         ${rows}
@@ -2660,21 +2003,20 @@ function analyzeUrls(){
 
   `;
 
-
   wrap
     .querySelectorAll(".copy-cell")
     .forEach(cell => {
 
-      cell.addEventListener(
-        "click",
-        () => {
+      cell.addEventListener("click", () => {
 
-          copyText(
-            cell.dataset.copy
-          );
+        /* 空内容（例如没有目录）不复制，也不变色 */
+        if(!cell.dataset.copy) return;
 
-        }
-      );
+        copyText(cell.dataset.copy);
+
+        cycleClick(cell);
+
+      });
 
     });
 
@@ -2683,18 +2025,11 @@ function analyzeUrls(){
 
 function clearUrls(){
 
-  const config =
-    UI[currentLang];
+  const config = UI[currentLang];
 
+  document.getElementById("urlInput").value = "";
 
-  document
-    .getElementById("urlInput")
-    .value = "";
-
-
-  document
-    .getElementById("urlTableWrap")
-    .innerHTML = `
+  document.getElementById("urlTableWrap").innerHTML = `
 
       <div class="empty">
         ${config.urlEmpty}
@@ -2718,10 +2053,12 @@ function setLanguage(lang){
     return;
   }
 
+  currentLang = lang;
 
-  currentLang =
-    lang;
+  /* 切换语言后，复制出的代码不同 → Mobile / PC 颜色重置 */
+  resetClick(document.getElementById("mobilePreviewClick"));
 
+  pcClicks = 0;
 
   updateGlobalLanguageUI();
 
@@ -2734,99 +2071,37 @@ function updateGlobalLanguageUI(){
 
   document
     .getElementById("globalDeBtn")
-    .classList.toggle(
-      "active",
-      currentLang === "de"
-    );
-
+    .classList.toggle("active", currentLang === "de");
 
   document
     .getElementById("globalEsBtn")
-    .classList.toggle(
-      "active",
-      currentLang === "es"
-    );
+    .classList.toggle("active", currentLang === "es");
 
 }
 
 
 function renderAll(){
 
-  const config =
-    UI[currentLang];
+  const config = UI[currentLang];
 
+  /* Header */
 
-  /*
-    Header
-  */
+  document.getElementById("pageTitle").textContent = config.pageTitle;
+  document.getElementById("pageSubtitle").textContent = config.pageSubtitle;
 
-  document
-    .getElementById("pageTitle")
-    .textContent =
-      config.pageTitle;
+  /* Navigation */
 
+  document.getElementById("navUrl").textContent = config.navUrl;
+  document.getElementById("navAds").textContent = config.navAds;
+  document.getElementById("navReplacer").textContent = config.navReplacer;
 
-  document
-    .getElementById("pageSubtitle")
-    .textContent =
-      config.pageSubtitle;
+  /* URL module */
 
-
-  /*
-    Navigation
-  */
-
-  document
-    .getElementById("navUrl")
-    .textContent =
-      config.navUrl;
-
-
-  document
-    .getElementById("navAds")
-    .textContent =
-      config.navAds;
-
-
-  document
-    .getElementById("navReplacer")
-    .textContent =
-      config.navReplacer;
-
-
-  /*
-    URL module
-  */
-
-  document
-    .getElementById("urlTitle")
-    .textContent =
-      config.urlTitle;
-
-
-  document
-    .getElementById("urlDesc")
-    .textContent =
-      config.urlDesc;
-
-
-  document
-    .getElementById("urlInput")
-    .placeholder =
-      config.urlPlaceholder;
-
-
-  document
-    .getElementById("analyzeBtn")
-    .textContent =
-      config.analyze;
-
-
-  document
-    .getElementById("clearUrlBtn")
-    .textContent =
-      config.clear;
-
+  document.getElementById("urlTitle").textContent = config.urlTitle;
+  document.getElementById("urlDesc").textContent = config.urlDesc;
+  document.getElementById("urlInput").placeholder = config.urlPlaceholder;
+  document.getElementById("analyzeBtn").textContent = config.analyze;
+  document.getElementById("clearUrlBtn").textContent = config.clear;
 
   /*
     IMPORTANT:
@@ -2835,58 +2110,24 @@ function renderAll(){
     Existing table also remains untouched.
   */
 
+  /* Mobile */
 
-  /*
-    Mobile
-  */
-
-  document
-    .getElementById("mobileTitle")
-    .textContent =
-      config.mobileTitle;
-
+  document.getElementById("mobileTitle").textContent = config.mobileTitle;
 
   renderMobileAd();
 
+  /* PC */
 
-  /*
-    PC
-  */
+  document.getElementById("pcTitle").textContent = config.pcTitle;
+  document.getElementById("pcInputHint").textContent = config.pcInputHint;
+  document.getElementById("pcTrendInput").placeholder = config.pcPlaceholder;
+  document.getElementById("pcGenerateBtn").textContent = config.pcGenerate;
 
-  document
-    .getElementById("pcTitle")
-    .textContent =
-      config.pcTitle;
-
-
-  document
-    .getElementById("pcInputHint")
-    .textContent =
-      config.pcInputHint;
-
-
-  document
-    .getElementById("pcTrendInput")
-    .placeholder =
-      config.pcPlaceholder;
-
-
-  document
-    .getElementById("pcGenerateBtn")
-    .textContent =
-      config.pcGenerate;
-
-
-  /*
-    Re-rendering PC preview does NOT touch input.
-  */
+  /* Re-rendering PC preview does NOT touch input. */
 
   renderPcPreview();
 
-
-  /*
-    Replacer
-  */
+  /* Replacer */
 
   renderReplaceUI();
 
@@ -2897,118 +2138,53 @@ function renderAll(){
    EVENT BINDINGS
 ========================================================= */
 
-
 /* Global language */
 
-document
-  .getElementById("globalDeBtn")
-  .addEventListener(
-    "click",
-    () => setLanguage("de")
-  );
-
-
-document
-  .getElementById("globalEsBtn")
-  .addEventListener(
-    "click",
-    () => setLanguage("es")
-  );
-
+document.getElementById("globalDeBtn").addEventListener("click", () => setLanguage("de"));
+document.getElementById("globalEsBtn").addEventListener("click", () => setLanguage("es"));
 
 /* URL */
 
-document
-  .getElementById("analyzeBtn")
-  .addEventListener(
-    "click",
-    analyzeUrls
-  );
-
-
-document
-  .getElementById("clearUrlBtn")
-  .addEventListener(
-    "click",
-    clearUrls
-  );
-
+document.getElementById("analyzeBtn").addEventListener("click", analyzeUrls);
+document.getElementById("clearUrlBtn").addEventListener("click", clearUrls);
 
 /* Mobile preview = COPY */
 
-document
-  .getElementById("mobilePreviewClick")
-  .addEventListener(
-    "click",
-    () => {
+document.getElementById("mobilePreviewClick").addEventListener("click", () => {
 
-      copyText(
-        getMobileAdCode()
-      );
+  copyText(getMobileAdCode());
 
-    }
-  );
+  cycleClick(document.getElementById("mobilePreviewClick"));
 
+});
 
 /* PC */
 
-document
-  .getElementById("pcGenerateBtn")
-  .addEventListener(
-    "click",
-    generatePcCode
-  );
-
-
-document
-  .getElementById("pcClearBtn")
-  .addEventListener(
-    "click",
-    clearPc
-  );
-
+document.getElementById("pcGenerateBtn").addEventListener("click", generatePcCode);
+document.getElementById("pcClearBtn").addEventListener("click", clearPc);
 
 /*
   Update PC preview live while typing.
   This does NOT change the input.
+  内容变化后代码也变了，所以颜色重置。
 */
 
-document
-  .getElementById("pcTrendInput")
-  .addEventListener(
-    "input",
-    renderPcPreview
-  );
+document.getElementById("pcTrendInput").addEventListener("input", () => {
 
+  pcClicks = 0;
+
+  renderPcPreview();
+
+});
 
 /* Replacer */
 
-document
-  .getElementById("replaceButton")
-  .addEventListener(
-    "click",
-    replaceHtmlLinks
-  );
+document.getElementById("replaceButton").addEventListener("click", replaceHtmlLinks);
+document.getElementById("replaceClearButton").addEventListener("click", clearHtmlReplacer);
 
+/* Output itself = copy. */
 
-document
-  .getElementById("replaceClearButton")
-  .addEventListener(
-    "click",
-    clearHtmlReplacer
-  );
-
-
-/*
-  Output itself = copy.
-*/
-
-document
-  .getElementById("replaceOutput")
-  .addEventListener(
-    "click",
-    copyReplacedHtml
-  );
+document.getElementById("replaceOutput").addEventListener("click", copyReplacedHtml);
 
 
 /* =========================================================
@@ -3021,4 +2197,3 @@ renderAll();
 
 </body>
 </html>
-
