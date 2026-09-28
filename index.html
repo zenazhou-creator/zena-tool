@@ -395,10 +395,13 @@ tr:last-child td{ border-bottom:0; }
   align-items:start;
 }
 
-.ad-card.ad-mobile{ grid-column:span 5; }
-.ad-card.ad-pc{ grid-column:span 7; }
+.ad-card.ad-mobile,
+.ad-card.ad-pc{ grid-column:1/-1; }
 
-.ad-card .preview{ margin-top:8px; }
+.ad-card .preview{
+  max-width:520px;
+  margin-top:8px;
+}
 
 
 /* =========================
@@ -653,6 +656,108 @@ tr:last-child td{ border-bottom:0; }
 
 
 /* =========================
+   REPLACE RULES PANEL（可解锁编辑）
+========================= */
+
+.rules-panel{ margin-top:9px; }
+
+.rules-head{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:8px;
+  margin-bottom:5px;
+}
+
+.rules-title{
+  color:#625b72;
+  font-size:9px;
+  font-weight:800;
+}
+
+.rules-tools{
+  display:flex;
+  gap:5px;
+}
+
+.rules-btn{
+  border:0;
+  border-radius:6px;
+  padding:4px 8px;
+  background:var(--primary-soft);
+  color:var(--primary-dark);
+  font-size:8.5px;
+  font-weight:750;
+}
+
+.rules-btn.unlocked{
+  background:#dff3e6;
+  color:#3f7d5c;
+}
+
+.rule-label{
+  margin-bottom:2px;
+  color:var(--muted);
+  font-size:7.5px;
+  font-weight:700;
+}
+
+.rule-input{
+  width:100%;
+  padding:5px 6px;
+  border:1px solid var(--border);
+  border-radius:6px;
+  outline:none;
+  background:#fff;
+  color:var(--primary-dark);
+  font-family:Consolas,Monaco,"Courier New",monospace;
+  font-size:8px;
+}
+
+.rule-input:focus{
+  border-color:#b8a8ef;
+  box-shadow:0 0 0 3px rgba(124,92,230,.07);
+}
+
+.rule-input[readonly]{
+  background:#f3f1f8;
+  color:#7d7791;
+  cursor:default;
+}
+
+.result-row{
+  display:flex;
+  flex-wrap:wrap;
+  align-items:center;
+  gap:4px 6px;
+  margin-top:4px;
+  padding-top:4px;
+  border-top:1px dashed #e8e2f5;
+}
+
+.result-row code{
+  padding:1px 4px;
+  border-radius:4px;
+  background:var(--primary-soft-2);
+  color:var(--primary-dark);
+  font-size:7.5px;
+  word-break:break-all;
+}
+
+.result-num{
+  color:var(--primary-dark);
+  font-weight:800;
+}
+
+.result-num.zero{
+  color:#a9a3b8;
+  font-weight:600;
+}
+
+.result-sep{ color:#c2bdd0; }
+
+
+/* =========================
    TOAST
 ========================= */
 
@@ -684,8 +789,6 @@ tr:last-child td{ border-bottom:0; }
 ========================= */
 
 @media(max-width:900px){
-  .ad-card.ad-mobile,
-  .ad-card.ad-pc{ grid-column:1/-1; }
   .replace-rules{ grid-template-columns:1fr; }
 }
 
@@ -821,35 +924,13 @@ https://edimakor.hitpaw.de/ai-video-tools/create-ai-streamer.html"></textarea>
 
   <div class="ad-grid">
 
-    <!-- ② MOBILE -->
-    <section class="card ad-card ad-mobile">
-
-      <div class="card-head">
-        <div>
-          <div class="card-title">
-            <div class="card-number">②</div>
-            <h2 id="mobileTitle">Mobile Bottom Ad</h2>
-          </div>
-        </div>
-      </div>
-
-      <!-- The preview itself is the copy button. -->
-      <div class="preview">
-        <div class="mobile-preview-frame click-preview" id="mobilePreviewClick">
-          <div class="mobile-preview-inner" id="mobileAdPreview"></div>
-        </div>
-      </div>
-
-    </section>
-
-
-    <!-- ③ PC -->
+    <!-- ② PC -->
     <section class="card ad-card ad-pc">
 
       <div class="card-head">
         <div>
           <div class="card-title">
-            <div class="card-number">③</div>
+            <div class="card-number">②</div>
             <h2 id="pcTitle">PC Right-side Ad</h2>
           </div>
           <p class="card-desc" id="pcInputHint">URL + Tab + Beschriftung · 3–5 Einträge</p>
@@ -875,6 +956,27 @@ https://edimakor.hitpaw.de/video-editing-tips/example.html    Video-Tipps"></tex
 
     </section>
 
+    <!-- ③ MOBILE -->
+    <section class="card ad-card ad-mobile">
+
+      <div class="card-head">
+        <div>
+          <div class="card-title">
+            <div class="card-number">③</div>
+            <h2 id="mobileTitle">Mobile Bottom Ad</h2>
+          </div>
+        </div>
+      </div>
+
+      <!-- The preview itself is the copy button. -->
+      <div class="preview">
+        <div class="mobile-preview-frame click-preview" id="mobilePreviewClick">
+          <div class="mobile-preview-inner" id="mobileAdPreview"></div>
+        </div>
+      </div>
+
+    </section>
+
   </div>
 
 </div>
@@ -896,8 +998,6 @@ https://edimakor.hitpaw.de/video-editing-tips/example.html    Video-Tipps"></tex
     </div>
   </div>
 
-  <div class="replace-rules" id="replaceRules"></div>
-
   <textarea
     id="htmlReplaceInput"
     placeholder="Hier den vollständigen HTML-Code einfügen..."></textarea>
@@ -911,6 +1011,24 @@ https://edimakor.hitpaw.de/video-editing-tips/example.html    Video-Tipps"></tex
 
   <!-- The output itself is clickable. No separate copy button. -->
   <div id="replaceOutput" class="code-box">Der ersetzte HTML-Code wird hier angezeigt.</div>
+
+  <!-- 替换规则：默认锁定，可解锁后自行编辑 -->
+  <div class="rules-panel">
+
+    <div class="rules-head">
+
+      <span class="rules-title" id="rulesTitle">Ersetzungsregeln</span>
+
+      <span class="rules-tools">
+        <button type="button" class="rules-btn" id="rulesLockBtn">🔒 Entsperren</button>
+        <button type="button" class="rules-btn" id="rulesResetBtn">↺ Standard</button>
+      </span>
+
+    </div>
+
+    <div class="replace-rules" id="replaceRules"></div>
+
+  </div>
 
 </section>
 
@@ -1116,6 +1234,19 @@ https://edimakor.hitpaw.de/video-editing-tips/example.html    Video-Tipps`,
     replaceNoResult:"Noch kein Ergebnis",
     replaceNoLinks:"Keine passenden Links gefunden",
 
+    rulesTitle:"Ersetzungsregeln (bearbeitbar)",
+    rulesUnlock:"🔒 Entsperren",
+    rulesLock:"🔓 Sperren",
+    rulesReset:"↺ Standard",
+    rulesResetDone:"Regeln zurückgesetzt",
+    ruleFrom:"Suchen",
+    ruleTo:"Ersetzen durch",
+    resReplaced:"ersetzt",
+    resTarget:"im Original vorhanden",
+    resTotal:"ersetzt",
+    resLinkOne:"Link",
+    resLinkMany:"Links",
+
     replaceRules:[
       ['<a href="https://edimakor.hitpaw.com','<a href="https://edimakor.hitpaw.de'],
       ['<a href="https://app.edimakor.ai/en','<a href="https://app.edimakor.ai/de'],
@@ -1177,6 +1308,19 @@ https://edimakor.hitpaw.es/video-editing-tips/example.html    Consejos de edici�
     replaceNoResult:"Aún no hay resultados",
     replaceNoLinks:"No se encontraron enlaces para reemplazar",
 
+    rulesTitle:"Reglas de reemplazo (editables)",
+    rulesUnlock:"🔒 Desbloquear",
+    rulesLock:"🔓 Bloquear",
+    rulesReset:"↺ Predeterminado",
+    rulesResetDone:"Reglas restablecidas",
+    ruleFrom:"Buscar",
+    ruleTo:"Reemplazar por",
+    resReplaced:"reemplazados",
+    resTarget:"ya existentes en el original",
+    resTotal:"reemplazados",
+    resLinkOne:"enlace",
+    resLinkMany:"enlaces",
+
     replaceRules:[
       ['<a href="https://edimakor.hitpaw.com','<a href="https://edimakor.hitpaw.es'],
       ['<a href="https://app.edimakor.ai/en','<a href="https://app.edimakor.ai/es'],
@@ -1186,6 +1330,20 @@ https://edimakor.hitpaw.es/video-editing-tips/example.html    Consejos de edici�
   }
 
 };
+
+
+/* 替换规则的当前值（可编辑），每种语言各保存一份 */
+
+const ruleState = {
+  de:UI.de.replaceRules.map(rule => [rule[0],rule[1]]),
+  es:UI.es.replaceRules.map(rule => [rule[0],rule[1]])
+};
+
+let rulesUnlocked = false;
+
+function getRules(){
+  return ruleState[currentLang];
+}
 
 
 /* =========================================================
@@ -1656,22 +1814,7 @@ function renderReplaceUI(){
   document.getElementById("replaceButton").textContent = config.replaceButton;
   document.getElementById("replaceClearButton").textContent = config.replaceClear;
 
-  document.getElementById("replaceRules").innerHTML =
-    config.replaceRules
-      .map(rule => `
-
-        <div class="replace-rule">
-
-          <code>${escapeHtml(rule[0])}</code>
-
-          <span class="replace-arrow">↓</span>
-
-          <code>${escapeHtml(rule[1])}</code>
-
-        </div>
-
-      `)
-      .join("");
+  renderRules();
 
   /*
     IMPORTANT:
@@ -1684,7 +1827,93 @@ function renderReplaceUI(){
 }
 
 
+function renderRules(){
+
+  const config = UI[currentLang];
+
+  document.getElementById("rulesTitle").textContent = config.rulesTitle;
+
+  const lockBtn = document.getElementById("rulesLockBtn");
+
+  lockBtn.textContent = rulesUnlocked ? config.rulesLock : config.rulesUnlock;
+  lockBtn.classList.toggle("unlocked", rulesUnlocked);
+
+  document.getElementById("rulesResetBtn").textContent = config.rulesReset;
+
+  document.getElementById("replaceRules").innerHTML =
+    getRules()
+      .map((rule,index) => `
+
+        <div class="replace-rule">
+
+          <div class="rule-label">${config.ruleFrom} ${index + 1}</div>
+
+          <input
+            class="rule-input"
+            type="text"
+            spellcheck="false"
+            data-rule="${index}"
+            data-side="0"
+            value="${escapeAttribute(rule[0])}"
+            ${rulesUnlocked ? "" : "readonly"}>
+
+          <span class="replace-arrow">↓</span>
+
+          <div class="rule-label">${config.ruleTo}</div>
+
+          <input
+            class="rule-input"
+            type="text"
+            spellcheck="false"
+            data-rule="${index}"
+            data-side="1"
+            value="${escapeAttribute(rule[1])}"
+            ${rulesUnlocked ? "" : "readonly"}>
+
+        </div>
+
+      `)
+      .join("");
+
+}
+
+
+function toggleRulesLock(){
+
+  rulesUnlocked = !rulesUnlocked;
+
+  renderRules();
+
+}
+
+
+function resetRules(){
+
+  ruleState[currentLang] =
+    UI[currentLang].replaceRules.map(rule => [rule[0],rule[1]]);
+
+  renderRules();
+
+  showToast(UI[currentLang].rulesResetDone);
+
+}
+
+
+function countOccurrences(source, search){
+
+  if(!search) return 0;
+
+  return source.split(search).length - 1;
+
+}
+
+
 function replaceAllExact(source, search, replacement){
+
+  /* 空的搜索内容会造成死循环，直接跳过 */
+  if(!search){
+    return { result:source, count:0 };
+  }
 
   let result = source;
   let count = 0;
@@ -1696,6 +1925,22 @@ function replaceAllExact(source, search, replacement){
 
     if(index === -1){
       break;
+    }
+
+    /*
+      如果目标内容本身就以搜索内容开头
+      （例如 .../ → .../de），而这里已经是目标链接，
+      就跳过，避免重复替换成 .../dede
+    */
+    if(
+      replacement.startsWith(search) &&
+      result.startsWith(replacement, index)
+    ){
+
+      position = index + replacement.length;
+
+      continue;
+
     }
 
     result =
@@ -1728,21 +1973,33 @@ function replaceHtmlLinks(){
 
   }
 
+  const rules = getRules();
+
   let output = input;
 
-  const counts = [];
+  /*
+    每条规则统计两个数字：
+    replaced = 找到旧链接并替换的数量
+    existing = 原文里本来就已经是目标链接的数量（不替换，只统计）
+  */
+  const stats = rules.map(rule => {
 
-  config.replaceRules.forEach(rule => {
+    const existing = countOccurrences(input, rule[1]);
 
     const result = replaceAllExact(output, rule[0], rule[1]);
 
     output = result.result;
 
-    counts.push(result.count);
+    return {
+      from:rule[0],
+      to:rule[1],
+      replaced:result.count,
+      existing
+    };
 
   });
 
-  const total = counts.reduce((sum,count) => sum + count, 0);
+  const total = stats.reduce((sum,item) => sum + item.replaced, 0);
 
   const outputBox = document.getElementById("replaceOutput");
 
@@ -1751,37 +2008,42 @@ function replaceHtmlLinks(){
   /* 生成了新的结果 → 颜色重置 */
   resetClick(outputBox);
 
-  if(currentLang === "de"){
+  const numHtml = value =>
+    `<span class="result-num ${value ? "" : "zero"}">${value}</span>`;
 
-    document.getElementById("replaceResult").innerHTML = `
+  const rows = stats
+    .map((item,index) => `
 
-        <span class="replace-count">
-          ${total}
-          ${total === 1 ? "Link" : "Links"}
-          ersetzt
-        </span>
+      <div class="result-row">
 
-        · edimakor.hitpaw.com: ${counts[0]}
-        · app.edimakor.ai/en: ${counts[1]}
-        · www.edimakor.ai/: ${counts[2]}
+        <span class="result-sep">#${index + 1}</span>
 
-      `;
+        <code>${escapeHtml(item.from)}</code>
 
-  }else{
+        ${escapeHtml(config.resReplaced)}: ${numHtml(item.replaced)}
 
-    document.getElementById("replaceResult").innerHTML = `
+        <span class="result-sep">·</span>
 
-        <span class="replace-count">
-          ${total} enlaces reemplazados
-        </span>
+        <code>${escapeHtml(item.to)}</code>
 
-        · edimakor.hitpaw.com: ${counts[0]}
-        · app.edimakor.ai/en: ${counts[1]}
-        · www.edimakor.ai/: ${counts[2]}
+        ${escapeHtml(config.resTarget)}: ${numHtml(item.existing)}
 
-      `;
+      </div>
 
-  }
+    `)
+    .join("");
+
+  document.getElementById("replaceResult").innerHTML = `
+
+      <span class="replace-count">
+        ${total}
+        ${total === 1 ? config.resLinkOne : config.resLinkMany}
+        ${config.resTotal}
+      </span>
+
+      ${rows}
+
+    `;
 
   showToast(
 
@@ -2181,6 +2443,25 @@ document.getElementById("pcTrendInput").addEventListener("input", () => {
 
 document.getElementById("replaceButton").addEventListener("click", replaceHtmlLinks);
 document.getElementById("replaceClearButton").addEventListener("click", clearHtmlReplacer);
+
+/* 规则：解锁 / 编辑 / 恢复默认 */
+
+document.getElementById("rulesLockBtn").addEventListener("click", toggleRulesLock);
+document.getElementById("rulesResetBtn").addEventListener("click", resetRules);
+
+document.getElementById("replaceRules").addEventListener("input", event => {
+
+  const target = event.target;
+
+  if(!target.classList.contains("rule-input")) return;
+
+  const rule = ruleState[currentLang][parseInt(target.dataset.rule,10)];
+
+  if(rule){
+    rule[parseInt(target.dataset.side,10)] = target.value;
+  }
+
+});
 
 /* Output itself = copy. */
 
