@@ -1,2480 +1,625 @@
-<!DOCTYPE html>
-<html lang="de">
+<!doctype html>
+<html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Edimakor Content Tools</title>
-
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>My Recipes</title>
 <style>
-:root{
-  --bg:#f7f5fc;
-  --card:rgba(255,255,255,.97);
-  --primary:#7c5ce6;
-  --primary-dark:#6544d4;
-  --primary-soft:#eee9ff;
-  --primary-soft-2:#f5f1ff;
-  --text:#252238;
-  --muted:#817c95;
-  --border:#e8e2f5;
-  --shadow:0 8px 24px rgba(91,67,150,.065);
-  --radius:14px;
-}
-
-*{ box-sizing:border-box; }
-
-html{ scroll-behavior:smooth; }
-
-body{
-  margin:0;
-  background:
-    radial-gradient(circle at 8% 0%,rgba(124,92,230,.10),transparent 25%),
-    radial-gradient(circle at 92% 8%,rgba(185,160,255,.11),transparent 22%),
-    var(--bg);
-  color:var(--text);
-  font-family:Inter,-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Arial,sans-serif;
-  font-size:12px;
-}
-
-button,
-textarea{ font:inherit; }
-
-button{ cursor:pointer; }
-
-.app{
-  width:min(1180px,calc(100% - 28px));
-  margin:0 auto;
-  padding:20px 0 35px;
-}
-
-
-/* =========================
-   HEADER
-========================= */
-
-.header{
-  display:flex;
-  align-items:flex-end;
-  justify-content:space-between;
-  gap:15px;
-  margin-bottom:12px;
-}
-
-.header-main{ min-width:0; }
-
-.eyebrow{
-  display:inline-flex;
-  padding:5px 9px;
-  border-radius:999px;
-  background:var(--primary-soft);
-  color:var(--primary-dark);
-  font-size:9px;
-  font-weight:800;
-  letter-spacing:.08em;
-}
-
-h1{
-  margin:7px 0 3px;
-  font-size:24px;
-  line-height:1.15;
-  letter-spacing:-.03em;
-}
-
-.header p{
-  margin:0;
-  color:var(--muted);
-  font-size:11px;
-}
-
-
-/* =========================
-   GLOBAL LANGUAGE
-========================= */
-
-.global-lang{
-  display:flex;
-  align-items:center;
-  gap:2px;
-  padding:3px;
-  flex:none;
-  border:1px solid var(--border);
-  border-radius:8px;
-  background:rgba(255,255,255,.9);
-  box-shadow:0 4px 14px rgba(70,50,110,.06);
-}
-
-.global-lang button{
-  appearance:none;
-  border:0;
-  outline:0;
-  padding:5px 9px;
-  border-radius:5px;
-  background:transparent;
-  color:var(--muted);
-  font-size:9px;
-  font-weight:800;
-}
-
-.global-lang button.active{
-  background:var(--primary-soft);
-  color:var(--primary-dark);
-}
-
-
-/* =========================
-   FLOATING MODULE NAV
-========================= */
-
-.module-nav{
-  position:sticky;
-  top:10px;
-  z-index:100;
-  display:flex;
-  justify-content:center;
-  margin:0 auto 12px;
-  pointer-events:none;
-}
-
-.module-nav-inner{
-  display:flex;
-  align-items:center;
-  gap:3px;
-  padding:4px;
-  border:1px solid var(--border);
-  border-radius:10px;
-  background:rgba(255,255,255,.92);
-  box-shadow:0 7px 22px rgba(70,50,110,.09);
-  backdrop-filter:blur(12px);
-  pointer-events:auto;
-}
-
-.module-nav a{
-  display:block;
-  padding:5px 9px;
-  border-radius:6px;
-  color:#70697f;
-  text-decoration:none;
-  font-size:9px;
-  font-weight:800;
-  white-space:nowrap;
-}
-
-.module-nav a:hover{
-  color:var(--primary-dark);
-  background:var(--primary-soft);
-}
-
-
-/* =========================
-   GRID
-========================= */
-
-.grid{
-  display:grid;
-  grid-template-columns:repeat(12,1fr);
-  gap:11px;
-}
-
-.card{
-  min-width:0;
-  padding:13px;
-  background:var(--card);
-  border:1px solid var(--border);
-  border-radius:var(--radius);
-  box-shadow:var(--shadow);
-}
-
-.card.full{ grid-column:1/-1; }
-
-.card-head{
-  display:flex;
-  align-items:center;
-  justify-content:space-between;
-  gap:8px;
-  margin-bottom:8px;
-}
-
-.card-title{
-  display:flex;
-  align-items:center;
-  gap:7px;
-}
-
-.card-number{
-  width:21px;
-  height:21px;
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  flex:none;
-  border-radius:6px;
-  background:var(--primary-soft);
-  color:var(--primary-dark);
-  font-size:9px;
-  font-weight:900;
-}
-
-.card h2{
-  margin:0;
-  font-size:13px;
-  line-height:1.2;
-}
-
-.card-desc{
-  margin:3px 0 0 28px;
-  color:var(--muted);
-  font-size:9px;
-  line-height:1.35;
-}
-
-
-/* =========================
-   INPUT
-========================= */
-
-textarea{
-  width:100%;
-  min-height:68px;
-  padding:8px 9px;
-  resize:vertical;
-  border:1px solid var(--border);
-  border-radius:8px;
-  outline:none;
-  background:#fcfbfe;
-  color:var(--text);
-  font-size:10px;
-  line-height:1.45;
-}
-
-textarea:focus{
-  border-color:#b8a8ef;
-  box-shadow:0 0 0 3px rgba(124,92,230,.07);
-  background:#fff;
-}
-
-#urlInput,
-#pcTrendInput{ min-height:68px; }
-
-#htmlReplaceInput{
-  min-height:125px;
-  font-family:Consolas,Monaco,"Courier New",monospace;
-  font-size:9px;
-}
-
-.actions{
-  display:flex;
-  gap:6px;
-  margin-top:6px;
-}
-
-.btn{
-  border:0;
-  border-radius:7px;
-  padding:6px 10px;
-  font-size:9px;
-  font-weight:750;
-  transition:.15s ease;
-}
-
-.btn-primary{
-  color:#fff;
-  background:linear-gradient(135deg,#8568ea,#7153dc);
-}
-
-.btn-soft{
-  color:var(--primary-dark);
-  background:var(--primary-soft);
-}
-
-.btn:hover{ transform:translateY(-1px); }
-
-
-/* =========================
-   URL TABLE
-========================= */
-
-.table-wrap{
-  margin-top:7px;
-  overflow:auto;
-  border:1px solid var(--border);
-  border-radius:8px;
-}
-
-table{
-  width:100%;
-  border-collapse:collapse;
-  min-width:650px;
-}
-
-th{
-  padding:5px 7px;
-  text-align:left;
-  background:#faf9fd;
-  color:#77708b;
-  font-size:8px;
-  font-weight:800;
-  border-bottom:1px solid var(--border);
-}
-
-td{
-  padding:5px 7px;
-  border-bottom:1px solid #eeeaf5;
-  vertical-align:top;
-  font-size:9px;
-  line-height:1.35;
-  transition:background .15s ease;
-}
-
-tr:last-child td{ border-bottom:0; }
-
-.copy-cell{ cursor:pointer; }
-
-.copy-cell:hover{ background:var(--primary-soft-2); }
-
-.cell-url{
-  width:42%;
-  max-width:42%;
-  color:#5e4bb4;
-}
-
-.cell-url .url-text{
-  display:-webkit-box;
-  -webkit-box-orient:vertical;
-  -webkit-line-clamp:2;
-  overflow:hidden;
-  word-break:break-all;
-  line-height:1.35;
-}
-
-.cell-path{
-  color:#49425b;
-  word-break:break-word;
-}
-
-.path-main{ font-weight:700; }
-
-.path-note{
-  color:var(--muted);
-  font-size:8px;
-}
-
-.empty{
-  padding:14px;
-  text-align:center;
-  color:var(--muted);
-  font-size:9px;
-}
-
-
-/* =========================
-   AD PREVIEW
-   The visual itself is clickable.
-========================= */
-
-.preview{ margin-top:7px; }
-
-.click-preview{
-  cursor:pointer;
-  transition:.15s ease;
-  user-select:none;
-}
-
-.click-preview:hover{
-  box-shadow:0 0 0 2px rgba(124,92,230,.16);
-}
-
-
-/* =========================
-   AD MODULES (② + ③)
-   紧凑卡片预览，只显示文本内容
-========================= */
-
-.ad-grid{
-  display:grid;
-  grid-template-columns:repeat(12,1fr);
-  gap:11px;
-  align-items:start;
-}
-
-.ad-card.ad-mobile,
-.ad-card.ad-pc{ grid-column:1/-1; }
-
-.ad-card .preview{
-  max-width:520px;
-  margin-top:8px;
-}
-
-
-/* =========================
-   MOBILE PREVIEW（卡片）
-========================= */
-
-.mobile-preview-frame{
-  padding:8px;
-  border:1px dashed #d9d0ec;
-  border-radius:8px;
-  background:#faf9fd;
-}
-
-.mobile-preview-inner{ width:100%; }
-
-.bottom-ad-preview{
-  padding:10px 12px;
-  color:#fff;
-  background:linear-gradient(135deg,#241d3a,#6544d4);
-  border-radius:6px;
-}
-
-.bottom-ad-preview .ad-row{
-  display:flex;
-  align-items:center;
-  justify-content:space-between;
-  gap:10px;
-}
-
-.ad-brand{
-  display:flex;
-  align-items:center;
-  gap:5px;
-}
-
-.ad-brand img{
-  width:20px;
-  height:20px;
-  object-fit:contain;
-}
-
-.ad-brand strong{ font-size:10px; }
-
-.ad-copy{
-  margin-top:3px;
-  color:rgba(255,255,255,.8);
-  font-size:8px;
-  line-height:1.4;
-}
-
-.ad-btn{
-  flex:none;
-  padding:5px 9px;
-  border-radius:5px;
-  background:#fff;
-  color:#5d45bd;
-  font-size:8.5px;
-  font-weight:800;
-  white-space:nowrap;
-}
-
-
-/* =========================
-   PC PREVIEW（卡片）
-========================= */
-
-.pc-preview{
-  padding:11px 12px;
-  border:1px dashed #d9d0ec;
-  border-radius:8px;
-  background:#faf9fd;
-}
-
-.pc-logo-row{
-  display:flex;
-  align-items:center;
-  gap:6px;
-  margin-bottom:4px;
-}
-
-.pc-logo-row img{
-  width:20px;
-  height:20px;
-  object-fit:contain;
-}
-
-.pc-logo-row strong{ font-size:10.5px; }
-
-.pc-description{
-  margin-bottom:8px;
-  color:#70697f;
-  font-size:8.5px;
-  line-height:1.45;
-}
-
-.pc-system{
-  display:grid;
-  grid-template-columns:1fr 1fr;
-  gap:6px;
-}
-
-.pc-preview-btn{
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  gap:4px;
-  min-height:24px;
-  padding:4px 6px;
-  border-radius:5px;
-  font-size:8.5px;
-  font-weight:800;
-}
-
-.pc-preview-btn.download{
-  color:#fff;
-  background:#7c5ce6;
-}
-
-.pc-preview-btn.buy{
-  color:#6b52cb;
-  border:1px solid #bcaeed;
-  background:#fff;
-}
-
-.pc-trend-title{
-  margin:10px 0 6px;
-  padding-top:8px;
-  border-top:1px solid #eeeaf5;
-  font-size:9.5px;
-  font-weight:800;
-}
-
-.pc-trend-item{
-  display:flex;
-  gap:6px;
-  align-items:center;
-  margin-bottom:5px;
-}
-
-.pc-trend-item:last-child{ margin-bottom:0; }
-
-.pc-trend-item img{
-  width:13px;
-  height:13px;
-  flex:none;
-  object-fit:contain;
-}
-
-.pc-trend-item span{
-  color:#625b72;
-  font-size:8.5px;
-  line-height:1.35;
-}
-
-
-/* =========================
-   REPLACER
-========================= */
-
-.replace-rules{
-  display:grid;
-  grid-template-columns:repeat(3,1fr);
-  gap:5px;
-  margin-bottom:6px;
-}
-
-.replace-rule{
-  min-width:0;
-  padding:6px 7px;
-  border:1px solid var(--border);
-  border-radius:7px;
-  background:#faf9fd;
-  font-size:7.5px;
-  line-height:1.35;
-}
-
-.replace-rule code{
-  color:var(--primary-dark);
-  background:var(--primary-soft-2);
-  padding:2px 4px;
-  border-radius:4px;
-  word-break:break-all;
-}
-
-.replace-arrow{
-  display:block;
-  margin:2px 0;
-  color:var(--muted);
-}
-
-.replace-result{
-  margin-top:5px;
-  padding:5px 7px;
-  border:1px solid var(--border);
-  border-radius:7px;
-  background:#faf9fd;
-  color:#625b72;
-  font-size:8px;
-  line-height:1.35;
-}
-
-.replace-count{
-  color:var(--primary-dark);
-  font-weight:800;
-}
-
-.code-box{
-  max-height:150px;
-  overflow:auto;
-  margin-top:6px;
-  padding:7px 8px;
-  border:1px solid var(--border);
-  border-radius:7px;
-  background:#191720;
-  color:#e9e4f6;
-  font-family:Consolas,Monaco,"Courier New",monospace;
-  font-size:7.5px;
-  line-height:1.45;
-  white-space:pre-wrap;
-  word-break:break-word;
-  cursor:pointer;
-  transition:background .15s ease,border-color .15s ease;
-}
-
-.code-box:hover{ border-color:#b9a9ec; }
-
-
-/* =========================================================
-   CLICK COLOR CYCLE
-   每点击一次就换一种颜色：
-   绿 → 蓝 → 黄 → 粉 → 绿 ...（循环）
-   这些规则放在 hover 规则之后，所以会覆盖 hover 颜色。
-========================================================= */
-
-/* 表格单元格 */
-.copy-cell.click-c1{ background:#dff3e6; }
-.copy-cell.click-c2{ background:#deeafb; }
-.copy-cell.click-c3{ background:#fdefcf; }
-.copy-cell.click-c4{ background:#fbe1ec; }
-
-/* Mobile / PC 预览框 */
-.click-preview.click-c1{ background:#dff3e6; border-color:#8fcfa8; }
-.click-preview.click-c2{ background:#deeafb; border-color:#93b7ea; }
-.click-preview.click-c3{ background:#fdefcf; border-color:#e6c064; }
-.click-preview.click-c4{ background:#fbe1ec; border-color:#e79ab9; }
-
-/* 替换结果代码框（深色底，用深色调 + 彩色边框） */
-.code-box.click-c1{ background:#15281d; border-color:#5fb583; }
-.code-box.click-c2{ background:#15243a; border-color:#6c9be0; }
-.code-box.click-c3{ background:#33291a; border-color:#d9b04d; }
-.code-box.click-c4{ background:#341c28; border-color:#d97ba1; }
-
-
-/* =========================
-   REPLACE RULES PANEL（可解锁编辑）
-========================= */
-
-.rules-panel{ margin-top:9px; }
-
-.rules-head{
-  display:flex;
-  align-items:center;
-  justify-content:space-between;
-  gap:8px;
-  margin-bottom:5px;
-}
-
-.rules-title{
-  color:#625b72;
-  font-size:9px;
-  font-weight:800;
-}
-
-.rules-tools{
-  display:flex;
-  gap:5px;
-}
-
-.rules-btn{
-  border:0;
-  border-radius:6px;
-  padding:4px 8px;
-  background:var(--primary-soft);
-  color:var(--primary-dark);
-  font-size:8.5px;
-  font-weight:750;
-}
-
-.rules-btn.unlocked{
-  background:#dff3e6;
-  color:#3f7d5c;
-}
-
-.rule-label{
-  margin-bottom:2px;
-  color:var(--muted);
-  font-size:7.5px;
-  font-weight:700;
-}
-
-.rule-input{
-  width:100%;
-  padding:5px 6px;
-  border:1px solid var(--border);
-  border-radius:6px;
-  outline:none;
-  background:#fff;
-  color:var(--primary-dark);
-  font-family:Consolas,Monaco,"Courier New",monospace;
-  font-size:8px;
-}
-
-.rule-input:focus{
-  border-color:#b8a8ef;
-  box-shadow:0 0 0 3px rgba(124,92,230,.07);
-}
-
-.rule-input[readonly]{
-  background:#f3f1f8;
-  color:#7d7791;
-  cursor:default;
-}
-
-.result-row{
-  display:flex;
-  flex-wrap:wrap;
-  align-items:center;
-  gap:4px 6px;
-  margin-top:4px;
-  padding-top:4px;
-  border-top:1px dashed #e8e2f5;
-}
-
-.result-row code{
-  padding:1px 4px;
-  border-radius:4px;
-  background:var(--primary-soft-2);
-  color:var(--primary-dark);
-  font-size:7.5px;
-  word-break:break-all;
-}
-
-.result-num{
-  color:var(--primary-dark);
-  font-weight:800;
-}
-
-.result-num.zero{
-  color:#a9a3b8;
-  font-weight:600;
-}
-
-.result-sep{ color:#c2bdd0; }
-
-
-/* =========================
-   TOAST
-========================= */
-
-.toast{
-  position:fixed;
-  left:50%;
-  bottom:18px;
-  transform:translate(-50%,15px);
-  padding:7px 11px;
-  border-radius:7px;
-  background:#292433;
-  color:#fff;
-  font-size:9px;
-  box-shadow:0 8px 25px rgba(30,20,50,.2);
-  opacity:0;
-  pointer-events:none;
-  transition:.2s ease;
-  z-index:9999;
-}
-
-.toast.show{
-  opacity:1;
-  transform:translate(-50%,0);
-}
-
-
-/* =========================
-   RESPONSIVE
-========================= */
-
-@media(max-width:900px){
-  .replace-rules{ grid-template-columns:1fr; }
-}
-
-@media(max-width:600px){
-
-  .app{
-    width:calc(100% - 18px);
-    padding-top:12px;
-  }
-
-  .header{ display:block; }
-
-  .global-lang{
-    margin-top:10px;
-    width:max-content;
-  }
-
-  h1{ font-size:21px; }
-
-  .card{ padding:10px; }
-
-  .module-nav{ top:6px; }
-
-  .module-nav-inner{
-    max-width:100%;
-    overflow:auto;
-    justify-content:flex-start;
-  }
-
-  .module-nav a{
-    padding:5px 7px;
-    font-size:8px;
-  }
-
-
-  .cell-url{
-    width:38%;
-    max-width:38%;
-  }
-
-}
+:root{--bg:#FBF6EE;--card:#fff;--ink:#3B2A22;--dim:#8C7B70;--line:#EADFD2;--ac:#D9502F;--acbg:#FBE3DA;--teal:#3E7C8C;--serif:"Songti SC","Noto Serif SC",Georgia,serif}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font:14px/1.5 system-ui,"Segoe UI",sans-serif}
+button,input,select,textarea{font:inherit;color:inherit}
+button{cursor:pointer;background:#fff;border:1px solid var(--line);border-radius:10px;padding:5px 12px}
+button:hover{border-color:#cdb9a6}
+button.pri{background:var(--ac);border-color:var(--ac);color:#fff;font-weight:600}
+button.out{border-color:var(--ac);color:var(--ac);font-weight:600}
+button.ic{border:0;background:none;padding:4px;display:inline-flex;color:#B8A798}
+button.ic:hover{color:var(--ac)}
+input,select,textarea{width:100%;background:#fff;border:1px solid var(--line);border-radius:10px;padding:7px 10px}
+input:focus,select:focus,textarea:focus,button:focus-visible{outline:2px solid #F3B9A8;outline-offset:1px}
+textarea{min-height:110px;resize:vertical}
+[hidden]{display:none!important}
+.dim{color:var(--dim)} .row{display:flex;gap:10px;align-items:center} .sp{flex:1}
+#top{height:64px;display:flex;align-items:center;gap:14px;padding:0 24px;background:#FFFDF9;border-bottom:1px solid var(--line);position:sticky;top:0;z-index:5}
+.logo{display:flex;align-items:center;gap:10px;font:700 18px var(--serif);white-space:nowrap}
+.logo i{width:24px;height:24px;border-radius:8px;background:var(--ac)}
+#q{max-width:480px;border-radius:20px;padding-left:16px}
+.body{display:flex;min-height:calc(100vh - 64px)}
+#side{width:240px;flex:none;padding:18px 18px 30px 24px;border-right:1px solid var(--line);position:sticky;top:64px;align-self:flex-start;max-height:calc(100vh - 64px);overflow:auto}
+.nosb #side{display:none}
+.grp{margin:18px 0 6px;font-size:12px;letter-spacing:.06em;text-transform:uppercase;color:#A8978B}
+.it{display:flex;align-items:center;gap:8px;height:33px;padding:0 10px;margin:0 -10px;border-radius:8px;cursor:pointer;color:#5B463A}
+.it:hover{background:#F5EBDD} .it.on{background:var(--acbg);color:#B83A1C;font-weight:600}
+.it .n{margin-left:auto;font-size:12px;color:#A8978B}
+.sw{width:10px;height:10px;border-radius:50%}
+.tags{display:flex;flex-wrap:wrap;gap:6px}
+.tg{padding:1px 10px;border-radius:14px;background:#F2E9DD;color:#6B5649;font-size:13px;cursor:pointer;border:0}
+.tg.on{background:var(--teal);color:#fff}
+#content{flex:1;min-width:0;padding:20px 28px 40px}
+.bar{display:flex;align-items:center;gap:12px;margin-bottom:16px}
+.bar select{width:auto}
+#grid.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(250px,1fr));gap:20px}
+#grid.empty{text-align:center;padding:100px 20px;color:var(--dim)}
+#grid.empty p{font:600 20px var(--serif);color:var(--ink)}
+.card{background:var(--card);border:1px solid #EFE4D6;border-radius:14px;overflow:hidden;box-shadow:0 2px 8px rgba(120,80,40,.07);cursor:pointer;transition:transform .15s,box-shadow .15s}
+.card:hover{transform:translateY(-3px);box-shadow:0 8px 20px rgba(120,80,40,.13)}
+.cv{position:relative;aspect-ratio:16/9;background:center/cover;display:flex;align-items:center;justify-content:center;font:60px var(--serif);color:rgba(255,255,255,.92)}
+.star{position:absolute;top:10px;right:10px;width:30px;height:30px;border-radius:50%;background:rgba(255,255,255,.92);display:grid;place-items:center;border:0;padding:0;color:#C2B3A6}
+.star.on{color:#E2A33B}
+.pills{position:absolute;left:10px;bottom:10px;display:flex;gap:6px;font:600 12px system-ui}
+.pl{padding:1px 9px;border-radius:10px;background:rgba(255,255,255,.92);color:#5B463A}
+.cb{padding:12px 14px 14px;position:relative}
+.nm{font:700 17px var(--serif);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;padding-right:50px}
+.mt{display:flex;gap:12px;align-items:center;color:var(--dim);font-size:13px}
+.mt span{display:flex;align-items:center;gap:4px}
+.tl{margin-top:4px;font-size:12px;color:var(--teal);min-height:18px}
+.ops{position:absolute;right:10px;bottom:10px;display:flex}
+.wrap{max-width:1040px;margin:0 auto;padding:20px 24px 50px}
+.hero{width:100%;max-height:360px;object-fit:cover;border-radius:16px;margin:14px 0}
+.hero.ph{height:200px;display:flex;align-items:center;justify-content:center;font:90px var(--serif);color:rgba(255,255,255,.9)}
+h1.t{font:700 30px var(--serif);margin:6px 0}
+.two{display:grid;grid-template-columns:320px 1fr;gap:20px;align-items:start;margin-top:18px}
+.cols{display:grid;grid-template-columns:1fr 340px;gap:20px;align-items:start}
+.box{background:var(--card);border:1px solid #EFE4D6;border-radius:14px;padding:16px 18px;margin-bottom:16px}
+.box h3{margin:0 0 8px;font:700 16px var(--serif)}
+.hd{font-weight:700;margin:10px 0 2px;color:var(--ac)}
+.ln{white-space:pre-wrap;padding:3px 0}
+.step{display:flex;gap:12px;padding:6px 0}
+.step b{flex:none;width:26px;height:26px;border-radius:50%;background:var(--acbg);color:#B83A1C;display:grid;place-items:center;font-size:13px}
+.fl{display:block;margin:12px 0 3px;font-size:12px;color:var(--dim)}
+.g3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px}
+#imgbox{border:2px dashed var(--line);border-radius:12px;padding:12px;text-align:center}
+#imgbox img{max-width:100%;max-height:200px;border-radius:8px;display:block;margin:0 auto 8px}
+.tagin{display:flex;flex-wrap:wrap;gap:6px;margin-top:8px}
+.fbar{position:sticky;top:64px;z-index:4;background:var(--bg);padding:10px 0}
+#toast{position:fixed;left:50%;bottom:24px;transform:translateX(-50%);background:var(--ink);color:#fff;padding:8px 16px;border-radius:10px;z-index:20}
+#toast button{margin-left:10px;color:#fff;background:none;border-color:#fff6}
+dialog{border:0;border-radius:16px;background:#fff;color:var(--ink);width:460px;max-width:92vw;padding:20px;box-shadow:0 20px 60px rgba(0,0,0,.25)}
+dialog::backdrop{background:#3B2A2266}
+dialog h2{margin:0 0 10px;font:700 20px var(--serif)}
+.mi{display:block;width:100%;text-align:left;margin:6px 0}
+body.ro #newBtn,body.ro #menuBtn,body.ro .ops,body.ro #bk,body.ro #grid.empty .row,body.ro .star:not(.on){display:none!important}
+body.ro .star{pointer-events:none}
+@media(max-width:900px){.two,.cols{grid-template-columns:1fr}#side{width:200px}}
 </style>
 </head>
-
-
 <body>
-
-<div class="app">
-
-
-<!-- =========================
-     HEADER
-========================= -->
-
-<header class="header">
-
-  <div class="header-main">
-
-    <div class="eyebrow">EDIMAKOR · CONTENT WORKSPACE</div>
-
-    <h1 id="pageTitle">HTML Content Tools</h1>
-
-    <p id="pageSubtitle">URL-Analyse, Werbemodule und HTML-Link-Ersetzung schnell erstellen.</p>
-
-  </div>
-
-  <!-- ONE GLOBAL LANGUAGE SWITCH -->
-  <div class="global-lang">
-    <button type="button" id="globalDeBtn">DE</button>
-    <button type="button" id="globalEsBtn">ES</button>
-  </div>
-
-</header>
-
-
-<!-- =========================
-     FLOATING NAV
-========================= -->
-
-<nav class="module-nav">
-  <div class="module-nav-inner">
-    <a href="#urlTool" id="navUrl">① URL</a>
-    <a href="#adTools" id="navAds">②③ Ads</a>
-    <a href="#replacerTool" id="navReplacer">④ Replacer</a>
-  </div>
-</nav>
-
-
-<main class="grid">
-
-
-<!-- =====================================================
-     ① URL ANALYZER
-===================================================== -->
-
-<section class="card full" id="urlTool">
-
-  <div class="card-head">
-    <div>
-      <div class="card-title">
-        <div class="card-number">①</div>
-        <h2 id="urlTitle">URL-Analyse</h2>
-      </div>
-      <p class="card-desc" id="urlDesc">Eine URL pro Zeile · Klick auf Tabellenzelle = kopieren</p>
-    </div>
-  </div>
-
-  <textarea
-    id="urlInput"
-    placeholder="https://edimakor.hitpaw.de/photo-generation-tips/ai-cake-generator-copy.html
-https://edimakor.hitpaw.de/ai-video-tools/create-ai-streamer.html"></textarea>
-
-  <div class="actions">
-    <button type="button" class="btn btn-primary" id="analyzeBtn">URLs analysieren</button>
-    <button type="button" class="btn btn-soft" id="clearUrlBtn">Leeren</button>
-  </div>
-
-  <div class="table-wrap" id="urlTableWrap">
-    <div class="empty" id="urlEmpty">Noch keine URLs analysiert.</div>
-  </div>
-
-</section>
-
-
-<!-- =====================================================
-     ② + ③ ADS
-===================================================== -->
-
-<div
-  class="card full"
-  id="adTools"
-  style="padding:0;border:0;background:transparent;box-shadow:none;">
-
-  <div class="ad-grid">
-
-    <!-- ② PC -->
-    <section class="card ad-card ad-pc">
-
-      <div class="card-head">
-        <div>
-          <div class="card-title">
-            <div class="card-number">②</div>
-            <h2 id="pcTitle">PC Right-side Ad</h2>
-          </div>
-          <p class="card-desc" id="pcInputHint">URL + Tab + Beschriftung · 3–5 Einträge</p>
-        </div>
-      </div>
-
-      <textarea
-        id="pcTrendInput"
-        placeholder="URL[TAB]Beschriftung
-https://edimakor.hitpaw.de/ai-video-tools/example.html    Beispielartikel
-https://edimakor.hitpaw.de/photo-tips/example.html    Foto-Tipps
-https://edimakor.hitpaw.de/video-editing-tips/example.html    Video-Tipps"></textarea>
-
-      <div class="actions">
-        <button type="button" class="btn btn-primary" id="pcGenerateBtn">PC-Modul erstellen</button>
-        <button type="button" class="btn btn-soft" id="pcClearBtn">Leeren</button>
-      </div>
-
-      <!-- The whole PC preview is the copy button. -->
-      <div class="preview">
-        <div id="pcPreview"></div>
-      </div>
-
-    </section>
-
-    <!-- ③ MOBILE -->
-    <section class="card ad-card ad-mobile">
-
-      <div class="card-head">
-        <div>
-          <div class="card-title">
-            <div class="card-number">③</div>
-            <h2 id="mobileTitle">Mobile Bottom Ad</h2>
-          </div>
-        </div>
-      </div>
-
-      <!-- The preview itself is the copy button. -->
-      <div class="preview">
-        <div class="mobile-preview-frame click-preview" id="mobilePreviewClick">
-          <div class="mobile-preview-inner" id="mobileAdPreview"></div>
-        </div>
-      </div>
-
-    </section>
-
-  </div>
-
+<div id="top">
+  <button class="ic" id="sbBtn" title="Toggle filters" style="color:var(--ink)"></button>
+  <div class="logo" id="logo" style="cursor:pointer"><i></i>My Recipes</div>
+  <input id="q" placeholder="Search name, ingredients, tags, category">
+  <span class="sp"></span>
+  <span id="syncst" class="dim" style="font-size:12px"></span>
+  <button class="out" id="rollBtn"></button>
+  <button class="pri" id="newBtn"></button>
+  <button class="ic" id="menuBtn" title="More" style="color:var(--ink)"></button>
 </div>
-
-
-<!-- =====================================================
-     ④ HTML REPLACER
-===================================================== -->
-
-<section class="card full" id="replacerTool">
-
-  <div class="card-head">
-    <div>
-      <div class="card-title">
-        <div class="card-number">④</div>
-        <h2 id="replaceTitle">HTML Code Batch Replacer</h2>
-      </div>
-      <p class="card-desc" id="replaceDesc">Vollständigen HTML-Code einfügen · nur definierte Links werden ersetzt</p>
-    </div>
-  </div>
-
-  <textarea
-    id="htmlReplaceInput"
-    placeholder="Hier den vollständigen HTML-Code einfügen..."></textarea>
-
-  <div class="actions">
-    <button type="button" class="btn btn-primary" id="replaceButton">Links ersetzen</button>
-    <button type="button" class="btn btn-soft" id="replaceClearButton">Leeren</button>
-  </div>
-
-  <div id="replaceResult" class="replace-result">Noch kein Ergebnis.</div>
-
-  <!-- The output itself is clickable. No separate copy button. -->
-  <div id="replaceOutput" class="code-box">Der ersetzte HTML-Code wird hier angezeigt.</div>
-
-  <!-- 替换规则：默认锁定，可解锁后自行编辑 -->
-  <div class="rules-panel">
-
-    <div class="rules-head">
-
-      <span class="rules-title" id="rulesTitle">Ersetzungsregeln</span>
-
-      <span class="rules-tools">
-        <button type="button" class="rules-btn" id="rulesLockBtn">🔒 Entsperren</button>
-        <button type="button" class="rules-btn" id="rulesResetBtn">↺ Standard</button>
-      </span>
-
-    </div>
-
-    <div class="replace-rules" id="replaceRules"></div>
-
-  </div>
-
-</section>
-
-
-</main>
-
-</div>
-
-
-<div class="toast" id="toast"></div>
-
+<div id="home" class="body"><aside id="side"></aside><main id="content"><div class="bar"><b id="info"></b><span class="sp"></span><span class="dim">Sort</span><select id="sort"></select></div><div id="bk"></div><div id="grid"></div></main></div>
+<div id="detail" hidden></div>
+<div id="form" hidden></div>
+<dialog id="dlg"></dialog>
+<div id="toast" hidden></div>
+<input type="file" id="jsonFile" accept=".json" hidden>
+<input type="file" id="xlsFile" accept=".xlsx,.csv,.json" hidden>
 
 <script>
-
-/* =========================================================
-   GLOBAL STATE
-========================================================= */
-
-let currentLang = "de";
-let toastTimer = null;
-
-/* PC 预览会被重新渲染，所以点击次数单独保存 */
-let pcClicks = 0;
-
-
-/* =========================================================
-   CLICK COLOR CYCLE
-   每点击一次换一种颜色，共 4 种（绿 → 蓝 → 黄 → 粉），循环。
-   颜色样式见 CSS：.click-c1 ~ .click-c4
-========================================================= */
-
-const CLICK_COLOR_COUNT = 4;
-
-function applyClickColor(el){
-
-  if(!el) return;
-
-  for(let i = 1; i <= CLICK_COLOR_COUNT; i++){
-    el.classList.remove("click-c" + i);
-  }
-
-  const n = parseInt(el.dataset.clicks || "0", 10);
-
-  if(n > 0){
-    el.classList.add("click-c" + (((n - 1) % CLICK_COLOR_COUNT) + 1));
-  }
-
-}
-
-function cycleClick(el){
-
-  if(!el) return 0;
-
-  const n = parseInt(el.dataset.clicks || "0", 10) + 1;
-
-  el.dataset.clicks = String(n);
-
-  applyClickColor(el);
-
-  return n;
-
-}
-
-function resetClick(el){
-
-  if(!el) return;
-
-  el.dataset.clicks = "0";
-
-  applyClickColor(el);
-
-}
-
-
-/* =========================================================
-   GENERAL
-========================================================= */
-
-function showToast(message){
-
-  const toast = document.getElementById("toast");
-
-  toast.textContent = message;
-
-  toast.classList.add("show");
-
-  clearTimeout(toastTimer);
-
-  toastTimer = setTimeout(() => {
-    toast.classList.remove("show");
-  }, 1600);
-
-}
-
-
-async function copyText(text){
-
-  if(!text) return;
-
-  try{
-
-    await navigator.clipboard.writeText(text);
-
-  }catch(error){
-
-    const textarea = document.createElement("textarea");
-
-    textarea.value = text;
-    textarea.style.position = "fixed";
-    textarea.style.left = "-9999px";
-
-    document.body.appendChild(textarea);
-
-    textarea.select();
-
-    document.execCommand("copy");
-
-    textarea.remove();
-
-  }
-
-  showToast(currentLang === "de" ? "Kopiert" : "Copiado");
-
-}
-
-
-function escapeHtml(value){
-
-  return String(value)
-    .replace(/&/g,"&amp;")
-    .replace(/</g,"&lt;")
-    .replace(/>/g,"&gt;")
-    .replace(/"/g,"&quot;")
-    .replace(/'/g,"&#039;");
-
-}
-
-
-function escapeAttribute(value){
-
-  return String(value)
-    .replace(/&/g,"&amp;")
-    .replace(/"/g,"&quot;");
-
-}
-
-
-/* =========================================================
-   LANGUAGE CONFIG
-========================================================= */
-
-const UI = {
-
-  de:{
-
-    pageTitle:"HTML Content Tools",
-    pageSubtitle:"URL-Analyse, Werbemodule und HTML-Link-Ersetzung schnell erstellen.",
-
-    navUrl:"① URL",
-    navAds:"②③ Ads",
-    navReplacer:"④ Replacer",
-
-    urlTitle:"URL-Analyse",
-    urlDesc:"Eine URL pro Zeile · Klick auf Tabellenzelle = kopieren",
-
-    urlPlaceholder:
-`https://edimakor.hitpaw.de/photo-generation-tips/ai-cake-generator-copy.html
-https://edimakor.hitpaw.de/ai-video-tools/create-ai-streamer.html`,
-
-    analyze:"URLs analysieren",
-    clear:"Leeren",
-    urlEmpty:"Noch keine URLs analysiert.",
-    urlInputEmpty:"Bitte zuerst URLs eingeben.",
-    invalidUrl:"Ungültige URL",
-
-    tableUrl:"URL",
-    tableDirectory:"Verzeichnis",
-    tableForm:"Form",
-    tableFilename:"Dateiname",
-
-    mobileTitle:"Mobile Bottom Ad",
-
-    pcTitle:"PC Right-side Ad",
-    pcInputHint:"URL + Tab + Beschriftung · 3–5 Einträge",
-
-    pcPlaceholder:
-`URL[TAB]Beschriftung
-https://edimakor.hitpaw.de/ai-video-tools/example.html    Beispielartikel
-https://edimakor.hitpaw.de/photo-tips/example.html    Foto-Tipps
-https://edimakor.hitpaw.de/video-editing-tips/example.html    Video-Tipps`,
-
-    pcGenerate:"PC-Modul erstellen",
-    pcEmpty:"Artikel oben eingeben",
-
-    replaceTitle:"HTML Code Batch Replacer",
-    replaceDesc:"Vollständigen HTML-Code einfügen · nur definierte Links werden ersetzt",
-    replacePlaceholder:"Hier den vollständigen HTML-Code einfügen...",
-    replaceButton:"Links ersetzen",
-    replaceClear:"Leeren",
-    replaceEmptyResult:"Noch kein Ergebnis.",
-    replaceEmptyOutput:"Der ersetzte HTML-Code wird hier angezeigt.",
-    replaceNoInput:"Bitte HTML-Code eingeben",
-    replaceNoResult:"Noch kein Ergebnis",
-    replaceNoLinks:"Keine passenden Links gefunden",
-
-    rulesTitle:"Ersetzungsregeln (bearbeitbar)",
-    rulesUnlock:"🔒 Entsperren",
-    rulesLock:"🔓 Sperren",
-    rulesReset:"↺ Standard",
-    rulesResetDone:"Regeln zurückgesetzt",
-    ruleFrom:"Suchen",
-    ruleTo:"Ersetzen durch",
-    resReplaced:"ersetzt",
-    resTarget:"im Original vorhanden",
-    resTotal:"ersetzt",
-    resLinkOne:"Link",
-    resLinkMany:"Links",
-
-    replaceRules:[
-      ['href="https://edimakor.hitpaw.com','href="https://edimakor.hitpaw.de'],
-      ['href="https://app.edimakor.ai/en','href="https://app.edimakor.ai/de'],
-      ['href="https://www.edimakor.ai/','href="https://www.edimakor.ai/de']
-    ]
-
-  },
-
-
-  es:{
-
-    pageTitle:"Herramientas de contenido HTML",
-    pageSubtitle:"Analiza URLs, crea módulos publicitarios y reemplaza enlaces HTML rápidamente.",
-
-    navUrl:"① URL",
-    navAds:"②③ Anuncios",
-    navReplacer:"④ Reemplazador",
-
-    urlTitle:"Análisis de URL",
-    urlDesc:"Una URL por línea · Haz clic en una celda para copiar",
-
-    urlPlaceholder:
-`https://edimakor.hitpaw.es/photo-generation-tips/ai-cake-generator-copy.html
-https://edimakor.hitpaw.es/ai-video-tools/create-ai-streamer.html`,
-
-    analyze:"Analizar URLs",
-    clear:"Limpiar",
-    urlEmpty:"Aún no hay URLs analizadas.",
-    urlInputEmpty:"Introduce primero las URLs.",
-    invalidUrl:"URL no válida",
-
-    tableUrl:"URL",
-    tableDirectory:"Directorio",
-    tableForm:"Forma",
-    tableFilename:"Nombre de archivo",
-
-    mobileTitle:"Anuncio inferior móvil",
-
-    pcTitle:"Anuncio lateral PC",
-    pcInputHint:"URL + Tab + texto · 3–5 entradas",
-
-    pcPlaceholder:
-`URL[TAB]Texto
-https://edimakor.hitpaw.es/ai-video-tools/example.html    Artículo de ejemplo
-https://edimakor.hitpaw.es/photo-tips/example.html    Consejos de fotos
-https://edimakor.hitpaw.es/video-editing-tips/example.html    Consejos de edición`,
-
-    pcGenerate:"Crear módulo PC",
-    pcEmpty:"Introduce artículos arriba",
-
-    replaceTitle:"Reemplazador de código HTML",
-    replaceDesc:"Pega el código HTML completo · solo se reemplazarán los enlaces definidos",
-    replacePlaceholder:"Pega aquí el código HTML completo...",
-    replaceButton:"Reemplazar enlaces",
-    replaceClear:"Limpiar",
-    replaceEmptyResult:"Aún no hay resultados.",
-    replaceEmptyOutput:"El código HTML reemplazado aparecerá aquí.",
-    replaceNoInput:"Introduce el código HTML",
-    replaceNoResult:"Aún no hay resultados",
-    replaceNoLinks:"No se encontraron enlaces para reemplazar",
-
-    rulesTitle:"Reglas de reemplazo (editables)",
-    rulesUnlock:"🔒 Desbloquear",
-    rulesLock:"🔓 Bloquear",
-    rulesReset:"↺ Predeterminado",
-    rulesResetDone:"Reglas restablecidas",
-    ruleFrom:"Buscar",
-    ruleTo:"Reemplazar por",
-    resReplaced:"reemplazados",
-    resTarget:"ya existentes en el original",
-    resTotal:"reemplazados",
-    resLinkOne:"enlace",
-    resLinkMany:"enlaces",
-
-    replaceRules:[
-      ['href="https://edimakor.hitpaw.com','href="https://edimakor.hitpaw.es'],
-      ['href="https://app.edimakor.ai/en','href="https://app.edimakor.ai/es'],
-      ['href="https://www.edimakor.ai/','href="https://www.edimakor.ai/es']
-    ]
-
-  }
-
+'use strict';
+/* ===== 1. Config ===== */
+const DIFF = ['简单', '中等', '困难'];                           // stored values (kept for data compatibility)
+const DL = ['Easy', 'Medium', 'Hard'], DPILL = [['#E4EFD9', '#4A7A36'], ['#FBE9C4', '#9A6A10'], ['#F8D9D3', '#A8352B']], DDOT = ['#5E8C4A', '#E2A33B', '#C8423A'];
+const DEF_CATS = ['Breakfast', 'Noodles', 'Stew', 'Quick'];
+const GRAD = [['#F6B58C', '#E8795A'], ['#F5DE96', '#E8B94F'], ['#F2B3B0', '#D9777A'], ['#B7CF9E', '#7FA566'], ['#A9CFD8', '#6FA3B5'], ['#E9CDA8', '#C99A68']];
+const ld = r => r.hist.length ? r.hist[r.hist.length - 1] : 0;
+const SORTS = {
+  new: ['Newest', (a, b) => b.createdAt - a.createdAt], old: ['Oldest', (a, b) => a.createdAt - b.createdAt],
+  time: ['Quickest first', (a, b) => (a.min || 1e9) - (b.min || 1e9)],
+  recent: ['Recently cooked', (a, b) => ld(b) - ld(a)], stale: ['Not cooked longest', (a, b) => ld(a) - ld(b)],
+  name: ['Name A–Z', (a, b) => a.name.localeCompare(b.name)],
 };
-
-
-/* 替换规则的当前值（可编辑），每种语言各保存一份 */
-
-const ruleState = {
-  de:UI.de.replaceRules.map(rule => [rule[0],rule[1]]),
-  es:UI.es.replaceRules.map(rule => [rule[0],rule[1]])
+const HEADERS = ['Name', 'Category', 'Difficulty', 'Minutes', 'Servings', 'Tags', 'Source', 'Ingredients', 'Steps', 'Notes'];
+const ICONS = {
+  star: '<path d="m12 3 2.7 5.6 6.1.9-4.4 4.3 1 6.1L12 17l-5.4 2.9 1-6.1L3.2 9.5l6.1-.9z" fill="currentColor"/>',
+  clock: '<circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/>', edit: '<path d="M4 20h4L19 9l-4-4L4 16z"/>',
+  trash: '<path d="M4 7h16M9 7V4h6v3M6 7l1 13h10l1-13"/>', plus: '<path d="M12 5v14M5 12h14"/>',
+  dice: '<rect x="4" y="4" width="16" height="16" rx="3"/><circle cx="9" cy="9" r="1"/><circle cx="15" cy="15" r="1"/><circle cx="12" cy="12" r="1"/>',
+  dots: '<circle cx="5" cy="12" r="1.5" fill="currentColor"/><circle cx="12" cy="12" r="1.5" fill="currentColor"/><circle cx="19" cy="12" r="1.5" fill="currentColor"/>',
+  filter: '<path d="M4 6h16M7 12h10M10 18h4"/>', back: '<path d="m15 6-6 6 6 6"/>',
 };
-
-let rulesUnlocked = false;
-
-function getRules(){
-  return ruleState[currentLang];
-}
-
-
-/* =========================================================
-   MOBILE AD
-========================================================= */
-
-const MOBILE_AD = {
-
-  de:{
-    id:"v80im6",
-    logoAlt:"HitPaw Edimakor",
-    description:"Bester KI-Videoeditor mit vielen Videobearbeitungselementen und KI-Funktionen.",
-    buyText:"Jetzt kaufen",
-    buyUrl:"https://edimakor.hitpaw.de/buy-video-editor.html"
-  },
-
-  es:{
-    id:"a3ooxh",
-    logoAlt:"HitpawEdimakor",
-    description:"El mejor editor de video de IA con muchos recursos de edición de video y funciones de IA.",
-    buyText:"Comprar Ahora",
-    buyUrl:"https://edimakor.hitpaw.es/buy-video-editor.html"
-  }
-
-};
-
-
-function getMobileAdCode(){
-
-  const d = MOBILE_AD[currentLang];
-
-  return `<div class="bottom-ad" id="${d.id}">
-  <div class="close-icon"></div>
-  <div class="d-flex align-items-center justify-content-md-between">
-    <div class="text-white">
-      <div class="sub-title d-flex align-items-end">
-        <img class="img-fluid logo" src="https://edimakor.hitpaw.com/images/logos/hitpaw-edimakor.png" width="40" height="40" alt="${d.logoAlt}">
-        <span class="fw-bolder">HitPaw Edimakor</span>
-      </div>
-      <p class="small mt-1 mb-0">${d.description}</p>
-    </div>
-    <div class="btn-box">
-      <a href="${d.buyUrl}" class="btn btn-white">
-        ${d.buyText}
-      </a>
-    </div>
-  </div>
-</div>`;
-
-}
-
-
-function renderMobileAd(){
-
-  const d = MOBILE_AD[currentLang];
-
-  document.getElementById("mobileAdPreview").innerHTML = `
-
-      <div class="bottom-ad-preview">
-
-        <div class="ad-row">
-
-          <div>
-
-            <div class="ad-brand">
-              <img
-                src="https://edimakor.hitpaw.com/images/logos/hitpaw-edimakor.png"
-                alt="${escapeHtml(d.logoAlt)}">
-              <strong>HitPaw Edimakor</strong>
-            </div>
-
-            <div class="ad-copy">${escapeHtml(d.description)}</div>
-
-          </div>
-
-          <div class="ad-btn">${escapeHtml(d.buyText)}</div>
-
-        </div>
-
-      </div>
-
-    `;
-
-}
-
-
-/* =========================================================
-   PC AD
-========================================================= */
-
-const PC_CONFIG = {
-
-  de:{
-
-    winDownload:"https://download.hitpaw.com/downloads/hitpaw-edimakor-full_8670.exe",
-    macDownload:"https://download.hitpaw.com/downloads/hitpaw-edimakor-mac-full_8671.zip",
-    winBuy:"https://edimakor.hitpaw.de/buy-video-editor.html",
-    macBuy:"https://edimakor.hitpaw.de/buy-video-editor-mac.html",
-
-    downloadText:"Jetzt herunterladen",
-    buyText:"Jetzt kaufen",
-
-    description:"Bester KI-Videoeditor mit vielen Videobearbeitungselementen und KI-Funktionen.",
-
-    hotTitle:"Heiß &amp; im Trend",
-
-    hotArticles:[
-      ["https://edimakor.hitpaw.de/subtitle-tips/","Tipps für Untertitel"],
-      ["https://edimakor.hitpaw.de/ai-translation/","KI-Übersetzung"],
-      ["https://edimakor.hitpaw.de/video-editing-tips/","Videobearbeitung von Filmmaterial"],
-      ["https://edimakor.hitpaw.de/photo-tips/","Tipps für Fotobearbeitung"],
-      ["https://edimakor.hitpaw.de/video-editing-footage/","Video-Material &amp; Footage"]
-    ]
-
-  },
-
-
-  es:{
-
-    winDownload:"https://download.hitpaw.com/downloads/hitpaw-edimakor-full_8692.exe",
-    macDownload:"https://download.hitpaw.com/downloads/hitpaw-edimakor-mac-full_8693.zip",
-    winBuy:"https://edimakor.hitpaw.es/buy-video-editor.html",
-    macBuy:"https://edimakor.hitpaw.es/buy-video-editor-mac.html",
-
-    downloadText:"Descargar Ahora",
-    buyText:"Comprar Ahora",
-
-    description:"El mejor editor de video con IA, con numerosos recursos de edición y funciones de IA.",
-
-    hotTitle:"Popular &amp; Tendencia",
-
-    hotArticles:[
-      ["https://edimakor.hitpaw.es/subtitle-tips/","Consejos de Subtítulos"],
-      ["https://edimakor.hitpaw.es/ai-translation/","Traducción de IA"],
-      ["https://edimakor.hitpaw.es/video-recording-tips/","Consejos de Grabación"],
-      ["https://edimakor.hitpaw.es/video-editing-tips/","Consejos para Editar Vídeo"]
-    ]
-
-  }
-
-};
-
-
-/*
-  IMPORTANT:
-  The user-entered PC trend articles are NEVER replaced
-  when switching DE / ES.
-*/
-
-function parseTrendInput(){
-
-  const input = document.getElementById("pcTrendInput").value.trim();
-
-  if(!input){
-    return [];
-  }
-
-  return input
-
-    .split(/\n+/)
-
-    .map(line => line.trim())
-
-    .filter(Boolean)
-
-    .map(line => {
-
-      let parts;
-
-      if(line.includes("\t")){
-        parts = line.split("\t");
-      }else if(line.includes(" | ")){
-        parts = line.split(" | ");
-      }else{
-        parts = line.split(/\s{2,}/);
-      }
-
-      return {
-        url:(parts[0] || "").trim(),
-        text:(parts.slice(1).join(" ") || "").trim()
-      };
-
-    })
-
-    .filter(item => item.url && item.text);
-
-}
-
-
-function generateTrendPreview(){
-
-  const items = parseTrendInput().slice(0,5);
-
-  if(!items.length){
-
-    return `
-
-      <div class="pc-trend-item">
-
-        <span style="color:#9a94a6;">
-          ${escapeHtml(PC_CONFIG[currentLang].hotTitle.replace("&amp;","&"))}
-        </span>
-
-      </div>
-
-    `;
-
-  }
-
-  return items
-    .map((item,index) => {
-
-      const icon = Math.min(index + 1,3);
-
-      return `
-
-        <div class="pc-trend-item">
-
-          <img
-            src="https://edimakor.hitpaw.com/images/edimakor-2025/article/hot-and-trend-icon-${icon}.png"
-            alt="">
-
-          <span>${escapeHtml(item.text)}</span>
-
-        </div>
-
-      `;
-
-    })
-    .join("");
-
-}
-
-
-function generateTrendHtml(items){
-
-  return items
-    .map((item,index) => {
-
-      const iconNumber = Math.min(index + 1,3);
-
-      return `
-    <li>
-      <a href="${escapeAttribute(item.url)}">
-        <img
-          class="img-fluid"
-          src="https://edimakor.hitpaw.com/images/edimakor-2025/article/hot-and-trend-icon-${iconNumber}.png"
-          alt="hot-and-trending">
-        <span>${escapeHtml(item.text)}</span>
-      </a>
-    </li>`;
-
-    })
-    .join("");
-
-}
-
-
-function generateHotArticles(items){
-
-  return items
-    .map(item => `
-
-    <li>
-      <a
-        href="${escapeAttribute(item[0])}"
-        target="_blank">
-        ${item[1]}
-      </a>
-    </li>
-
-  `)
-    .join("");
-
-}
-
-
-function getPcCode(){
-
-  const config = PC_CONFIG[currentLang];
-
-  /*
-    Always use exactly the articles entered by the user.
-    Language switching only changes the fixed module content.
-  */
-
-  const trendItems = parseTrendInput();
-
-  return `<div class="ad-module mb-4">
-  <div class="d-flex align-items-center justify-content-center mb-2">
-    <img class="lozad" src="https://images.hitpaw.com/images/common/loading.svg"
-         data-src="https://edimakor.hitpaw.com/images/logos/hitpaw-edimakor.png" width="38" height="38"
-         alt="${currentLang === "es" ? "HitpawEdimakor Logo" : "HitPaw Edimakor Logo"}">
-    <span class="h5 ms-2 mb-0">HitPaw Edimakor</span>
-  </div>
-
-  <p class="p1 fw-normal text-center mb-0">${config.description}</p>
-
-  <div class="btn-groups">
-
-    <div class="sys-win">
-
-      <div class="mb-3">
-        <a href="${config.winDownload}" class="btn btn-lg btn-primary">
-          <svg width="28" height="28">
-            <use xlink:href="#win-path"></use>
-          </svg>
-          <span>${config.downloadText}</span>
-        </a>
-      </div>
-
-      <div>
-        <a href="${config.winBuy}" class="btn btn-lg btn-outline-primary">
-          <svg width="22" height="22">
-            <use xlink:href="#shop-cart-path"></use>
-          </svg>
-          <span>${config.buyText}</span>
-        </a>
-      </div>
-
-    </div>
-
-
-    <div class="sys-mac">
-
-      <div class="mb-3">
-        <a href="${config.macDownload}" class="btn btn-lg btn-primary">
-          <svg width="28" height="28">
-            <use xlink:href="#mac-path"></use>
-          </svg>
-          <span>${config.downloadText}</span>
-        </a>
-      </div>
-
-      <div>
-        <a href="${config.macBuy}" class="btn btn-lg btn-outline-primary">
-          <svg width="22" height="22">
-            <use xlink:href="#shop-cart-path"></use>
-          </svg>
-          <span>${config.buyText}</span>
-        </a>
-      </div>
-
-    </div>
-
-  </div>
-</div>
-
-<div class="hot-and-trending">
-
-  <p class="h5 mb-0">${config.hotTitle}</p>
-
-  <ul class="list-trend mb-0">
-    ${generateTrendHtml(trendItems)}
-  </ul>
-
-  <ul class="hot-articles mb-0">
-    ${generateHotArticles(config.hotArticles)}
-  </ul>
-
-</div>`;
-
-}
-
-
-function renderPcPreview(){
-
-  const config = PC_CONFIG[currentLang];
-
-  document.getElementById("pcPreview").innerHTML = `
-
-      <div
-        class="pc-preview click-preview"
-        id="pcPreviewClick">
-
-        <div class="pc-logo-row">
-
-          <img
-            src="https://edimakor.hitpaw.com/images/logos/hitpaw-edimakor.png"
-            alt="HitPaw Edimakor">
-
-          <strong>HitPaw Edimakor</strong>
-
-        </div>
-
-        <div class="pc-description">
-          ${escapeHtml(config.description)}
-        </div>
-
-        <div class="pc-system">
-
-          <div class="pc-preview-btn download">
-            ↓ ${escapeHtml(config.downloadText)}
-          </div>
-
-          <div class="pc-preview-btn buy">
-            🛒 ${escapeHtml(config.buyText)}
-          </div>
-
-        </div>
-
-        <div class="pc-trend-title">
-          ${config.hotTitle.replace("&amp;","&")}
-        </div>
-
-        ${generateTrendPreview()}
-
-      </div>
-
-    `;
-
-  /*
-    IMPORTANT:
-    Event is attached directly to the newly rendered
-    preview element. Clicking ANYWHERE on the visual
-    copies the complete PC HTML code.
-  */
-
-  const preview = document.getElementById("pcPreviewClick");
-
-  /* 预览被重新渲染后，恢复之前的点击颜色 */
-  preview.dataset.clicks = String(pcClicks);
-  applyClickColor(preview);
-
-  preview.addEventListener("click", () => {
-
-    copyText(getPcCode());
-
-    cycleClick(preview);
-
-    pcClicks = parseInt(preview.dataset.clicks, 10);
-
-  });
-
-}
-
-
-function generatePcCode(){
-
-  renderPcPreview();
-
-}
-
-
-function clearPc(){
-
-  document.getElementById("pcTrendInput").value = "";
-
-  /* 内容已变化 → 颜色重置 */
-  pcClicks = 0;
-
-  renderPcPreview();
-
-}
-
-
-/* =========================================================
-   ④ HTML BATCH REPLACER
-========================================================= */
-
-function renderReplaceUI(){
-
-  const config = UI[currentLang];
-
-  document.getElementById("replaceTitle").textContent = config.replaceTitle;
-  document.getElementById("replaceDesc").textContent = config.replaceDesc;
-  document.getElementById("htmlReplaceInput").placeholder = config.replacePlaceholder;
-  document.getElementById("replaceButton").textContent = config.replaceButton;
-  document.getElementById("replaceClearButton").textContent = config.replaceClear;
-
-  renderRules();
-
-  /*
-    IMPORTANT:
-    We intentionally DO NOT touch:
-    - htmlReplaceInput.value
-    - replaceOutput.textContent
-    - replaceResult.textContent
-  */
-
-}
-
-
-function renderRules(){
-
-  const config = UI[currentLang];
-
-  document.getElementById("rulesTitle").textContent = config.rulesTitle;
-
-  const lockBtn = document.getElementById("rulesLockBtn");
-
-  lockBtn.textContent = rulesUnlocked ? config.rulesLock : config.rulesUnlock;
-  lockBtn.classList.toggle("unlocked", rulesUnlocked);
-
-  document.getElementById("rulesResetBtn").textContent = config.rulesReset;
-
-  document.getElementById("replaceRules").innerHTML =
-    getRules()
-      .map((rule,index) => `
-
-        <div class="replace-rule">
-
-          <div class="rule-label">${config.ruleFrom} ${index + 1}</div>
-
-          <input
-            class="rule-input"
-            type="text"
-            spellcheck="false"
-            data-rule="${index}"
-            data-side="0"
-            value="${escapeAttribute(rule[0])}"
-            ${rulesUnlocked ? "" : "readonly"}>
-
-          <span class="replace-arrow">↓</span>
-
-          <div class="rule-label">${config.ruleTo}</div>
-
-          <input
-            class="rule-input"
-            type="text"
-            spellcheck="false"
-            data-rule="${index}"
-            data-side="1"
-            value="${escapeAttribute(rule[1])}"
-            ${rulesUnlocked ? "" : "readonly"}>
-
-        </div>
-
-      `)
-      .join("");
-
-}
-
-
-function toggleRulesLock(){
-
-  rulesUnlocked = !rulesUnlocked;
-
-  renderRules();
-
-}
-
-
-function resetRules(){
-
-  ruleState[currentLang] =
-    UI[currentLang].replaceRules.map(rule => [rule[0],rule[1]]);
-
-  renderRules();
-
-  showToast(UI[currentLang].rulesResetDone);
-
-}
-
-
-function countOccurrences(source, search){
-
-  if(!search) return 0;
-
-  return source.split(search).length - 1;
-
-}
-
-
-function replaceAllExact(source, search, replacement){
-
-  /* 空的搜索内容会造成死循环，直接跳过 */
-  if(!search){
-    return { result:source, count:0 };
-  }
-
-  let result = source;
-  let count = 0;
-  let position = 0;
-
-  while(true){
-
-    const index = result.indexOf(search, position);
-
-    if(index === -1){
-      break;
-    }
-
-    /*
-      如果目标内容本身就以搜索内容开头
-      （例如 .../ → .../de），而这里已经是目标链接，
-      就跳过，避免重复替换成 .../dede
-    */
-    if(
-      replacement.startsWith(search) &&
-      result.startsWith(replacement, index)
-    ){
-
-      position = index + replacement.length;
-
-      continue;
-
-    }
-
-    result =
-      result.slice(0,index) +
-      replacement +
-      result.slice(index + search.length);
-
-    position = index + replacement.length;
-
-    count++;
-
-  }
-
-  return { result, count };
-
-}
-
-
-function replaceHtmlLinks(){
-
-  const config = UI[currentLang];
-
-  const input = document.getElementById("htmlReplaceInput").value;
-
-  if(!input.trim()){
-
-    showToast(config.replaceNoInput);
-
-    return;
-
-  }
-
-  const rules = getRules();
-
-  let output = input;
-
-  /*
-    每条规则统计两个数字：
-    replaced = 找到旧链接并替换的数量
-    existing = 原文里本来就已经是目标链接的数量（不替换，只统计）
-  */
-  const stats = rules.map(rule => {
-
-    const existing = countOccurrences(input, rule[1]);
-
-    const result = replaceAllExact(output, rule[0], rule[1]);
-
-    output = result.result;
-
-    return {
-      from:rule[0],
-      to:rule[1],
-      replaced:result.count,
-      existing
-    };
-
-  });
-
-  const total = stats.reduce((sum,item) => sum + item.replaced, 0);
-
-  const outputBox = document.getElementById("replaceOutput");
-
-  outputBox.textContent = output;
-
-  /* 生成了新的结果 → 颜色重置 */
-  resetClick(outputBox);
-
-  const numHtml = value =>
-    `<span class="result-num ${value ? "" : "zero"}">${value}</span>`;
-
-  const rows = stats
-    .map((item,index) => `
-
-      <div class="result-row">
-
-        <span class="result-sep">#${index + 1}</span>
-
-        <code>${escapeHtml(item.from)}</code>
-
-        ${escapeHtml(config.resReplaced)}: ${numHtml(item.replaced)}
-
-        <span class="result-sep">·</span>
-
-        <code>${escapeHtml(item.to)}</code>
-
-        ${escapeHtml(config.resTarget)}: ${numHtml(item.existing)}
-
-      </div>
-
-    `)
-    .join("");
-
-  document.getElementById("replaceResult").innerHTML = `
-
-      <span class="replace-count">
-        ${total}
-        ${total === 1 ? config.resLinkOne : config.resLinkMany}
-        ${config.resTotal}
-      </span>
-
-      ${rows}
-
-    `;
-
-  showToast(
-
-    total
-
-      ? currentLang === "de"
-        ? `${total} ${total === 1 ? "Link" : "Links"} ersetzt`
-        : `${total} enlaces reemplazados`
-
-      : config.replaceNoLinks
-
-  );
-
-}
-
-
-function clearHtmlReplacer(){
-
-  const config = UI[currentLang];
-
-  document.getElementById("htmlReplaceInput").value = "";
-
-  const outputBox = document.getElementById("replaceOutput");
-
-  outputBox.textContent = config.replaceEmptyOutput;
-
-  resetClick(outputBox);
-
-  document.getElementById("replaceResult").textContent = config.replaceEmptyResult;
-
-}
-
-
-function copyReplacedHtml(){
-
-  const outputBox = document.getElementById("replaceOutput");
-
-  const output = outputBox.textContent;
-
-  const config = UI[currentLang];
-
-  if(
-    !output ||
-    output === config.replaceEmptyOutput
-  ){
-
-    showToast(config.replaceNoResult);
-
-    return;
-
-  }
-
-  copyText(output);
-
-  cycleClick(outputBox);
-
-}
-
-
-/* =========================================================
-   URL ANALYZER
-========================================================= */
-
-function analyzeUrls(){
-
-  const config = UI[currentLang];
-
-  const input = document.getElementById("urlInput").value.trim();
-
-  const wrap = document.getElementById("urlTableWrap");
-
-  if(!input){
-
-    wrap.innerHTML = `
-      <div class="empty">
-        ${config.urlInputEmpty}
-      </div>
-    `;
-
-    return;
-
-  }
-
-  const urls = input
-    .split(/\n+/)
-    .map(item => item.trim())
-    .filter(Boolean);
-
-  let rows = "";
-
-  urls.forEach(url => {
-
-    try{
-
-      const parsed = new URL(url);
-
-      let pathname = parsed.pathname.replace(/^\/+|\/+$/g,"");
-
-      const parts = pathname.split("/");
-
-      let filename = parts.pop() || "";
-
-      filename = filename
-        .replace(/\.html$/i,"")
-        .replace(/-copy$/i,"");
-
-      const directory = parts.length
-        ? parts[parts.length - 1]
-        : "";
-
-      const formed = directory
-        ? directory + "/" + filename + ".html"
-        : filename + ".html";
-
-      rows += `
-
-        <tr>
-
-          <td
-            class="copy-cell cell-url"
-            data-copy="${escapeAttribute(url)}">
-
-            <div class="url-text">
-              ${escapeHtml(url)}
-            </div>
-
-          </td>
-
-
-          <td
-            class="copy-cell cell-path"
-            data-copy="${escapeAttribute(directory)}">
-
-            ${escapeHtml(directory)}
-
-          </td>
-
-
-          <td
-            class="copy-cell cell-path"
-            data-copy="${escapeAttribute(formed)}">
-
-            <div class="path-main">
-              ${escapeHtml(formed)}
-            </div>
-
-            <div class="path-note">
-              ${escapeHtml(filename)}
-            </div>
-
-          </td>
-
-
-          <td
-            class="copy-cell cell-path"
-            data-copy="${escapeAttribute(filename)}">
-
-            ${escapeHtml(filename)}
-
-          </td>
-
-        </tr>
-
-      `;
-
-    }catch(error){
-
-      rows += `
-
-        <tr>
-
-          <td
-            class="copy-cell cell-url"
-            data-copy="${escapeAttribute(url)}">
-
-            <div class="url-text">
-              ${escapeHtml(url)}
-            </div>
-
-          </td>
-
-
-          <td colspan="3">
-
-            <span style="color:#b05a67;">
-              ${config.invalidUrl}
-            </span>
-
-          </td>
-
-        </tr>
-
-      `;
-
-    }
-
-  });
-
-  wrap.innerHTML = `
-
-    <table>
-
-      <thead>
-
-        <tr>
-          <th>${config.tableUrl}</th>
-          <th>${config.tableDirectory}</th>
-          <th>${config.tableForm}</th>
-          <th>${config.tableFilename}</th>
-        </tr>
-
-      </thead>
-
-      <tbody>
-        ${rows}
-      </tbody>
-
-    </table>
-
-  `;
-
-  wrap
-    .querySelectorAll(".copy-cell")
-    .forEach(cell => {
-
-      cell.addEventListener("click", () => {
-
-        /* 空内容（例如没有目录）不复制，也不变色 */
-        if(!cell.dataset.copy) return;
-
-        copyText(cell.dataset.copy);
-
-        cycleClick(cell);
-
-      });
-
+const ico = (n, s = 18) => `<svg width="${s}" height="${s}" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">${ICONS[n]}</svg>`;
+
+/* ===== 2. Data layer (all IndexedDB access) ===== */
+const DB = {
+  db: null,
+  open() {
+    return new Promise((ok, no) => {
+      const r = indexedDB.open('recipes-db', 1);
+      r.onupgradeneeded = () => { const d = r.result; ['recipes', 'thumbs', 'fulls'].forEach(n => d.createObjectStore(n, { keyPath: 'id' })); d.createObjectStore('meta'); };
+      r.onsuccess = () => { this.db = r.result; ok(); }; r.onerror = () => no(r.error);
     });
+  },
+  run(s, mode, fn) { return new Promise((ok, no) => { const t = this.db.transaction(s, mode), r = fn(t.objectStore(s)); t.oncomplete = () => ok(r && r.result); t.onerror = () => no(t.error); }); },
+  all(s) { return this.run(s, 'readonly', o => o.getAll()); }, get(s, k) { return this.run(s, 'readonly', o => o.get(k)); },
+  put(s, v, k) { return this.run(s, 'readwrite', o => o.put(v, k)); }, del(s, k) { return this.run(s, 'readwrite', o => o.delete(k)); },
+};
 
+/* ===== 3. State & helpers ===== */
+let R = [], T = {}, CATS = [], lastExport = 0, undoBuf = null, D = null, draftT, lastRoll = null;
+let F = { q: '', cat: null, diff: null, time: null, tags: [] };
+let sortKey = localStorage.getItem('rc.sort') || 'new';
+const $ = s => document.querySelector(s);
+const uid = () => Date.now().toString(36) + Math.random().toString(36).slice(2, 6);
+const catName = id => (CATS.find(c => c.id === id) || {}).name || '';
+const fmt = t => new Date(t).toLocaleDateString('en-GB');
+const metaLine = r => [r.min && r.min + ' min', r.serv && r.serv + (r.serv === 1 ? ' serving' : ' servings')].filter(Boolean).join(' · ');
+const saveR = r => DB.put('recipes', r);
+const touch = r => { r.updatedAt = Date.now(); saveR(r); syncSoon(); };      // any edit that must reach the other person
+const h = (tag, p = {}, ...kids) => {
+  const e = document.createElement(tag);
+  for (const k in p) { if (k === 'on') for (const n in p.on) e.addEventListener(n, p.on[n]); else if (k === 'html') e.innerHTML = p[k]; else if (k in e) e[k] = p[k]; else e.setAttribute(k, p[k]); }
+  e.append(...kids); return e;
+};
+const btn = (t, fn, cls = '') => h('button', { textContent: t, class: cls, on: { click: fn } });
+const ib = (name, fn, title, cls = 'ic') => h('button', { class: cls, title, html: ico(name, 17), on: { click: e => { e.stopPropagation(); fn(); } } });
+const grad = n => GRAD[[...n].reduce((a, c) => a + c.charCodeAt(0), 0) % GRAD.length];
+const cover = (r, cls) => {
+  const el = h('div', { class: cls }); const g = grad(r.name);
+  if (T[r.id]) el.style.backgroundImage = `url(${T[r.id]})`; else { el.style.background = `linear-gradient(135deg,${g[0]},${g[1]})`; el.textContent = [...r.name][0].toUpperCase(); }
+  return el;
+};
+function toast(msg, actText, act) {
+  const t = $('#toast'); t.replaceChildren(msg); t.hidden = false;
+  if (act) t.append(btn(actText, () => { act(); t.hidden = true; }));
+  clearTimeout(toast.t); toast.t = setTimeout(() => t.hidden = true, 6000);
 }
 
+/* ===== 4. Filter & sort (pure logic) ===== */
+function visible() {
+  const ws = F.q.toLowerCase().split(/\s+/).filter(Boolean);
+  return R.filter(r => {
+    const hay = (r.name + '\n' + r.ing + '\n' + r.tags.join(' ') + '\n' + catName(r.cat)).toLowerCase();
+    return ws.every(w => hay.includes(w)) && (!F.cat || r.cat === F.cat) && (!F.diff || r.diff === F.diff) && (!F.time || (r.min && r.min <= F.time)) && F.tags.every(t => r.tags.includes(t));
+  }).sort((a, b) => (!!b.star - !!a.star) || SORTS[sortKey][1](a, b));
+}
+const filtering = () => F.q || F.cat || F.diff || F.time || F.tags.length;
+const clearF = () => { F = { q: '', cat: null, diff: null, time: null, tags: [] }; $('#q').value = ''; renderHome(); };
 
-function clearUrls(){
-
-  const config = UI[currentLang];
-
-  document.getElementById("urlInput").value = "";
-
-  document.getElementById("urlTableWrap").innerHTML = `
-
-      <div class="empty">
-        ${config.urlEmpty}
-      </div>
-
-    `;
-
+/* ===== 5. Home: sidebar + grid ===== */
+function renderSide() {
+  const tog = (k, v) => () => { F[k] = F[k] === v ? null : v; renderHome(); };
+  const item = (label, n, on, fn, dot) => h('div', { class: 'it' + (on ? ' on' : ''), on: { click: fn } }, ...(dot ? [h('span', { class: 'sw', style: 'background:' + dot })] : []), label, h('span', { class: 'n', textContent: n }));
+  const tags = {}; R.forEach(r => r.tags.forEach(t => tags[t] = (tags[t] || 0) + 1));
+  $('#side').replaceChildren(
+    h('div', { class: 'grp', textContent: 'Category', style: 'margin-top:0' }),
+    item('All', R.length, !F.cat, () => { F.cat = null; renderHome(); }),
+    ...CATS.map(c => item(c.name, R.filter(r => r.cat === c.id).length, F.cat === c.id, tog('cat', c.id))),
+    h('div', { class: 'grp', textContent: 'Difficulty' }),
+    ...DIFF.map((d, i) => item(DL[i], R.filter(r => r.diff === d).length, F.diff === d, tog('diff', d), DDOT[i])),
+    h('div', { class: 'grp', textContent: 'Time' }),
+    item('Within 30 min', R.filter(r => r.min && r.min <= 30).length, F.time === 30, tog('time', 30)),
+    item('Within 1 hour', R.filter(r => r.min && r.min <= 60).length, F.time === 60, tog('time', 60)),
+    ...(Object.keys(tags).length ? [h('div', { class: 'grp', textContent: 'Tags' }), h('div', { class: 'tags' }, ...Object.keys(tags).sort().map(t =>
+      h('button', { class: 'tg' + (F.tags.includes(t) ? ' on' : ''), textContent: '#' + t, on: { click: () => { F.tags = F.tags.includes(t) ? F.tags.filter(x => x !== t) : [...F.tags, t]; renderHome(); } } })))] : []),
+    ...(filtering() ? [h('div', { style: 'margin-top:18px' }, btn('Clear filters', clearF))] : []));
+}
+function card(r) {
+  const cv = cover(r, 'cv'), c = catName(r.cat), m = metaLine(r);
+  cv.append(h('button', { class: 'star' + (r.star ? ' on' : ''), title: 'Favorite', html: ico('star', 16), on: { click: e => { e.stopPropagation(); r.star = !r.star; touch(r); renderHome(); } } }),
+    h('div', { class: 'pills' },
+      ...(r.diff ? [h('span', { class: 'pl', style: `background:${DPILL[DIFF.indexOf(r.diff)][0]};color:${DPILL[DIFF.indexOf(r.diff)][1]}`, textContent: DL[DIFF.indexOf(r.diff)] })] : []),
+      ...(c ? [h('span', { class: 'pl', textContent: c })] : [])));
+  return h('div', { class: 'card', on: { click: () => location.hash = '#r/' + r.id } }, cv,
+    h('div', { class: 'cb' }, h('div', { class: 'nm', textContent: r.name }),
+      h('div', { class: 'mt' }, ...(m ? [h('span', { html: ico('clock', 14) + m })] : [])),
+      h('div', { class: 'tl', textContent: r.tags.slice(0, 4).map(t => '#' + t).join(' ') }),
+      h('div', { class: 'ops' }, ib('edit', () => location.hash = '#e/' + r.id, 'Edit'), ib('trash', () => remove(r), 'Delete'))));
+}
+function renderHome() {
+  renderSide();
+  const list = visible(), g = $('#grid'), old = R.length && (!lastExport || Date.now() - lastExport > 30 * 864e5);
+  $('#info').textContent = R.length ? `${list.length} ${list.length === 1 ? 'recipe' : 'recipes'}` : '';
+  $('#bk').replaceChildren(...(old ? [h('div', { class: 'box row', style: 'padding:8px 14px;margin-bottom:14px' }, h('span', { class: 'dim sp', textContent: 'Tip: export a backup file now and then — data lives only in this browser.' }), btn('Export backup', () => exportJSON(true)))] : []));
+  g.replaceChildren();
+  if (!R.length) { g.className = 'empty'; g.append(h('p', { textContent: 'No recipes yet' }), h('div', { class: 'row', style: 'justify-content:center' }, btn('New recipe', () => location.hash = '#new', 'pri'), btn('Import', batchDlg))); return; }
+  if (!list.length) { g.className = 'empty'; g.append(h('p', { textContent: 'No recipes match your filters' }), btn('Clear filters', clearF)); return; }
+  g.className = 'grid'; list.forEach(r => g.append(card(r)));
 }
 
+/* ===== 6. Delete with undo ===== */
+async function remove(r) {
+  if (!confirm(`Delete "${r.name}"?`)) return;
+  undoBuf = { r, th: T[r.id], full: await DB.get('fulls', r.id) };
+  R = R.filter(x => x !== r); delete T[r.id];
+  await Promise.all([DB.del('recipes', r.id), DB.del('thumbs', r.id), DB.del('fulls', r.id)]); await addTomb(r.id);
+  if (location.hash) location.hash = ''; else renderHome();
+  toast('Recipe deleted', 'Undo', async () => {
+    const u = undoBuf; R.push(u.r); u.r.updatedAt = Date.now(); await saveR(u.r); await delTomb(u.r.id); syncSoon();
+    if (u.th) { T[u.r.id] = u.th; await DB.put('thumbs', { id: u.r.id, d: u.th }); }
+    if (u.full) await DB.put('fulls', u.full); renderHome();
+  });
+}
 
-/* =========================================================
-   GLOBAL LANGUAGE SWITCH
-========================================================= */
+/* ===== 7. Detail page ===== */
+function lines(text, num) {
+  const box = h('div'); let n = 0;
+  text.split('\n').map(s => s.trim()).filter(Boolean).forEach(s => {
+    if (s[0] === '#') { n = 0; box.append(h('div', { class: 'hd', textContent: s.replace(/^#+\s*/, '') })); }
+    else if (num) box.append(h('div', { class: 'step' }, h('b', { textContent: ++n }), h('span', { textContent: s })));
+    else box.append(h('div', { class: 'ln', textContent: '• ' + s }));
+  });
+  return box;
+}
+async function showDetail0(id) {
+  const r = R.find(x => x.id === id), d = $('#detail'); if (!r) { location.hash = ''; return; }
+  const full = RO ? await viewFull(r) : await DB.get('fulls', id), n = r.hist.length, c = catName(r.cat), box = (t, v) => v ? [h('div', { class: 'box' }, h('h3', { textContent: t }), v)] : [];
+  const hero = full ? h('img', { class: 'hero', src: full.d }) : cover(r, 'hero ph');
+  d.replaceChildren(h('div', { class: 'wrap' },
+    h('div', { class: 'row' }, btn('← Back', () => location.hash = ''), h('span', { class: 'sp' }),
+      btn(r.star ? '★ Favorited' : '☆ Favorite', () => { r.star = !r.star; touch(r); showDetail(id); }), btn('Edit', () => location.hash = '#e/' + id), btn('Delete', () => remove(r))),
+    hero, h('h1', { class: 't', textContent: r.name }),
+    h('div', { class: 'dim', textContent: [metaLine(r), r.diff && DL[DIFF.indexOf(r.diff)], c, ...r.tags.map(t => '#' + t)].filter(Boolean).join('  ·  ') }),
+    h('div', { class: 'row', style: 'margin:14px 0' }, btn('Cooked it ✓', () => { r.hist.push(Date.now()); touch(r); showDetail(id); }, 'pri'),
+      h('span', { class: 'dim', textContent: n ? `Cooked ${n} ${n === 1 ? 'time' : 'times'} · last on ${fmt(ld(r))}` : 'Not cooked yet' }),
+      ...(n ? [btn('Undo', () => { r.hist.pop(); touch(r); showDetail(id); })] : [])),
+    h('div', { class: 'two' }, h('div', {}, ...box('Ingredients', r.ing.trim() && lines(r.ing, false))),
+      h('div', {}, ...box('Steps', r.steps.trim() && lines(r.steps, true)), ...box('Notes', r.note.trim() && h('div', { class: 'ln', textContent: r.note })),
+        ...box('Source', /^https?:/.test(r.src) && h('a', { href: r.src, target: '_blank', rel: 'noreferrer noopener', textContent: r.src }))))));
+}
 
-function setLanguage(lang){
+/* ===== 8. Image compression (stores 1280px full + 480px thumbnail) ===== */
+function shrink(file, max) {
+  return new Promise(ok => {
+    const i = new Image(), u = URL.createObjectURL(file);
+    i.onload = () => { const k = Math.min(1, max / Math.max(i.width, i.height)), c = document.createElement('canvas'); c.width = i.width * k; c.height = i.height * k; c.getContext('2d').drawImage(i, 0, 0, c.width, c.height); URL.revokeObjectURL(u); ok(c.toDataURL('image/jpeg', .8)); };
+    i.src = u;
+  });
+}
+async function setImg(file) { if (!file || !file.type.startsWith('image/')) return; D.img = { thumb: await shrink(file, 480), full: await shrink(file, 1280) }; D.imgChanged = true; draft(); drawImg(); }
+function drawImg() {
+  const b = $('#imgbox'); if (!b) return;
+  b.replaceChildren(...(D.img ? [h('img', { src: D.img.full || D.img.thumb })] : []), h('div', { class: 'dim', textContent: 'Drop an image here, paste with Ctrl+V, or' }),
+    h('div', { class: 'row', style: 'justify-content:center;margin-top:6px' }, btn('Choose image', () => { const i = h('input', { type: 'file', accept: 'image/*' }); i.onchange = () => setImg(i.files[0]); i.click(); }),
+      ...(D.img ? [btn('Remove', () => { D.img = null; D.imgChanged = true; draft(); drawImg(); })] : [])));
+}
 
-  if(
-    lang !== "de" &&
-    lang !== "es"
-  ){
-    return;
+/* ===== 9. Edit form (with draft autosave) ===== */
+const blank = () => ({ id: null, name: '', min: '', serv: '', diff: '', cat: '', tags: [], ing: '', steps: '', note: '', src: '', img: null, imgChanged: false });
+function draft() { clearTimeout(draftT); draftT = setTimeout(() => DB.put('meta', { for: D.id || 'new', D }, 'draft'), 400); }
+async function openForm(id) {
+  const key = id || 'new', r = id && R.find(x => x.id === id); if (id && !r) { location.hash = ''; return; }
+  const dr = await DB.get('meta', 'draft'); let restored = false;
+  if (dr && dr.for === key) { D = dr.D; restored = true; }
+  else if (r) { const f = await DB.get('fulls', id); D = { ...blank(), ...r, id, img: f ? { thumb: T[id], full: f.d } : null }; } else D = blank();
+  const bind = (k, el) => { el.value = D[k] ?? ''; el.addEventListener('input', () => { D[k] = el.value; draft(); }); return el; };
+  const fld = (label, el) => h('label', {}, h('span', { class: 'fl', textContent: label }), el);
+  const cat = h('select', {}, h('option', { value: '', textContent: 'Uncategorized' }), ...CATS.map(c => h('option', { value: c.id, textContent: c.name })));
+  const diff = h('select', {}, h('option', { value: '', textContent: 'Not set' }), ...DIFF.map((x, i) => h('option', { value: x, textContent: DL[i] })));
+  const tagBox = h('div', { class: 'tagin' }), tagIn = h('input', { placeholder: 'Type a tag, press Enter' });
+  const drawTags = () => {
+    const all = [...new Set(R.flatMap(x => x.tags))].filter(t => !D.tags.includes(t));
+    tagBox.replaceChildren(...D.tags.map(t => h('button', { class: 'tg on', textContent: '#' + t + ' ×', on: { click: () => { D.tags = D.tags.filter(x => x !== t); draft(); drawTags(); } } })),
+      ...all.map(t => h('button', { class: 'tg', textContent: '+ ' + t, on: { click: () => { D.tags.push(t); draft(); drawTags(); } } })));
+  };
+  tagIn.addEventListener('keydown', e => { if (e.key !== 'Enter' && e.key !== ',') return; e.preventDefault(); const t = tagIn.value.trim().replace(/^#/, ''); if (t && !D.tags.includes(t)) D.tags.push(t); tagIn.value = ''; draft(); drawTags(); });
+  const sec = (t, ...k) => h('div', { class: 'box' }, h('h3', { textContent: t }), ...k);
+  $('#form').replaceChildren(h('div', { class: 'wrap' },
+    h('div', { class: 'fbar row' }, h('b', { textContent: r ? 'Edit recipe' : 'New recipe', style: 'font:700 22px var(--serif)' }), h('span', { class: 'sp' }),
+      ...(restored ? [h('span', { class: 'dim', textContent: 'Draft restored' }), btn('Discard draft', async () => { await DB.del('meta', 'draft'); openForm(id); })] : []),
+      btn('Cancel', async () => { await DB.del('meta', 'draft'); history.back(); }), btn('Save', save, 'pri')),
+    h('div', { class: 'cols' },
+      h('div', {}, sec('Basics', fld('Name (required)', bind('name', h('input'))),
+        h('div', { class: 'g3' }, fld('Minutes', bind('min', h('input', { type: 'number', min: 0 }))), fld('Servings', bind('serv', h('input', { type: 'number', min: 0 }))), fld('Difficulty', bind('diff', diff))),
+        h('div', { class: 'row', style: 'align-items:flex-end' }, h('div', { class: 'sp' }, fld('Category', bind('cat', cat))), btn('Manage', () => manageCats(() => openForm(id))))),
+        sec('Ingredients', h('div', { class: 'dim', textContent: 'One per line. A line starting with # is a heading (e.g. # Sauce).' }), bind('ing', h('textarea'))),
+        sec('Steps', h('div', { class: 'dim', textContent: 'One step per line.' }), bind('steps', h('textarea')))),
+      h('div', {}, sec('Cover image', h('div', { id: 'imgbox' })), sec('Tags', tagIn, tagBox),
+        sec('Notes & source', fld('Tips', bind('note', h('textarea', { style: 'min-height:70px' }))), fld('Source link', bind('src', h('input', { placeholder: 'https://' }))))))));
+  drawTags(); drawImg();
+}
+async function save() {
+  const name = D.name.trim(); if (!name) { alert('Please enter a recipe name'); return; }
+  const now = Date.now(), old = D.id && R.find(x => x.id === D.id), id = D.id || uid();
+  const r = { id, name, createdAt: old ? old.createdAt : now, updatedAt: now, min: +D.min || 0, serv: +D.serv || 0, diff: D.diff, cat: D.cat, tags: D.tags, star: old ? old.star : false, hist: old ? old.hist : [], ing: D.ing, steps: D.steps, note: D.note, src: D.src.trim(),
+    imgAt: D.imgChanged ? (D.img ? now : 0) : (old ? old.imgAt || 0 : 0) };
+  await saveR(r);
+  if (D.imgChanged) {
+    if (D.img) { T[id] = D.img.thumb; await DB.put('thumbs', { id, d: D.img.thumb }); await DB.put('fulls', { id, d: D.img.full }); await addPend(id); }
+    else { delete T[id]; await DB.del('thumbs', id); await DB.del('fulls', id); }
   }
-
-  currentLang = lang;
-
-  /* 切换语言后，复制出的代码不同 → Mobile / PC 颜色重置 */
-  resetClick(document.getElementById("mobilePreviewClick"));
-
-  pcClicks = 0;
-
-  updateGlobalLanguageUI();
-
-  renderAll();
-
+  old ? Object.assign(old, r) : R.push(r);
+  clearTimeout(draftT); await DB.del('meta', 'draft'); syncSoon(); location.hash = '#r/' + id;
 }
 
-
-function updateGlobalLanguageUI(){
-
-  document
-    .getElementById("globalDeBtn")
-    .classList.toggle("active", currentLang === "de");
-
-  document
-    .getElementById("globalEsBtn")
-    .classList.toggle("active", currentLang === "es");
-
+/* ===== 10. Dialogs: menu, categories, roll ===== */
+function dialog(...kids) { const d = $('#dlg'); d.onclose = null; d.replaceChildren(...kids); if (!d.open) d.showModal(); return d; }
+const closeBtn = () => btn('Close', () => $('#dlg').close());
+function menu() {
+  dialog(h('h2', { textContent: 'More' }),
+    ...[['Import (Excel / CSV / JSON backup)', batchDlg], ['Export to Excel (no images)', exportXlsx], ['Export backup JSON (with images)', () => exportJSON(true)], ['Export backup JSON (no images)', () => exportJSON(false)], ['Cloud sync settings', syncDlg], ['Manage categories', manageCats]].map(([t, f]) => h('button', { class: 'mi', textContent: t, on: { click: () => { $('#dlg').close(); f(); } } })),
+    h('div', { class: 'dim', style: 'margin:10px 0', textContent: lastExport ? 'Last export: ' + fmt(lastExport) : 'Never exported' }), closeBtn());
+}
+function manageCats(after) {
+  const saveC = saveCats;
+  const draw = () => {
+    const d = dialog(h('h2', { textContent: 'Categories' }),
+      ...CATS.map(c => h('div', { class: 'row', style: 'margin:6px 0' }, h('span', { class: 'sp', textContent: c.name }),
+        btn('Rename', async () => { const n = prompt('New name', c.name); if (n && n.trim()) { c.name = n.trim(); await saveC(); draw(); } }),
+        btn('Delete', async () => { if (!confirm(`Delete "${c.name}"? Its recipes become uncategorized.`)) return; CATS = CATS.filter(x => x !== c); for (const r of R) if (r.cat === c.id) { r.cat = ''; touch(r); } await saveC(); draw(); }))),
+      h('div', { class: 'row', style: 'margin-top:10px' }, h('input', { id: 'newcat', placeholder: 'New category' }), btn('Add', async () => { const n = $('#newcat').value.trim(); if (n) { CATS.push({ id: uid(), name: n }); await saveC(); draw(); } })),
+      h('div', { class: 'row', style: 'margin-top:12px' }, h('span', { class: 'sp' }), closeBtn()));
+    d.onclose = () => { renderHome(); if (typeof after === 'function') after(); };
+  };
+  draw();
+}
+function roll() {
+  const pool = visible(); if (!pool.length) { toast('No recipes to pick from'); return; }
+  const pick = pool.length > 1 ? pool.filter(r => r.id !== lastRoll) : pool, r = pick[Math.floor(Math.random() * pick.length)]; lastRoll = r.id;
+  dialog(h('h2', { textContent: 'What to eat today?' }), cover(r, 'cv'), h('h3', { textContent: r.name, style: 'font:700 22px var(--serif);margin:12px 0 2px' }),
+    h('div', { class: 'dim', textContent: [metaLine(r), r.diff && DL[DIFF.indexOf(r.diff)]].filter(Boolean).join(' · ') + (filtering() ? '  (picked from current filters)' : '') }),
+    h('div', { class: 'row', style: 'margin-top:14px' }, btn('Roll again', roll), btn("Let's cook this", () => { $('#dlg').close(); location.hash = '#r/' + r.id; }, 'pri'), closeBtn()));
 }
 
-
-function renderAll(){
-
-  const config = UI[currentLang];
-
-  /* Header */
-
-  document.getElementById("pageTitle").textContent = config.pageTitle;
-  document.getElementById("pageSubtitle").textContent = config.pageSubtitle;
-
-  /* Navigation */
-
-  document.getElementById("navUrl").textContent = config.navUrl;
-  document.getElementById("navAds").textContent = config.navAds;
-  document.getElementById("navReplacer").textContent = config.navReplacer;
-
-  /* URL module */
-
-  document.getElementById("urlTitle").textContent = config.urlTitle;
-  document.getElementById("urlDesc").textContent = config.urlDesc;
-  document.getElementById("urlInput").placeholder = config.urlPlaceholder;
-  document.getElementById("analyzeBtn").textContent = config.analyze;
-  document.getElementById("clearUrlBtn").textContent = config.clear;
-
-  /*
-    IMPORTANT:
-    Do not automatically re-analyze or clear
-    existing URL input when changing language.
-    Existing table also remains untouched.
-  */
-
-  /* Mobile */
-
-  document.getElementById("mobileTitle").textContent = config.mobileTitle;
-
-  renderMobileAd();
-
-  /* PC */
-
-  document.getElementById("pcTitle").textContent = config.pcTitle;
-  document.getElementById("pcInputHint").textContent = config.pcInputHint;
-  document.getElementById("pcTrendInput").placeholder = config.pcPlaceholder;
-  document.getElementById("pcGenerateBtn").textContent = config.pcGenerate;
-
-  /* Re-rendering PC preview does NOT touch input. */
-
-  renderPcPreview();
-
-  /* Replacer */
-
-  renderReplaceUI();
-
+/* ===== 11. JSON backup ===== */
+function download(blob, name) { const a = h('a', { href: URL.createObjectURL(blob), download: name }); a.click(); setTimeout(() => URL.revokeObjectURL(a.href), 3000); }
+async function exportJSON(withImg) {
+  const o = { v: 1, cats: CATS, recipes: R };
+  if (withImg) { o.thumbs = T; o.fulls = {}; (await DB.all('fulls')).forEach(x => o.fulls[x.id] = x.d); }
+  download(new Blob([JSON.stringify(o)], { type: 'application/json' }), 'recipes-' + new Date().toISOString().slice(0, 10) + '.json');
+  lastExport = Date.now(); await DB.put('meta', lastExport, 'lastExport'); renderHome();
+}
+async function importJSON(file) {
+  try {
+    const d = JSON.parse(await file.text()); if (!Array.isArray(d.recipes)) throw 0;
+    (d.cats || []).forEach(c => { if (!CATS.some(x => x.id === c.id)) CATS.push(c); }); await saveCats(); let n = 0;
+    for (const r of d.recipes) {
+      const cur = R.find(x => x.id === r.id); if (cur && cur.updatedAt >= r.updatedAt) continue;
+      r.hist = r.hist || []; r.tags = r.tags || []; await saveR(r);
+      if (d.thumbs && d.thumbs[r.id]) { T[r.id] = d.thumbs[r.id]; await DB.put('thumbs', { id: r.id, d: T[r.id] }); }
+      if (d.fulls && d.fulls[r.id]) await DB.put('fulls', { id: r.id, d: d.fulls[r.id] });
+      cur ? Object.assign(cur, r) : R.push(r); n++;
+    }
+    toast(`Imported ${n} recipes`); await DB.put('meta', 0, 'lastPush'); syncSoon(); renderHome();
+  } catch (e) { alert('That file is not a valid backup'); }
 }
 
-
-/* =========================================================
-   EVENT BINDINGS
-========================================================= */
-
-/* Global language */
-
-document.getElementById("globalDeBtn").addEventListener("click", () => setLanguage("de"));
-document.getElementById("globalEsBtn").addEventListener("click", () => setLanguage("es"));
-
-/* URL */
-
-document.getElementById("analyzeBtn").addEventListener("click", analyzeUrls);
-document.getElementById("clearUrlBtn").addEventListener("click", clearUrls);
-
-/* Mobile preview = COPY */
-
-document.getElementById("mobilePreviewClick").addEventListener("click", () => {
-
-  copyText(getMobileAdCode());
-
-  cycleClick(document.getElementById("mobilePreviewClick"));
-
-});
-
-/* PC */
-
-document.getElementById("pcGenerateBtn").addEventListener("click", generatePcCode);
-document.getElementById("pcClearBtn").addEventListener("click", clearPc);
-
-/*
-  Update PC preview live while typing.
-  This does NOT change the input.
-  内容变化后代码也变了，所以颜色重置。
-*/
-
-document.getElementById("pcTrendInput").addEventListener("input", () => {
-
-  pcClicks = 0;
-
-  renderPcPreview();
-
-});
-
-/* Replacer */
-
-document.getElementById("replaceButton").addEventListener("click", replaceHtmlLinks);
-document.getElementById("replaceClearButton").addEventListener("click", clearHtmlReplacer);
-
-/* 规则：解锁 / 编辑 / 恢复默认 */
-
-document.getElementById("rulesLockBtn").addEventListener("click", toggleRulesLock);
-document.getElementById("rulesResetBtn").addEventListener("click", resetRules);
-
-document.getElementById("replaceRules").addEventListener("input", event => {
-
-  const target = event.target;
-
-  if(!target.classList.contains("rule-input")) return;
-
-  const rule = ruleState[currentLang][parseInt(target.dataset.rule,10)];
-
-  if(rule){
-    rule[parseInt(target.dataset.side,10)] = target.value;
+/* ===== 12. Excel (.xlsx) writer / reader — no libraries ===== */
+const CRC = (() => { const t = []; for (let n = 0; n < 256; n++) { let c = n; for (let k = 0; k < 8; k++) c = c & 1 ? 0xEDB88320 ^ (c >>> 1) : c >>> 1; t[n] = c >>> 0; } return t; })();
+const crc32 = u => { let c = ~0; for (const b of u) c = CRC[(c ^ b) & 255] ^ (c >>> 8); return ~c >>> 0; };
+function zip(files) {                                   // stored (uncompressed) zip
+  const enc = new TextEncoder(), parts = [], cd = []; let off = 0;
+  for (const [name, txt] of files) {
+    const nm = enc.encode(name), d = enc.encode(txt), c = crc32(d);
+    const l = new DataView(new ArrayBuffer(30)); l.setUint32(0, 0x04034b50, true); l.setUint16(4, 20, true); l.setUint16(6, 0x0800, true); l.setUint16(12, 0x21, true); l.setUint32(14, c, true); l.setUint32(18, d.length, true); l.setUint32(22, d.length, true); l.setUint16(26, nm.length, true);
+    const k = new DataView(new ArrayBuffer(46)); k.setUint32(0, 0x02014b50, true); k.setUint16(4, 20, true); k.setUint16(6, 20, true); k.setUint16(8, 0x0800, true); k.setUint16(14, 0x21, true); k.setUint32(16, c, true); k.setUint32(20, d.length, true); k.setUint32(24, d.length, true); k.setUint16(28, nm.length, true); k.setUint32(42, off, true);
+    parts.push(new Uint8Array(l.buffer), nm, d); cd.push(new Uint8Array(k.buffer), nm); off += 30 + nm.length + d.length;
   }
+  const e = new DataView(new ArrayBuffer(22)); e.setUint32(0, 0x06054b50, true); e.setUint16(8, files.length, true); e.setUint16(10, files.length, true); e.setUint32(12, cd.reduce((a, b) => a + b.length, 0), true); e.setUint32(16, off, true);
+  return new Blob([...parts, ...cd, new Uint8Array(e.buffer)]);
+}
+function makeXlsx(rows) {
+  const esc = s => String(s).replace(/[&<>]/g, m => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;' }[m])), X = '<?xml version="1.0" encoding="UTF-8" standalone="yes"?>';
+  const NS = 'http://schemas.openxmlformats.org/', M = NS + 'spreadsheetml/2006/main', RL = NS + 'officeDocument/2006/relationships';
+  const sheet = `${X}<worksheet xmlns="${M}"><cols><col min="1" max="10" width="24" customWidth="1"/></cols><sheetData>${rows.map((r, i) => `<row r="${i + 1}">${r.map((v, j) => `<c r="${String.fromCharCode(65 + j)}${i + 1}" t="inlineStr"><is><t xml:space="preserve">${esc(v)}</t></is></c>`).join('')}</row>`).join('')}</sheetData></worksheet>`;
+  return zip([
+    ['[Content_Types].xml', `${X}<Types xmlns="${NS}package/2006/content-types"><Default Extension="rels" ContentType="application/vnd.openxmlformats-package.relationships+xml"/><Default Extension="xml" ContentType="application/xml"/><Override PartName="/xl/workbook.xml" ContentType="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet.main+xml"/><Override PartName="/xl/worksheets/sheet1.xml" ContentType="application/vnd.openxmlformats-officedocument.spreadsheetml.worksheet+xml"/></Types>`],
+    ['_rels/.rels', `${X}<Relationships xmlns="${NS}package/2006/relationships"><Relationship Id="rId1" Type="${RL}/officeDocument" Target="xl/workbook.xml"/></Relationships>`],
+    ['xl/workbook.xml', `${X}<workbook xmlns="${M}" xmlns:r="${RL}"><sheets><sheet name="Recipes" sheetId="1" r:id="rId1"/></sheets></workbook>`],
+    ['xl/_rels/workbook.xml.rels', `${X}<Relationships xmlns="${NS}package/2006/relationships"><Relationship Id="rId1" Type="${RL}/worksheet" Target="worksheets/sheet1.xml"/></Relationships>`],
+    ['xl/worksheets/sheet1.xml', sheet]]);
+}
+async function readXlsx(buf) {
+  const u = new Uint8Array(buf), v = new DataView(buf), dec = new TextDecoder(); let e = u.length - 22;
+  while (e >= 0 && v.getUint32(e, true) !== 0x06054b50) e--;
+  const n = v.getUint16(e + 10, true); let p = v.getUint32(e + 16, true); const files = {};
+  for (let i = 0; i < n; i++) {
+    const m = v.getUint16(p + 10, true), cs = v.getUint32(p + 20, true), nl = v.getUint16(p + 28, true), xl = v.getUint16(p + 30, true), cl = v.getUint16(p + 32, true), lo = v.getUint32(p + 42, true);
+    const name = dec.decode(u.subarray(p + 46, p + 46 + nl)); p += 46 + nl + xl + cl;
+    if (!/^xl\/(sharedStrings|worksheets\/sheet\d+)\.xml$/.test(name)) continue;
+    const ds = lo + 30 + v.getUint16(lo + 26, true) + v.getUint16(lo + 28, true), raw = u.subarray(ds, ds + cs);
+    files[name] = m === 0 ? dec.decode(raw) : dec.decode(await new Response(new Blob([raw]).stream().pipeThrough(new DecompressionStream('deflate-raw'))).arrayBuffer());
+  }
+  const unx = x => x.replace(/&(#x?[0-9a-f]+|amp|lt|gt|quot|apos);/gi, (m, e) => e[0] === '#' ? String.fromCodePoint(e[1].toLowerCase() === 'x' ? parseInt(e.slice(2), 16) : +e.slice(1)) : { amp: '&', lt: '<', gt: '>', quot: '"', apos: "'" }[e.toLowerCase()]);
+  const txt = x => [...x.replace(/<rPh[\s\S]*?<\/rPh>/g, '').matchAll(/<t(?:\s[^>]*)?>([\s\S]*?)<\/t>/g)].map(m => unx(m[1])).join('');
+  const ss = files['xl/sharedStrings.xml'] ? [...files['xl/sharedStrings.xml'].matchAll(/<si\b[^>]*?(?:\/>|>([\s\S]*?)<\/si>)/g)].map(m => txt(m[1] || '')) : [];
+  const sn = Object.keys(files).filter(k => k.includes('worksheets')).sort((x, y) => x.length - y.length || (x < y ? -1 : 1))[0], rows = [];
+  for (const m of files[sn].matchAll(/<c\b([^>]*?)(?:\/>|>([\s\S]*?)<\/c>)/g)) {
+    const ref = /\br="([A-Z]+)(\d+)"/.exec(m[1]); if (!ref) continue;
+    const t = (/\bt="(\w+)"/.exec(m[1]) || [])[1], inner = m[2] || '', vm = /<v>([\s\S]*?)<\/v>/.exec(inner);
+    const ci = [...ref[1]].reduce((a, ch) => a * 26 + ch.charCodeAt(0) - 64, 0) - 1, ri = +ref[2] - 1;
+    (rows[ri] = rows[ri] || [])[ci] = t === 's' ? ss[+vm[1]] : t === 'inlineStr' ? txt(inner) : vm ? unx(vm[1]) : '';
+  }
+  return Array.from(rows, r => r || []);
+}
+function parseCSV(t) {
+  t = t.replace(/^\uFEFF/, ''); const first = t.split('\n')[0], sep = first.includes('\t') ? '\t' : (first.match(/;/g) || []).length > (first.match(/,/g) || []).length ? ';' : ',';
+  const rows = []; let r = [], f = '', q = false;
+  for (let i = 0; i < t.length; i++) {
+    const c = t[i];
+    if (q) { if (c === '"') { if (t[i + 1] === '"') { f += '"'; i++; } else q = false; } else f += c; }
+    else if (c === '"') q = true; else if (c === sep) { r.push(f); f = ''; }
+    else if (c === '\n' || c === '\r') { if (c === '\r' && t[i + 1] === '\n') i++; r.push(f); rows.push(r); r = []; f = ''; } else f += c;
+  }
+  if (f || r.length) { r.push(f); rows.push(r); } return rows;
+}
 
-});
+/* ===== 13. Batch import dialog ===== */
+const DMAP = { easy: '简单', medium: '中等', hard: '困难', 简单: '简单', 中等: '中等', 困难: '困难' };
+const KEYS = ['name', 'category', 'difficulty', 'minutes', 'servings', 'tags', 'source', 'ingredients', 'steps', 'notes'];   // template column order
+const ALIAS = { name: ['name', '菜名', '名称', '名字', '菜谱', 'recipe', 'title'], category: ['category', '分类', '类别'], difficulty: ['difficulty', '难度'],
+  minutes: ['minutes', '用时', '时间', '分钟', 'time'], servings: ['servings', '份量', '人份', '份数'], tags: ['tags', '标签'], source: ['source', '来源', '链接'],
+  ingredients: ['ingredients', '食材', '材料', '原料'], steps: ['steps', '步骤', '做法'], notes: ['notes', '小贴士', '备注', '笔记'] };
+const hnorm = x => String(x ?? '').trim().toLowerCase().replace(/[*＊]|[（(].*$/g, '').trim();
+const mins = s => { s = String(s); let m = 0; const hr = /(\d+(?:\.\d+)?)\s*(?:h|hr|hour|小时)/i.exec(s), mi = /(\d+)\s*(?:m|min|分)/i.exec(s); if (hr) m += parseFloat(hr[1]) * 60; if (mi) m += +mi[1]; return Math.round(m || parseFloat(s) || 0); };
+function plan(rows) {                                    // rows -> {items, warn}; nothing is saved here
+  let hi = rows.slice(0, 5).findIndex(r => r.some(x => ALIAS.name.includes(hnorm(x)))), warn = [];
+  const col = {};
+  if (hi < 0) { hi = 0; KEYS.forEach((k, i) => col[k] = i); warn.push('No header row recognized: using the template column order'); }
+  else KEYS.forEach(k => col[k] = rows[hi].findIndex(x => ALIAS[k].includes(hnorm(x))));
+  const g = (r, k) => col[k] < 0 ? '' : String(r[col[k]] ?? '').trim();
+  const items = [], seen = new Set(R.map(r => r.name.toLowerCase()));
+  rows.slice(hi + 1).forEach((r, i) => {
+    if (!r.some(x => String(x ?? '').trim())) return;
+    const name = g(r, 'name'); if (!name) { warn.push(`Row ${hi + i + 2}: no name, skipped`); return; }
+    const dif = g(r, 'difficulty'), d = DMAP[dif.toLowerCase()] || ''; if (dif && !d) warn.push(`"${name}": difficulty "${dif}" not recognized, left empty`);
+    const dup = seen.has(name.toLowerCase()); seen.add(name.toLowerCase());
+    const cp = g(r, 'category').split(/[・·\/／|]/).map(x => x.trim()).filter(Boolean), tags = g(r, 'tags').split(/[,;，、；]/).map(x => x.trim().replace(/^#/, '')).filter(Boolean);
+    cp.slice(1).forEach(x => { if (!tags.includes(x)) tags.push(x); });          // "荤菜・家常" -> category 荤菜, tag 家常
+    let ing = g(r, 'ingredients'), st = g(r, 'steps'); if (!ing.includes('\n')) ing = ing.split(/[、，]/).map(x => x.trim()).join('\n');   // one-line lists -> one per line
+    if (!st.includes('\n')) st = st.split(/\s*(?=\d+[.)、]\s*\D)/).join('\n');
+    const src = g(r, 'source');
+    items.push({ name, dup, cat: cp[0] || '', diff: d, min: mins(g(r, 'minutes')), serv: parseInt(g(r, 'servings')) || 0, tags,
+      src: /^https?:/.test(src) ? src : '', ing, steps: st.split('\n').map(x => x.replace(/^\s*\d+[.)、]\s*/, '').trim()).filter(Boolean).join('\n'), note: g(r, 'notes') });
+  });
+  return { items, warn };
+}
+function exportXlsx() {
+  download(makeXlsx([HEADERS, ...R.map(r => [r.name, catName(r.cat), r.diff ? DL[DIFF.indexOf(r.diff)] : '', r.min || '', r.serv || '', r.tags.join(', '), r.src, r.ing, r.steps, r.note])]),
+    'recipes-' + new Date().toISOString().slice(0, 10) + '.xlsx');
+}
+function batchDlg() {
+  dialog(h('h2', { textContent: 'Import' }),
+    h('p', { class: 'dim', textContent: 'Excel / CSV: download the template, fill one recipe per row, then choose the file — you get a preview first. JSON: choose a backup file exported from this page (merged by recipe, newer edit wins).' }),
+    h('div', { class: 'row' }, btn('Download template (.xlsx)', () => download(makeXlsx([HEADERS,
+      ['Tomato & Egg Stir-fry', 'Quick', 'Easy', 15, 2, 'rice dish, low-fat', 'https://example.com', '# Main\n2 tomatoes\n3 eggs\n# Seasoning\nSalt', '1. Cut tomatoes, beat eggs\n2. Scramble eggs, set aside\n3. Fry tomatoes, add eggs back', 'Blanch tomatoes for easy peeling'],
+      ['Scallion Oil Noodles', 'Noodles', 'Medium', 25, 2, 'noodles', '', 'Noodles 200 g\nScallions 1 bunch', 'Boil noodles\nFry scallions in oil\nToss together', '']]), 'recipe-template.xlsx'), 'out'),
+      btn('Choose file (.xlsx / .csv / .json)', () => $('#xlsFile').click(), 'pri')),
+    (() => { const ta = h('textarea', { placeholder: 'Or paste rows copied from Excel here (include the header row)', style: 'min-height:90px;margin-top:12px' }); return h('div', {}, ta, h('div', { style: 'margin-top:8px' }, btn('Preview pasted rows', () => { if (ta.value.trim()) previewRows(parseCSV(ta.value)); }))); })(),
+    h('div', { class: 'row', style: 'margin-top:14px' }, h('span', { class: 'sp' }), closeBtn()));
+}
+async function batchFile(file) {
+  try { previewRows(/\.csv$/i.test(file.name) ? parseCSV(await file.text()) : await readXlsx(await file.arrayBuffer())); }
+  catch (e) { alert('Could not read that file. Please use the downloaded template (.xlsx) or a .csv.'); }
+}
+function previewRows(rows) {
+  try {
+    const { items, warn } = plan(rows);
+    if (!items.length) { alert('No recipes found. The first row I saw was: ' + (rows[0] || []).join(' | ') + '\nPlease use the template columns (Name, Category, …).'); return; }
+    const dups = items.filter(x => x.dup).length, chk = h('input', { type: 'checkbox', style: 'width:auto' }), go = async () => {
+      let n = 0, now = Date.now();
+      for (const it of items) {
+        if (it.dup && !chk.checked) continue;
+        let cat = ''; if (it.cat) { let c = CATS.find(x => x.name.toLowerCase() === it.cat.toLowerCase()); if (!c) { c = { id: uid(), name: it.cat }; CATS.push(c); } cat = c.id; }
+        const r = { id: uid(), name: it.name, createdAt: now + n, updatedAt: now + n, min: it.min, serv: it.serv, diff: it.diff, cat, tags: it.tags, star: false, hist: [], ing: it.ing, steps: it.steps, note: it.note, src: it.src };
+        await saveR(r); R.push(r); n++;
+      }
+      await saveCats(); $('#dlg').close(); toast(`Imported ${n} recipes`); await DB.put('meta', 0, 'lastPush'); syncSoon(); renderHome();
+    };
+    dialog(h('h2', { textContent: 'Preview' }), h('div', { textContent: `${items.length} recipes found${dups ? `, ${dups} already exist (same name)` : ''}.` }),
+      h('ul', {}, ...items.slice(0, 8).map(x => h('li', { textContent: [x.name, x.cat, x.min && x.min + ' min', x.serv && x.serv + ' servings'].filter(Boolean).join(' · ') + (x.dup ? ' (duplicate)' : '') })), ...(items.length > 8 ? [h('li', { class: 'dim', textContent: `…and ${items.length - 8} more` })] : [])),
+      ...warn.slice(0, 5).map(w => h('div', { class: 'dim', textContent: '⚠ ' + w })),
+      ...(dups ? [h('label', { class: 'row', style: 'margin:8px 0' }, chk, 'Import duplicates too (default: skip)')] : []),
+      h('div', { class: 'row', style: 'margin-top:12px' }, h('span', { class: 'sp' }), closeBtn(), btn(`Import`, go, 'pri')));
+  } catch (e) { alert('Could not read that file. Please use the downloaded template (.xlsx) or a .csv.'); }
+}
 
-/* Output itself = copy. */
+/* ===== 14. Cloud sync (Cloudflare Worker + D1) ===== */
+const VIEW = new URLSearchParams(location.search).get('view'), RO = !!VIEW;       // ?view=<worker url> -> read-only visitor mode
+let SY = JSON.parse(localStorage.getItem('rc.sync') || 'null'), syncing = false, syncT, rt;
+const syncSoon = () => { if (SY) { clearTimeout(syncT); syncT = setTimeout(sync, 1500); } };
+const api = (path, opt = {}) => fetch(SY.url.replace(/\/$/, '') + path, { ...opt, headers: { 'X-Key': SY.key } }).then(r => { if (!r.ok) throw new Error(r.status); return r; });
+const status = t => { const e = $('#syncst'); if (e) e.textContent = t; };
+const tomb = async () => (await DB.get('meta', 'tomb')) || {};                     // ids deleted here, so deletions sync too
+async function addTomb(id) { const t = await tomb(); t[id] = Date.now(); await DB.put('meta', t, 'tomb'); syncSoon(); }
+async function delTomb(id) { const t = await tomb(); delete t[id]; await DB.put('meta', t, 'tomb'); }
+async function addPend(id) { const p = (await DB.get('meta', 'pendImg')) || []; if (!p.includes(id)) p.push(id); await DB.put('meta', p, 'pendImg'); }
+async function saveCats() { await DB.put('meta', CATS, 'cats'); await DB.put('meta', Date.now(), 'catsAt'); syncSoon(); }
 
-document.getElementById("replaceOutput").addEventListener("click", copyReplacedHtml);
+async function applyRow(row) {                                                       // one recipe coming from the cloud
+  const cur = R.find(x => x.id === row.id); if (cur && cur.updatedAt >= row.updated) return;
+  if (row.deleted) { if (cur) { R = R.filter(x => x !== cur); delete T[cur.id]; await Promise.all([DB.del('recipes', cur.id), DB.del('thumbs', cur.id), DB.del('fulls', cur.id)]); } return; }
+  const r = JSON.parse(row.data), had = cur ? cur.imgAt || 0 : 0; r.hist = r.hist || []; r.tags = r.tags || [];
+  await saveR(r); cur ? Object.assign(cur, r) : R.push(r);
+  if (!r.imgAt) { if (T[r.id]) { delete T[r.id]; await DB.del('thumbs', r.id); await DB.del('fulls', r.id); } }
+  else if (had !== r.imgAt || !T[r.id]) {
+    const [th, fu] = await Promise.all(['thumb', 'full'].map(k => api(`/img/${r.id}/${k}`).then(z => z.text()).catch(() => null)));
+    if (th && fu) { T[r.id] = th; await DB.put('thumbs', { id: r.id, d: th }); await DB.put('fulls', { id: r.id, d: fu }); }
+  }
+}
+async function sync() {
+  if (!SY || syncing) return; syncing = true; status('Syncing…');
+  try {
+    const t0 = Date.now(), lp = (await DB.get('meta', 'lastPush')) || 0, tb = await tomb(), pend = (await DB.get('meta', 'pendImg')) || [];
+    for (const r of R) if (T[r.id] && !r.imgAt) { r.imgAt = r.updatedAt || r.createdAt; await saveR(r); pend.push(r.id); }          // first sync: existing images
+    for (const id of pend) {
+      const r = R.find(x => x.id === id), f = await DB.get('fulls', id);
+      if (r && r.imgAt > 0 && f && T[id]) { await api(`/img/${id}/thumb`, { method: 'PUT', body: T[id] }); await api(`/img/${id}/full`, { method: 'PUT', body: f.d }); }
+    }
+    await DB.put('meta', [], 'pendImg');
+    const out = R.filter(r => r.updatedAt > lp).map(r => ({ id: r.id, updated: r.updatedAt, deleted: 0, data: JSON.stringify(r) }))
+      .concat(Object.entries(tb).filter(([, u]) => u > lp).map(([id, u]) => ({ id, updated: u, deleted: 1, data: '' })));
+    const catsAt = (await DB.get('meta', 'catsAt')) || 0, cats = catsAt > lp ? { updated: catsAt, data: JSON.stringify(CATS) } : null;
+    for (let i = 0; i < Math.max(out.length, 1); i += 25) await api('/sync', { method: 'POST', body: JSON.stringify({ recipes: out.slice(i, i + 25), cats: i ? null : cats }) });
+    await DB.put('meta', t0 - 5000, 'lastPush');
+    const since = (await DB.get('meta', 'lastPull')) || 0, d = await (await api('/sync?since=' + since)).json();
+    for (const row of d.recipes) await applyRow(row);
+    if (d.cats && d.cats.updated > catsAt) {
+      JSON.parse(d.cats.data).forEach(c => { const i = CATS.findIndex(x => x.id === c.id); i < 0 ? CATS.push(c) : CATS[i] = c; });
+      await DB.put('meta', CATS, 'cats'); await DB.put('meta', d.cats.updated, 'catsAt');
+    }
+    await DB.put('meta', d.now - 5000, 'lastPull');
+    status('Synced ' + new Date().toLocaleTimeString('en-GB', { hour: '2-digit', minute: '2-digit' }));
+    if (!location.hash) renderHome();
+  } catch (e) { status('Sync failed (' + e.message + ')'); }
+  syncing = false;
+}
+async function loadView() {                                                         // visitors: read straight from the cloud, nothing is saved locally
+  const base = VIEW.replace(/\/$/, '');
+  try {
+    const d = await (await fetch(base + '/sync?since=0')).json();
+    R = d.recipes.filter(x => !x.deleted).map(x => { const r = JSON.parse(x.data); r.hist = r.hist || []; r.tags = r.tags || []; return r; });
+    if (d.cats) CATS = JSON.parse(d.cats.data);
+  } catch (e) { R = []; status('Could not load (is PUBLIC_READ enabled?)'); return; }
+  R.forEach(r => { if (r.imgAt) fetch(`${base}/img/${r.id}/thumb`).then(z => z.ok ? z.text() : null).then(t => { if (t) { T[r.id] = t; clearTimeout(rt); rt = setTimeout(() => { if (!location.hash) renderHome(); }, 300); } }).catch(() => 0); });
+}
+const viewFull = r => r.imgAt ? fetch(`${VIEW.replace(/\/$/, '')}/img/${r.id}/full`).then(z => z.ok ? z.text() : null).then(t => t && { d: t }).catch(() => null) : null;
+async function showDetail(id) { await showDetail0(id); if (RO) $('#detail').querySelectorAll('button').forEach(b => { if (!/Back/.test(b.textContent)) b.remove(); }); }
+async function copyView(url) {
+  if (!url) { alert('Enter the Worker URL first'); return; }
+  const l = location.origin + location.pathname + '?view=' + encodeURIComponent(url);
+  try { await navigator.clipboard.writeText(l); toast('View-only link copied'); } catch (e) { prompt('Copy this link', l); }
+}
+function syncDlg() {
+  const u = h('input', { placeholder: 'https://recipes-sync.yourname.workers.dev', value: SY ? SY.url : '' }), k = h('input', { type: 'password', placeholder: 'Shared passphrase', value: SY ? SY.key : '' });
+  dialog(h('h2', { textContent: 'Cloud sync' }), h('p', { class: 'dim', textContent: 'Both of you enter the same Worker URL and passphrase. Changes then sync automatically.' }),
+    h('span', { class: 'fl', textContent: 'Worker URL' }), u, h('span', { class: 'fl', textContent: 'Passphrase' }), k,
+    h('div', { class: 'row', style: 'margin-top:14px' }, btn('Copy view-only link', () => copyView(u.value.trim())), btn('Turn off', () => { localStorage.removeItem('rc.sync'); SY = null; status(''); $('#dlg').close(); }), h('span', { class: 'sp' }), closeBtn(),
+      btn('Save & sync', () => { SY = { url: u.value.trim(), key: k.value }; localStorage.setItem('rc.sync', JSON.stringify(SY)); $('#dlg').close(); sync(); setInterval(sync, 60000); }, 'pri')));
+}
 
-
-/* =========================================================
-   INIT
-========================================================= */
-
-renderAll();
-
+/* ===== 15. Routing & boot ===== */
+function route() {
+  const [v, id] = location.hash.slice(1).split('/');
+  if (RO && (v === 'new' || v === 'e')) { location.hash = ''; return; }
+  $('#home').hidden = !!v; $('#detail').hidden = v !== 'r'; $('#form').hidden = !(v === 'new' || v === 'e');
+  $('#sbBtn').hidden = !!v;
+  if (v === 'r') showDetail(id); else if (v === 'new') openForm(null); else if (v === 'e') openForm(id); else renderHome();
+  scrollTo(0, 0);
+}
+(async () => {
+  await DB.open();
+  R = await DB.all('recipes'); R.forEach(r => { r.hist = r.hist || []; r.tags = r.tags || []; });
+  (await DB.all('thumbs')).forEach(x => T[x.id] = x.d);
+  CATS = await DB.get('meta', 'cats'); lastExport = (await DB.get('meta', 'lastExport')) || 0;
+  if (!CATS) { CATS = DEF_CATS.map(name => ({ id: 'c-' + name.toLowerCase(), name })); await DB.put('meta', CATS, 'cats'); }
+  $('#sbBtn').innerHTML = ico('filter'); $('#rollBtn').innerHTML = ico('dice', 16) + ' What to eat today?'; $('#newBtn').innerHTML = ico('plus', 16) + ' New'; $('#menuBtn').innerHTML = ico('dots');
+  document.body.classList.toggle('nosb', localStorage.getItem('rc.nosb') === '1');
+  $('#sbBtn').onclick = () => { const o = document.body.classList.toggle('nosb'); localStorage.setItem('rc.nosb', o ? '1' : '0'); };
+  $('#sort').replaceChildren(...Object.entries(SORTS).map(([k, v]) => h('option', { value: k, textContent: v[0], selected: k === sortKey })));
+  $('#sort').onchange = e => { sortKey = e.target.value; localStorage.setItem('rc.sort', sortKey); renderHome(); };
+  $('#q').oninput = e => { F.q = e.target.value; if (location.hash) location.hash = ''; else renderHome(); };
+  $('#logo').onclick = () => location.hash = '';
+  $('#newBtn').onclick = () => location.hash = '#new'; $('#rollBtn').onclick = roll; $('#menuBtn').onclick = menu;
+  $('#jsonFile').onchange = e => { if (e.target.files[0]) importJSON(e.target.files[0]); e.target.value = ''; };
+  $('#xlsFile').onchange = e => { const f = e.target.files[0]; if (f) { $('#dlg').open && $('#dlg').close(); /\.json$/i.test(f.name) ? importJSON(f) : batchFile(f); } e.target.value = ''; };
+  document.addEventListener('paste', e => { if (D && !$('#form').hidden) for (const it of e.clipboardData.items) if (it.type.startsWith('image/')) setImg(it.getAsFile()); });
+  document.addEventListener('dragover', e => e.preventDefault());
+  document.addEventListener('drop', e => { if (!$('#form').hidden) { e.preventDefault(); setImg(e.dataTransfer.files[0]); } });
+  addEventListener('hashchange', route);
+  if (navigator.storage && navigator.storage.persist) navigator.storage.persist();
+  if (RO) { document.body.classList.add('ro'); T = {}; await loadView(); status('View only'); }
+  route();
+  if (SY && !RO) { sync(); setInterval(sync, 60000); }
+  addEventListener('focus', sync);
+})();
 </script>
-
 </body>
 </html>
